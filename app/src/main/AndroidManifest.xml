@@ -38,7 +38,12 @@
         <activity
             android:name=".ContactosActivity"
             android:label="@string/nombre_pantalla_contactos"
-            android:parentActivityName=".PrincipalActivity"></activity>
+            android:parentActivityName=".PrincipalActivity" />
+        <activity
+            android:name=".PerfilUsuarioActivity"
+            android:label="@string/nombre_pantalla_perfil_usuario"
+            android:parentActivityName=".PrincipalActivity" />
+
     </application>
 
 </manifest>

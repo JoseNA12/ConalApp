@@ -153,6 +153,9 @@
     <!-- Pantalla contactos -->
     <string name="nombre_pantalla_contactos">Centros de Atención</string>
 
+    <!-- Pantalla perfil usuario -->
+    <string name="nombre_pantalla_perfil_usuario">Mi Perfil</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

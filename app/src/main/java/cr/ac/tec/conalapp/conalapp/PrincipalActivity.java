@@ -77,7 +77,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 switch(id)
                 {
                     case R.id.mi_perfil:
-                        Toast.makeText(PrincipalActivity.this, "Mi perfil",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), PerfilUsuarioActivity.class));
                         return true;
 
                     case R.id.puntos_interes:
