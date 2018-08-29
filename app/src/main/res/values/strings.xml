@@ -1,0 +1,159 @@
+<resources>
+    <string name="app_name">ConalApp</string>
+
+
+    <!-- Pantalla login -->
+    <string name="btn_Ingresar">Ingresar</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_contrasenia">Contraseña</string>
+    <string name="tv_crear_cuenta">Crear cuenta</string>
+
+    <!-- Pantalla principal -->
+    <string name="nombre_patalla_principal">ConalApp</string>
+    <string name="nv_boletin">Boletínes</string>
+    <string name="nv_reunion">Reuniónes</string>
+    <string name="Open">NavBarOpen</string>
+    <string name="Close">NavBarClose</string>
+    <string name="mi_perfil">Mi Perfil</string>
+    <string name="puntos_interes">Mis Puntos de Interés</string>
+    <string name="contactos_emergencia">Contactos de Emergecia</string>
+    <string name="configuracion">Configuración</string>
+    <string name="sobre_nosotros">Sobre Nosotros</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+
+    <!-- Pantalla registrar usuario -->
+    <string name="nombre_pantalla_registrar_usuario">Registrarse</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_apellido">Apellido</string>
+    <string name="hint_rep_contraseña">Repetir contraseña</string>
+    <string name="hint_anio_nacimiento">Año de nacimiento</string>
+
+    <!-- Pantalla configuracion -->
+    <string name="notificaciones">¿Recibir notificaciones emergentes?</string>
+    <string name="cerrar_cuenta">Cerrar cuenta</string>
+    <string name="nombre_pantalla_configuracion">Configuración</string>
+
+    <!-- Pantalla puntos de interés -->
+    <string-array name="array_provincias_costa_rica">
+        <item>San José</item>
+        <item>Alajuela</item>
+        <item>Cartago</item>
+        <item>Heredia</item>
+        <item>Guanacaste</item>
+        <item>Puntarenas</item>
+        <item>Limón</item>
+    </string-array>
+
+    <string-array name="array_cantones_san_jose">
+        <item>Acosta</item>
+        <item>Alajuelita</item>
+        <item>Aserrí</item>
+        <item>Curridabat</item>
+        <item>Desamparados</item>
+        <item>Dota</item>
+        <item>Escazú</item>
+        <item>Goicoechea</item>
+        <item>León Cortés</item>
+        <item>Montes de Oca</item>
+        <item>Mora</item>
+        <item>Moravia</item>
+        <item>Pérez Zeledón</item>
+        <item>Puriscal</item>
+        <item>San José</item>
+        <item>Santa Ana</item>
+        <item>Tarrazú</item>
+        <item>Tibás</item>
+        <item>Turrubares</item>
+        <item>Vázquez de Coronado</item>
+    </string-array>
+
+    <string-array name="array_cantones_alajuela">Alajuela
+        <item>Alajuela</item>
+        <item>Atenas</item>
+        <item>Grecia</item>
+        <item>Guatuso</item>
+        <item>Los Chiles</item>
+        <item>Naranjo</item>
+        <item>Orotina</item>
+        <item>Palmares</item>
+        <item>Poás</item>
+        <item>Río Cuarto</item>
+        <item>San Carlos</item>
+        <item>San Mateo</item>
+        <item>San Ramón</item>
+        <item>Upala</item>
+        <item>Valverde Vega</item>
+        <item>Zarcero</item>
+    </string-array>
+
+    <string-array name="array_cantones_cartago">Cartago
+        <item>Alvarado</item>
+        <item>Cartago</item>
+        <item>El Guarco</item>
+        <item>Jiménez</item>
+        <item>La Unión</item>
+        <item>Oreamuno</item>
+        <item>Paraíso</item>
+        <item>Turrialba</item>
+    </string-array>
+
+    <string-array name="array_cantones_guanacaste">Guanacaste
+        <item>Abangares</item>
+        <item>Bagaces</item>
+        <item>Cañas</item>
+        <item>Carrillo</item>
+        <item>Hojancha</item>
+        <item>La Cruz</item>
+        <item>Liberia</item>
+        <item>Nandayure</item>
+        <item>Nicoya</item>
+        <item>Santa Cruz</item>
+        <item>Tilarán</item>
+    </string-array>
+
+    <string-array name="array_cantones_heredia">Heredia
+        <item>Barva</item>
+        <item>Belén</item>
+        <item>Flores</item>
+        <item>Heredia</item>
+        <item>San Isidro</item>
+        <item>San Pablo</item>
+        <item>San Rafael</item>
+        <item>Santa Bárbara</item>
+        <item>Santo Domingo</item>
+        <item>Sarapiqui</item>
+    </string-array>
+
+    <string-array name="array_cantones_limon">Limón
+        <item>Guácimo</item>
+        <item>Limón</item>
+        <item>Matina</item>
+        <item>Pococí</item>
+        <item>Siquirres</item>
+        <item>Talamanca</item>
+    </string-array>
+
+    <string-array name="arrar_cantones_puntarenas">Puntarenas
+        <item>Aguirre</item>
+        <item>Buenos Aires</item>
+        <item>Corredores</item>
+        <item>Coto Brus</item>
+        <item>Esparza</item>
+        <item>Garabito</item>
+        <item>Golfito</item>
+        <item>Montes de Oro</item>
+        <item>Osa</item>
+        <item>Parrita</item>
+        <item>Puntarenas</item>
+    </string-array>
+
+    <string name="nombre_pantalla_puntos_interes">Puntos de Interés</string>
+    <string name="bnt_agregar_punto_interes">Agregar Ubicación</string>
+
+    <!-- Pantalla contactos -->
+    <string name="nombre_pantalla_contactos">Centros de Atención</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

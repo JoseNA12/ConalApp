@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TemaConalAppNOActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+        <item name="android:colorBackground">@color/gris</item>
+        <item name="android:windowBackground">@color/negro</item>
+        <item name="colorPrimary">@color/naranja</item>
+        <item name="android:colorAccent">@color/negro</item>
+    </style>
+
+    <style name="TemaConalApp" parent="AppTheme">
+        <item name="android:colorBackground">@color/gris</item>
+        <item name="android:windowBackground">@color/gris</item>
+        <item name="colorPrimary">@color/naranja</item>
+        <item name="android:colorAccent">@color/verde</item>
+        <item name="android:statusBarColor">@color/amarilloOscuro</item>
+    </style>
+</resources>

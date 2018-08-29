@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+
+        <item android:id="@+id/mi_perfil"
+            android:icon="@drawable/ic_perfil"
+            android:title="@string/mi_perfil"/>
+        <item android:id="@+id/puntos_interes"
+            android:icon="@drawable/ic_puntos_interes"
+            android:title="@string/puntos_interes"/>
+        <item android:id="@+id/contactos_emergencia"
+            android:icon="@drawable/ic_contactos_emergencia"
+            android:title="@string/contactos_emergencia"/>
+    </group>
+
+    <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="single">
+
+        <item android:id="@+id/configuracion"
+            android:icon="@drawable/ic_configuracion"
+            android:title="@string/configuracion"/>
+        <item android:id="@+id/sobre_nosotros"
+            android:icon="@drawable/ic_sobre_team"
+            android:title="@string/sobre_nosotros"/>
+    </group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
+
+        <item android:id="@+id/cerrar_sesion"
+            android:icon="@drawable/ic_cerrar_sesion"
+            android:title="@string/cerrar_sesion"/>
+    </group>
+</menu>

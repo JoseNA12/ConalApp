@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cr.ac.tec.conalapp.conalapp">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_logo_solo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_logo_solo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".IniciarSesionActivity"
+            android:theme="@style/AppThemeNOActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegistroUsuarioActivity"
+            android:label="@string/nombre_pantalla_registrar_usuario"
+            android:parentActivityName=".IniciarSesionActivity"
+            android:theme="@style/AppTheme" /> <!-- Poner el boton de atras en el action bar (siguiendo la logica de la pantalla anterior con la siguiente) -->
+        <activity
+            android:name=".PrincipalActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppThemePrincipal" />
+        <activity
+            android:name=".ConfiguracionActivity"
+            android:label="@string/nombre_pantalla_configuracion"
+            android:parentActivityName=".PrincipalActivity" />
+        <activity
+            android:name=".PuntosInteresActivity"
+            android:label="@string/nombre_pantalla_puntos_interes"
+            android:parentActivityName=".PrincipalActivity" />
+        <activity
+            android:name=".ContactosActivity"
+            android:label="@string/nombre_pantalla_contactos"
+            android:parentActivityName=".PrincipalActivity"></activity>
+    </application>
+
+</manifest>
