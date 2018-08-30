@@ -43,6 +43,10 @@
             android:name=".PerfilUsuarioActivity"
             android:label="@string/nombre_pantalla_perfil_usuario"
             android:parentActivityName=".PrincipalActivity" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:label="@string/nombre_pantalla_sobre_nosotros"
+            android:parentActivityName=".PrincipalActivity"/>
 
     </application>
 

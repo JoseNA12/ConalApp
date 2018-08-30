@@ -13,7 +13,7 @@
         android:paddingBottom="10sp"
         android:paddingLeft="5sp"
         android:paddingTop="10sp"
-        android:textColor="@color/naranja"
+        android:textColor="@color/negro"
         android:textSize="18sp">
 
     </TextView>

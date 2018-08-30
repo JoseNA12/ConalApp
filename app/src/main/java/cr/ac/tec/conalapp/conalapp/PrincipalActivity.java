@@ -93,7 +93,7 @@ public class PrincipalActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.sobre_nosotros:
-                        Toast.makeText(PrincipalActivity.this, "Sobre nosotros",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), AboutUsActivity.class));
                         return true;
 
                     case R.id.cerrar_sesion:

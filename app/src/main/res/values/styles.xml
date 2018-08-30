@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/amarillo</item>
         <item name="colorAccent">@color/naranja</item>
         <item name="colorPrimaryDark">@color/amarilloOscuro</item>
-        <item name="android:windowBackground">@color/gris</item>
+        <item name="android:windowBackground">@color/blanco</item>
     </style>
 
     <style name="AppThemeNOActionBar" parent="AppTheme" >
