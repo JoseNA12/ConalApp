@@ -1,12 +1,12 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.PantallaContactos;
 
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import cr.ac.tec.conalapp.conalapp.Adaptadores.PagerAdapterContactos;
+import cr.ac.tec.conalapp.conalapp.R;
 
 public class ContactosActivity extends AppCompatActivity {
 

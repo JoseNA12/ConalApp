@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.PantallaPuntosInteres;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.R;
 
 public class PuntosInteresActivity extends AppCompatActivity {
 

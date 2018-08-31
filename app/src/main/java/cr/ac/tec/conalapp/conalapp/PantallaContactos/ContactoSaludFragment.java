@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.PantallaContactos;
 
 
 import android.os.Bundle;
@@ -13,6 +13,12 @@ import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterContactos;
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.Utilitarios.LeerArchivoContactos;
+import cr.ac.tec.conalapp.conalapp.Modelo.ContactosModelo;
+import cr.ac.tec.conalapp.conalapp.R;
 
 
 /**

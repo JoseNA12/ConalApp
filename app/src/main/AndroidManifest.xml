@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cr.ac.tec.conalapp.conalapp">
 
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_logo_solo"
@@ -10,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".IniciarSesionActivity"
+            android:name=".PantallaLogin.IniciarSesionActivity"
             android:theme="@style/AppThemeNOActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,34 +26,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistroUsuarioActivity"
+            android:name=".PantallaRegistroUsuario.RegistroUsuarioActivity"
             android:label="@string/nombre_pantalla_registrar_usuario"
-            android:parentActivityName=".IniciarSesionActivity"
+            android:parentActivityName=".PantallaLogin.IniciarSesionActivity"
             android:theme="@style/AppTheme" /> <!-- Poner el boton de atras en el action bar (siguiendo la logica de la pantalla anterior con la siguiente) -->
         <activity
-            android:name=".PrincipalActivity"
+            android:name=".PantallaPrincipal.PrincipalActivity"
             android:label="@string/app_name"
             android:theme="@style/AppThemePrincipal" />
         <activity
-            android:name=".ConfiguracionActivity"
+            android:name=".PantallaConfiguracion.ConfiguracionActivity"
             android:label="@string/nombre_pantalla_configuracion"
-            android:parentActivityName=".PrincipalActivity" />
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
-            android:name=".PuntosInteresActivity"
+            android:name=".PantallaPuntosInteres.PuntosInteresActivity"
             android:label="@string/nombre_pantalla_puntos_interes"
-            android:parentActivityName=".PrincipalActivity" />
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
-            android:name=".ContactosActivity"
+            android:name=".PantallaContactos.ContactosActivity"
             android:label="@string/nombre_pantalla_contactos"
-            android:parentActivityName=".PrincipalActivity" />
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
-            android:name=".PerfilUsuarioActivity"
+            android:name=".PantallaPerfilUsuario.PerfilUsuarioActivity"
             android:label="@string/nombre_pantalla_perfil_usuario"
-            android:parentActivityName=".PrincipalActivity" />
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".PantallaAboutUs.AboutUsActivity"
             android:label="@string/nombre_pantalla_sobre_nosotros"
-            android:parentActivityName=".PrincipalActivity"/>
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity"/>
 
     </application>
 

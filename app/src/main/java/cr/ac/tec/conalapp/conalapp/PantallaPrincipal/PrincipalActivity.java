@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.PantallaPrincipal;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,6 +12,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import cr.ac.tec.conalapp.conalapp.PantallaAboutUs.AboutUsActivity;
+import cr.ac.tec.conalapp.conalapp.Adaptadores.PagerAdapterPrincipal;
+import cr.ac.tec.conalapp.conalapp.PantallaConfiguracion.ConfiguracionActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaContactos.ContactosActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaPuntosInteres.PuntosInteresActivity;
+import cr.ac.tec.conalapp.conalapp.R;
 
 public class PrincipalActivity extends AppCompatActivity {
 

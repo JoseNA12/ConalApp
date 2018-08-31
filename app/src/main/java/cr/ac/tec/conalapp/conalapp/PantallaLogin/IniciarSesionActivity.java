@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.PantallaLogin;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import cr.ac.tec.conalapp.conalapp.PantallaPrincipal.PrincipalActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaRegistroUsuario.RegistroUsuarioActivity;
+import cr.ac.tec.conalapp.conalapp.R;
 
 public class IniciarSesionActivity extends AppCompatActivity {
 

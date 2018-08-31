@@ -1,10 +1,12 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.Utilitarios;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import cr.ac.tec.conalapp.conalapp.Modelo.ContactosModelo;
 
 public class LeerArchivoContactos
 {

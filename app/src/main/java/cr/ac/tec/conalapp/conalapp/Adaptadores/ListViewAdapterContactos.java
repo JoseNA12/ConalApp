@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.Adaptadores;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,14 +12,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cr.ac.tec.conalapp.conalapp.Modelo.ContactosModelo;
+import cr.ac.tec.conalapp.conalapp.R;
+
 public class ListViewAdapterContactos
-        extends ArrayAdapter<ContactosModelo> implements View.OnClickListener{
+        extends ArrayAdapter<ContactosModelo> implements View.OnClickListener {
 
     private ArrayList<ContactosModelo> dataSet;
-    Context mContext;
+    private Context mContext;
+    //private int lastPosition = -1;
 
     // View lookup cache
-    private static class ViewHolder {
+    private static class RetenedorVista {
         TextView tv_nombre_centro;
         TextView tv_provincia;
         TextView tv_numero_telefono;
@@ -49,34 +53,33 @@ public class ListViewAdapterContactos
         }
     }
 
-    private int lastPosition = -1;
-
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         ContactosModelo contactos = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
+        RetenedorVista retenedorVista; // view lookup cache stored in tag
 
         final View result;
 
         if (convertView == null) {
 
-            viewHolder = new ViewHolder();
+            retenedorVista = new RetenedorVista();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item_contactos, parent, false);
-            viewHolder.tv_nombre_centro = (TextView) convertView.findViewById(R.id.tv_nombre_centro_id);
-            viewHolder.tv_provincia = (TextView) convertView.findViewById(R.id.tv_provincia_id);
-            viewHolder.tv_numero_telefono = (TextView) convertView.findViewById(R.id.tv_numero_telefono_id);
-            viewHolder.info = (ImageView) convertView.findViewById(R.id.item_info);
+
+            retenedorVista.tv_nombre_centro = (TextView) convertView.findViewById(R.id.tv_nombre_centro_id);
+            retenedorVista.tv_provincia = (TextView) convertView.findViewById(R.id.tv_provincia_id);
+            retenedorVista.tv_numero_telefono = (TextView) convertView.findViewById(R.id.tv_numero_telefono_id);
+            retenedorVista.info = (ImageView) convertView.findViewById(R.id.item_info);
 
             result=convertView;
 
-            convertView.setTag(viewHolder);
+            convertView.setTag(retenedorVista);
         }
         else
         {
-            viewHolder = (ViewHolder) convertView.getTag();
+            retenedorVista = (RetenedorVista) convertView.getTag();
             result=convertView;
         }
 
@@ -84,11 +87,11 @@ public class ListViewAdapterContactos
         result.startAnimation(animation);
         lastPosition = position;*/
 
-        viewHolder.tv_nombre_centro.setText(contactos.getNombreCentro());
-        viewHolder.tv_provincia.setText(contactos.getType());
-        viewHolder.tv_numero_telefono.setText(contactos.getNumeroTelefono());
-        viewHolder.info.setOnClickListener(this);
-        viewHolder.info.setTag(position);
+        retenedorVista.tv_nombre_centro.setText(contactos.getNombreCentro());
+        retenedorVista.tv_provincia.setText(contactos.getType());
+        retenedorVista.tv_numero_telefono.setText(contactos.getNumeroTelefono());
+        retenedorVista.info.setOnClickListener(this); // establecer el listener de la clase
+        retenedorVista.info.setTag(position);
         // Return the completed view to render on screen
         return convertView;
     }

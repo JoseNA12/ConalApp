@@ -1,8 +1,11 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.Adaptadores;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import cr.ac.tec.conalapp.conalapp.PantallaContactos.ContactoPoliciaFragment;
+import cr.ac.tec.conalapp.conalapp.PantallaContactos.ContactoSaludFragment;
 
 public class PagerAdapterContactos extends FragmentStatePagerAdapter {
 

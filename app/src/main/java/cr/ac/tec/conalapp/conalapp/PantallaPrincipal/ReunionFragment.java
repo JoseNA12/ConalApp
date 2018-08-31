@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.PantallaPrincipal;
 
 
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import cr.ac.tec.conalapp.conalapp.R;
 
 
 /**
