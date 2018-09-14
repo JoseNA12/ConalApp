@@ -1,8 +1,11 @@
 package cr.ac.tec.conalapp.conalapp.PantallaPrincipal;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
+import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
 
@@ -29,6 +33,8 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private ArrayList<BoletinModelo> array_boletines;
     private ListView listView;
     private static ListViewAdapterBoletin adapter;
+
+    private FloatingActionButton floatingActionButtonCrearBoletin;
 
     public BoletinFragment() {
         // Required empty public constructor
@@ -45,16 +51,23 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void inicializarComponentes(View pView)
     {
-        // Recargar
+        initSwipeLayout(pView);
+        initListView(pView);
+        initFloatingActiobButton(pView);
+    }
+
+    private void initSwipeLayout(View pView)
+    {
         swipeLayout = (SwipeRefreshLayout) pView.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeResources(android.R.color.holo_green_dark,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light,
                 android.R.color.holo_blue_dark);
+    }
 
-        // ListView
-
+    private void initListView(View pView)
+    {
         listView = (ListView) view.findViewById(R.id.lv_boletines_id);
 
         array_boletines = new ArrayList<>();
@@ -74,6 +87,17 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 Snackbar.make(view, "Ayyy papitoooohh", Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
+            }
+        });
+    }
+
+    private void initFloatingActiobButton(View pView)
+    {
+        floatingActionButtonCrearBoletin = (FloatingActionButton) pView.findViewById(R.id.fab_crear_boletin);
+        floatingActionButtonCrearBoletin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CrearBoletinActivity.class);
+                startActivity(intent);
             }
         });
     }

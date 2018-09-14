@@ -11,8 +11,24 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:divider="@color/negro"
-        android:orientation="vertical"
-        android:showDividers="middle">
+        android:showDividers="middle"
+    android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="320dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp" />
+            </LinearLayout>
+        </ScrollView>
 
         <Spinner
             android:id="@+id/sp_provincias_id"
@@ -36,22 +52,6 @@
             android:padding="12dp"
             android:text="@string/bnt_agregar_punto_interes"
             android:textColor="@android:color/background_light" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp" />
-            </LinearLayout>
-        </ScrollView>
 
     </LinearLayout>
 </ScrollView>
