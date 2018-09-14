@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:divider="@color/negro"
-        android:orientation="vertical"
-        android:showDividers="middle">
+        android:showDividers="middle"
+    android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"

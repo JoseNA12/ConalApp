@@ -55,8 +55,13 @@
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
             android:name=".PantallaCrearReunion.CrearReunionActivity"
+            android:label="@string/nombre_pantalla_crear_reunion"
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
-        <activity android:name=".PantallaCrearBoletin.CrearBoletinActivity"></activity>
+        <activity
+            android:name=".PantallaCrearBoletin.CrearBoletinActivity"
+            android:label="@string/nombre_pantalla_crear_boletin"
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
+
     </application>
 
 </manifest>

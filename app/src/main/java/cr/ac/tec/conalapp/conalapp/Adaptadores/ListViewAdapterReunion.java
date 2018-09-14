@@ -101,7 +101,7 @@ public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implemen
         retenedorVista.tv_provincia.setText(boletin.getProvincia());
         retenedorVista.tv_fecha.setText(boletin.getFecha());
         retenedorVista.tv_hora.setText(boletin.getHora());
-        retenedorVista.tv_descripcion.setText(boletin.getDescrpcion());
+        retenedorVista.tv_descripcion.setText(boletin.getDescripcion());
 
         retenedorVista.btn_comentarios.setOnClickListener(this);
         retenedorVista.btn_comentarios.setTag(position);

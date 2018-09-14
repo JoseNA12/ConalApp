@@ -164,17 +164,25 @@
         para la cuidadania costarricense.
     </string>
 
-    <!-- Pantalla crear boletin -->
+    <!-- Pantalla crear boletin y reunion -->
     <string name="nombre_pantalla_crear_boletin">Crear Boletín</string>
     <string name="hint_titular">Titular</string>
     <string name="hint_fecha">Fecha (Año-mes-día)</string>
     <string name="hint_hora">Hora</string>
-    <string name="hint_proposito">Propósito</string>
+    <string name="hint_descripcion">Descripción</string>
     <string name="hint_encargados">Ubicación</string>
+    <string name="btn_crear_boletin">PUBLICAR BOLETÍN</string>
+    <string name="tv_acordas_sospechosos">¿Te acordás de los sospechosos?</string>
+    <string name="input_hint_describelos">Estatura, cabello, contextura, piel, ...</string>
+    <string name="tv_portaban_armas">¿Portaban armas?</string>
+    <string name="input_hint_descripcion_armas">Arma blanca, arma de fuego, ...</string>
+    <string name="tv_usaron_vehiculos">¿Utilizaron vehículos?</string>
+    <string name="input_hint_descripcion_vehiculo">Cuantos?, tipo, color, placas, ... </string>
+    <string name="tv_acordas_ubicacion">¿Te acordás de la ubicación?</string>
 
-    <!-- Pantalla crear reunion -->
     <string name="nombre_pantalla_crear_reunion">Crear Reunión</string>
-    <string name="btn_crear_reunion">CREAR REUNIÓN</string>
+    <string name="btn_crear_reunion">PUBLICAR REUNIÓN</string>
+    <string name="_text_view">Provincia/Cantón</string>
 
 
 </resources>

@@ -5,10 +5,11 @@ public class ReunionModelo {
     private String autor; // cambiar luego, manejar objeto usuario
     private String titular;
     private String provincia; // dividir en distrito
+    private String distrito;
     private String fecha;
     private String hora;
     // Imagen GPS
-    private String descrpcion;
+    private String descripcion;
 
 
     public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String descrpcion) {
@@ -17,7 +18,7 @@ public class ReunionModelo {
         this.provincia = provincia;
         this.fecha = fecha;
         this.hora = hora;
-        this.descrpcion = descrpcion;
+        this.descripcion = descrpcion;
     }
 
     public String getAutor() {
@@ -60,12 +61,20 @@ public class ReunionModelo {
         this.hora = hora;
     }
 
-    public String getDescrpcion() {
-        return descrpcion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescrpcion(String descrpcion) {
-        this.descrpcion = descrpcion;
+    public void setDescripcion(String descrpcion) {
+        this.descripcion = descrpcion;
+    }
+
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
     }
 }
 
