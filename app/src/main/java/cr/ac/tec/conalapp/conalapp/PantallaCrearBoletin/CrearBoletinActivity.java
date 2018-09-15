@@ -1,9 +1,19 @@
 package cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,9 +24,29 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
 
@@ -42,9 +72,12 @@ public class CrearBoletinActivity extends AppCompatActivity {
 
     private Spinner sp_provincias, sp_cantones_por_provincia;
 
+    private LinearLayout linear_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_crear_boletin);
 
         inicializarComponentes();
@@ -60,6 +93,7 @@ public class CrearBoletinActivity extends AppCompatActivity {
         input_descripcion_armas_usadas = (TextInputEditText) findViewById(R.id.input_descripcion_armas_usadas_id);
         input_descripcion_vehiculos_usados = (TextInputEditText) findViewById(R.id.input_descripcion_vehiculos_usados_id);
 
+        initFrameLayout();
         initInputFecha();
         initInputHora();
         initSpinners();
@@ -242,15 +276,27 @@ public class CrearBoletinActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                 {
-
+                    linear_layout.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-
+                    linear_layout.setVisibility(View.GONE);
                 }
             }
         });
 
+    }
+
+    private void initFrameLayout()
+    {
+        linear_layout = (LinearLayout) findViewById(R.id.linear_layout_id);
+
+        LinearLayout ll = new LinearLayout(this);
+        ll.setId(12345); // como es un fragment el id no importa pero es necesario
+
+        getFragmentManager().beginTransaction().add(ll.getId(), MapFragment.newInstance(), "someTag1").commit();
+
+        linear_layout.addView(ll);
     }
 
     private void establecerAdaptadorSPCantones(String[] pLista)
@@ -258,4 +304,5 @@ public class CrearBoletinActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter_cant = new ArrayAdapter<String>(this,R.layout.spinner_layout,R.id.text, pLista);
         sp_cantones_por_provincia.setAdapter(adapter_cant);
     }
+
 }
