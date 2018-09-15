@@ -99,6 +99,11 @@ public class IniciarSesionActivity extends AppCompatActivity {
                 errorMessageDialog("No se pudo iniciar sesión.\nVerifique que el usuario que ingresó exista, que la contraseña sea la correcta, y que sea usuario activo");
             }
             else {
+                ClaseSingleton.USUARIO_ACTUAL.setId(jsonObject.getJSONObject("value").getInt("IdPersona"));
+                ClaseSingleton.USUARIO_ACTUAL.setCorreo(jsonObject.getJSONObject("value").getString("Correo"));
+                ClaseSingleton.USUARIO_ACTUAL.setNombre(jsonObject.getJSONObject("value").getString("Nombre"));
+                ClaseSingleton.USUARIO_ACTUAL.setApellido(jsonObject.getJSONObject("value").getString("Apellido"));
+
                 Intent intent = new Intent(this, PrincipalActivity.class);
                 startActivity(intent);
             }
