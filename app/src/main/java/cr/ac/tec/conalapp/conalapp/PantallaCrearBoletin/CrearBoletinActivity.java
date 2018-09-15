@@ -20,6 +20,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
 
+<<<<<<< HEAD
+>>>>>>> a106980be98c59cabf91e576429c3c339d3d4e1b
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 

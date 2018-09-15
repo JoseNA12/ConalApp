@@ -50,7 +50,7 @@
                 android:tint="@color/negro" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/nombreUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -75,7 +75,7 @@
                 android:id="@+id/designation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/nombreUsuario"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="(Adhyaksh)"
