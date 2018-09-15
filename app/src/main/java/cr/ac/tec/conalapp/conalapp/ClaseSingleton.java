@@ -1,5 +1,8 @@
 package cr.ac.tec.conalapp.conalapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+
 import java.util.ArrayList;
 
 public class ClaseSingleton {
@@ -44,6 +47,9 @@ public class ClaseSingleton {
      */
 
     // IP del servidor
-    private static final String IP = "https://conalapp.000webhostapp.com/";
+    private static final String URL_HOST = "http://conalapp.000webhostapp.com/";
+    /* PHP usuarios */
+    public static final String GET_USER_PASS = URL_HOST + "archivosPHP/select_usuario_iniciar_sesion.php";
+    public static final String INSERT_USER = URL_HOST + "archivosPHP/persona_insertar.php";
 
 }
