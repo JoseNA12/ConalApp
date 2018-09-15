@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cr.ac.tec.conalapp.conalapp">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- AIzaSyCPAm2LNrj34QzeH9eDvMC28ZGG-S351YM -->
+
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -15,6 +23,15 @@
         android:roundIcon="@drawable/ic_logo_solo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
             android:name=".PantallaLogin.IniciarSesionActivity"
             android:theme="@style/AppThemeNOActionBar">

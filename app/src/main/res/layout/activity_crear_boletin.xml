@@ -97,8 +97,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="15dp"
@@ -174,7 +174,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
@@ -188,6 +188,14 @@
                 android:paddingTop="8dp"
                 android:text="@string/tv_acordas_ubicacion"
                 android:textSize="17sp" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout_id"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:orientation="vertical"
+                android:visibility="gone"></LinearLayout>
+
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ConalApp</string>
 
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCPAm2LNrj34QzeH9eDvMC28ZGG-S351YM
+    </string>
 
     <!-- Pantalla login -->
     <string name="btn_Ingresar">Ingresar</string>
@@ -178,11 +180,14 @@
     <string name="input_hint_descripcion_armas">Arma blanca, arma de fuego, ...</string>
     <string name="tv_usaron_vehiculos">¿Utilizaron vehículos?</string>
     <string name="input_hint_descripcion_vehiculo">Cuantos?, tipo, color, placas, ... </string>
-    <string name="tv_acordas_ubicacion">¿Te acordás de la ubicación?</string>
+    <string name="tv_acordas_ubicacion">¿Te acordás de la ubicación exacta?</string>
 
     <string name="nombre_pantalla_crear_reunion">Crear Reunión</string>
     <string name="btn_crear_reunion">PUBLICAR REUNIÓN</string>
     <string name="_text_view">Provincia/Cantón</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
