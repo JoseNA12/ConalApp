@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">ConalApp</string>
 
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCPAm2LNrj34QzeH9eDvMC28ZGG-S351YM
-    </string>
-
     <!-- Pantalla login -->
     <string name="btn_Ingresar">Ingresar</string>
     <string name="hint_email">Correo electrónico</string>
@@ -188,6 +185,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>

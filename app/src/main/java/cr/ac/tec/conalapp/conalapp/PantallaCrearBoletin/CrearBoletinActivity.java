@@ -1,21 +1,12 @@
 package cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,37 +15,29 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
 
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
-import cr.ac.tec.conalapp.conalapp.PantallaCrearReunion.CrearReunionActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
-public class CrearBoletinActivity extends AppCompatActivity {
+public class CrearBoletinActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextInputEditText input_titular, input_descripcion;
     private EditText input_fecha, input_hora;
@@ -74,6 +57,7 @@ public class CrearBoletinActivity extends AppCompatActivity {
 
     private LinearLayout linear_layout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +65,9 @@ public class CrearBoletinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crear_boletin);
 
         inicializarComponentes();
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     private void inicializarComponentes()
@@ -88,6 +75,13 @@ public class CrearBoletinActivity extends AppCompatActivity {
         input_titular = (TextInputEditText) findViewById(R.id.input_titular_id);
         input_descripcion = (TextInputEditText) findViewById(R.id.input_descripcion_id);
         btn_crear_reunion = (Button) findViewById(R.id.btn_crear_reunion_id);
+        btn_crear_reunion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                // startActivity(intent);
+            }
+        });
 
         input_descripcion_sospechosos = (TextInputEditText) findViewById(R.id.input_descripcion_sospechosos_id);
         input_descripcion_armas_usadas = (TextInputEditText) findViewById(R.id.input_descripcion_armas_usadas_id);
@@ -290,19 +284,46 @@ public class CrearBoletinActivity extends AppCompatActivity {
     private void initFrameLayout()
     {
         linear_layout = (LinearLayout) findViewById(R.id.linear_layout_id);
+        linear_layout.setId(1230);
 
-        LinearLayout ll = new LinearLayout(this);
-        ll.setId(12345); // como es un fragment el id no importa pero es necesario
-
-        getFragmentManager().beginTransaction().add(ll.getId(), MapFragment.newInstance(), "someTag1").commit();
-
-        linear_layout.addView(ll);
     }
 
     private void establecerAdaptadorSPCantones(String[] pLista)
     {
         ArrayAdapter<String> adapter_cant = new ArrayAdapter<String>(this,R.layout.spinner_layout,R.id.text, pLista);
         sp_cantones_por_provincia.setAdapter(adapter_cant);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(37.4219999,-122.0862462))
+                .zoom(16)
+                .bearing(0)
+                .tilt(45)
+                .build();
+
+        //map.moveCamera(CameraUpdateFactory.newCameraPosition(googlePlex)); // sin animacion
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
+
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4219999, -122.0862462))
+                .title("Google Plex")
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.4629101,-122.2449094))
+                .title("Facebook")
+                .snippet("Facebook HQ: Menlo Park"));
+
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(37.3092293,-122.1136845))
+                .title("Apple"));
+
+        map.setMyLocationEnabled(true); // Posicion actual
     }
 
 }
