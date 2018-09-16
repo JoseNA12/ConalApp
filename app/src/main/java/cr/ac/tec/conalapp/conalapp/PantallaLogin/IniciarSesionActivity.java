@@ -103,7 +103,11 @@ public class IniciarSesionActivity extends AppCompatActivity {
                 ClaseSingleton.USUARIO_ACTUAL.setCorreo(jsonObject.getJSONObject("value").getString("Correo"));
                 ClaseSingleton.USUARIO_ACTUAL.setNombre(jsonObject.getJSONObject("value").getString("Nombre"));
                 ClaseSingleton.USUARIO_ACTUAL.setApellido(jsonObject.getJSONObject("value").getString("Apellido"));
-
+                ClaseSingleton.USUARIO_ACTUAL.setFechaNacimiento("Sin definir");
+                ClaseSingleton.USUARIO_ACTUAL.setBiografia("Sin definir");
+                ClaseSingleton.USUARIO_ACTUAL.setGenero("Sin definir");
+                ClaseSingleton.USUARIO_ACTUAL.setLugarResidencia("Sin definir");
+                ClaseSingleton.USUARIO_ACTUAL.setSobrenombre("Sin definir");
                 Intent intent = new Intent(this, PrincipalActivity.class);
                 startActivity(intent);
             }
