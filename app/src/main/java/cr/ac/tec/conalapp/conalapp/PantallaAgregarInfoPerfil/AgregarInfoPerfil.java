@@ -12,6 +12,10 @@ public class AgregarInfoPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_informacion_perfil);
 
-     //   inicializarComponentes();
+         inicializarComponentes();
+    }
+
+    private void inicializarComponentes(){
+
     }
 }
