@@ -19,9 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-<<<<<<< HEAD
->>>>>>> a106980be98c59cabf91e576429c3c339d3d4e1b
+
+// import com.google.android.gms.common.ConnectionResult;
+// import com.google.android.gms.common.api.GoogleApiClient;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 
@@ -32,6 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
@@ -300,7 +304,8 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-        CameraPosition googlePlex = CameraPosition.builder()
+        map.setMyLocationEnabled(true); // Posicion actual
+        CameraPosition googlePlex = CameraPosition.builder()//.target(map.getMyLocation().getLongitude(), map.getMyLocation().getLatitude())
                 .target(new LatLng(37.4219999,-122.0862462))
                 .zoom(16)
                 .bearing(0)
@@ -310,8 +315,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         //map.moveCamera(CameraUpdateFactory.newCameraPosition(googlePlex)); // sin animacion
         map.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null);
 
-
-        map.addMarker(new MarkerOptions()
+        /*map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.4219999, -122.0862462))
                 .title("Google Plex")
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
@@ -324,8 +328,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         map.addMarker(new MarkerOptions()
                 .position(new LatLng(37.3092293,-122.1136845))
                 .title("Apple"));
-
-        map.setMyLocationEnabled(true); // Posicion actual
+*/
     }
 
 }

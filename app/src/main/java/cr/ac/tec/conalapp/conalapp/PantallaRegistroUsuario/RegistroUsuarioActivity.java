@@ -21,6 +21,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.PantallaLogin.IniciarSesionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPrincipal.PrincipalActivity;
@@ -82,31 +85,40 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
 
         }else {
             progressDialog.show();
-            executeQuery(ClaseSingleton.INSERT_USER + "?Nombre=" +usuarioNombre + "&Apellido="+ usuarioApellido+ "&Correo=" + usuarioCorreo + "&Contrasena=" + usuarioContrasena);
+            executeQuery(ClaseSingleton.INSERT_USER, usuarioNombre, usuarioApellido, usuarioCorreo, usuarioContrasena);
 
 
         }
     }
 
-    private void executeQuery(String URL) {
-        RequestQueue queue = Volley.newRequestQueue(this);
-       // errorMessageDialog(URL);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+    private void executeQuery(String URL, final String nombre, final String apellido, final String correo, final String contrasena) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
-
-            public void onResponse(String response) {
+            public void onResponse(String response) { // Si serv contesta
+                System.out.println(response);
                 RegistrarUsuarioResponse(response);
-
             }
-        }, new Response.ErrorListener() {
+        }, new Response.ErrorListener() {  //Tratar errores conexion con serv
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
+                errorMessageDialog(error.toString());
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
-                // errorMessageDialog(error.toString());
             }
-        });queue.add(stringRequest);
+        }) {
+            @Override
+            protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
+                System.out.print("get params");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Nombre", nombre);
+                params.put("Apellido", apellido);
+                params.put("Correo", correo);
+                params.put("Contrasena", contrasena);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
     }
+
 
     private void RegistrarUsuarioResponse(String response){
         progressDialog.dismiss();

@@ -53,9 +53,16 @@ public class ClaseSingleton {
     /* PHP usuarios */
     public static final String GET_USER_PASS = URL_HOST + "archivosPHP/select_usuario_iniciar_sesion.php";
     public static final String INSERT_USER = URL_HOST + "archivosPHP/persona_insertar.php";
+
+    // PHP Noticias
     public static final String INSERT_NOTICIA = URL_HOST + "archivosPHP/noticia_insertar.php";
-    public static final String INSERT_REUNION= URL_HOST + "archivosPHP/reunion_insertar.php";
     public static final String SELECT_ALL_NOTICIA = URL_HOST + "archivosPHP/noticia_select_all.php";
+
+    // PHP Reuniones
+    public static final String INSERT_REUNION= URL_HOST + "archivosPHP/reunion_insertar.php";
     public static final String SELECT_ALL_REUNION = URL_HOST + "archivosPHP/reunion_select_all.php";
+
+    // PHP Puntos Interes
+    public static final String INSERT_PUNTO_INTERES= URL_HOST + "archivosPHP/puntosInteres_insertar.php";
 
 }
