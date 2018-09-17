@@ -86,7 +86,9 @@ public class PrincipalActivity extends AppCompatActivity {
                 switch(id)
                 {
                     case R.id.mi_perfil:
-                        startActivity(new Intent(getApplicationContext(), PerfilUsuarioActivity.class));
+                        Intent i =  new Intent(getApplicationContext(), PerfilUsuarioActivity.class);
+                        i.putExtra("TipoPerfil", "Propio");
+                        startActivity(i);
                         return true;
 
                     case R.id.puntos_interes:

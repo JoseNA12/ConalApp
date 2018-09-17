@@ -1,22 +1,18 @@
 package cr.ac.tec.conalapp.conalapp.PantallaPrincipal;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -25,19 +21,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
+import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.R;
 
 
@@ -53,7 +48,6 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private static ListViewAdapterBoletin adapter;
 
     private FloatingActionButton floatingActionButtonCrearBoletin;
-
     public BoletinFragment() {
         // Required empty public constructor
     }
@@ -112,9 +106,8 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 swipeLayout.setRefreshing(false);
-                executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN); // CAMBIAR POR SEGUN EL ID USUARIO
             }
-        }, 0);
+        }, 5000);
     }
 
     private void obtenerDatosBoletinesResponse(String response){
@@ -132,7 +125,9 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    String autor = jsonArray.getJSONObject(i).get("IdPersona").toString();
+                    jsonArray.getJSONObject(i).get("Titular").toString();
+
+
                     String titular = jsonArray.getJSONObject(i).get("Titular").toString();
                     String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
                     String canton = jsonArray.getJSONObject(i).get("Canton").toString();
@@ -144,9 +139,33 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
                     String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
 
+                    // Info usuario
+                    String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
+                    String nombreAutor = jsonArray.getJSONObject(i).get("Nombre").toString();
+                    String apellidoAutor = jsonArray.getJSONObject(i).get("Apellido").toString();
+                    String correoAutor = jsonArray.getJSONObject(i).get("Correo").toString();
+                    String sobrenombreAutor = jsonArray.getJSONObject(i).get("sobrenombre").toString();
+                    String lugarResidencia = jsonArray.getJSONObject(i).get("lugarResidencia").toString();
+                    String generoAutor = jsonArray.getJSONObject(i).get("genero").toString();
+                    String fechaNacimiento = jsonArray.getJSONObject(i).get("fechaNacimiento").toString();
+                    String biografia = jsonArray.getJSONObject(i).get("biografia").toString();
+
+                    Persona autor = new Persona();
+                    autor.setId(Integer.valueOf(idAutor));
+                    autor.setCorreo(correoAutor);
+                    autor.setNombre(nombreAutor);
+                    autor.setApellido(apellidoAutor);
+                    autor.setFechaNacimiento(fechaNacimiento);
+                    autor.setBiografia(biografia);
+                    autor.setGenero(generoAutor);
+                    autor.setLugarResidencia(lugarResidencia);
+                    autor.setSobrenombre(sobrenombreAutor);
+
+                    System.out.println("Autor " + autor.getNombre());
+                    System.out.println("Autor " + autor.getId());
                     array_boletines.add(
-                            new BoletinModelo(autor, titular, provincia, canton, fecha, hora, descripcion,
-                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS));
+                            new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, provincia, canton, fecha, hora, descripcion,
+                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor));
                 }
 
                 adapter = new ListViewAdapterBoletin(array_boletines, getContext());

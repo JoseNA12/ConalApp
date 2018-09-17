@@ -34,6 +34,7 @@ import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterReunion;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
+import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearReunion.CrearReunionActivity;
 import cr.ac.tec.conalapp.conalapp.R;
@@ -137,13 +138,34 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     String detalle = jsonArray.getJSONObject(i).get("Detalle").toString();
                     String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
                     String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
-                    String autor = jsonArray.getJSONObject(i).get("IdPersona").toString();
                     String hora = jsonArray.getJSONObject(i).get("Hora").toString();
                     String canton = jsonArray.getJSONObject(i).get("Canton").toString();
                     String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
 
+                    // Info usuario
+                    String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
+                    String nombreAutor = jsonArray.getJSONObject(i).get("Nombre").toString();
+                    String apellidoAutor = jsonArray.getJSONObject(i).get("Apellido").toString();
+                    String correoAutor = jsonArray.getJSONObject(i).get("Correo").toString();
+                    String sobrenombreAutor = jsonArray.getJSONObject(i).get("sobrenombre").toString();
+                    String lugarResidencia = jsonArray.getJSONObject(i).get("lugarResidencia").toString();
+                    String generoAutor = jsonArray.getJSONObject(i).get("genero").toString();
+                    String fechaNacimiento = jsonArray.getJSONObject(i).get("fechaNacimiento").toString();
+                    String biografia = jsonArray.getJSONObject(i).get("biografia").toString();
+
+                    Persona autor = new Persona();
+                    autor.setId(Integer.valueOf(idAutor));
+                    autor.setCorreo(correoAutor);
+                    autor.setNombre(nombreAutor);
+                    autor.setApellido(apellidoAutor);
+                    autor.setFechaNacimiento(fechaNacimiento);
+                    autor.setBiografia(biografia);
+                    autor.setGenero(generoAutor);
+                    autor.setLugarResidencia(lugarResidencia);
+                    autor.setSobrenombre(sobrenombreAutor);
+
                     array_reuniones.add(
-                            new ReunionModelo(autor, titular, provincia, fecha, hora, linkImagenGPS, detalle, canton));
+                            new ReunionModelo(autor.getNombre() + autor.getApellido(), titular, provincia, fecha, hora, linkImagenGPS, detalle, canton, autor));
                 }
 
                 adapter = new ListViewAdapterReunion(array_reuniones, getContext());

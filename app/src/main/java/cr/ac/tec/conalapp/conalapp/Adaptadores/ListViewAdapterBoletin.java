@@ -1,6 +1,9 @@
 package cr.ac.tec.conalapp.conalapp.Adaptadores;
 
+
+
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -23,7 +26,11 @@ import java.util.ArrayList;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaPrincipal.PrincipalActivity;
 import cr.ac.tec.conalapp.conalapp.R;
+
+//import static android.support.v4.content.ContextCompat.startActivity;
 
 public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implements View.OnClickListener {
 
@@ -76,7 +83,7 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        BoletinModelo boletin = getItem(position);
+        final BoletinModelo boletin = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         final ListViewAdapterBoletin.RetenedorVista retenedorVista; // view lookup cache stored in tag
 
@@ -89,6 +96,24 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
             convertView = inflater.inflate(R.layout.row_item_boletines, parent, false);
 
             retenedorVista.tv_nombre_prefil = (TextView) convertView.findViewById(R.id.tv_nombre_prefil_id);
+            retenedorVista.tv_nombre_prefil.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+
+                    Intent intent = new Intent(getContext(), PerfilUsuarioActivity.class);
+                    intent.putExtra("TipoPerfil", "Ajeno");
+                    intent.putExtra("Correo", boletin.getAutorInfo().getCorreo());
+                    intent.putExtra("Nombre", boletin.getAutorInfo().getNombre());
+                    intent.putExtra("Apellido", boletin.getAutorInfo().getApellido());
+                    intent.putExtra("FechaNacimiento", boletin.getAutorInfo().getFechaNacimiento());
+                    intent.putExtra("Biografia", boletin.getAutorInfo().getBiografia());
+                    intent.putExtra("Genero", boletin.getAutorInfo().getGenero());
+                    intent.putExtra("LugarResidencia", boletin.getAutorInfo().getLugarResidencia());
+                    intent.putExtra("Sobrenombre", boletin.getAutorInfo().getSobrenombre());
+                    mContext.startActivity(intent);
+                }
+
+            });
+
             retenedorVista.tv_titular = (TextView) convertView.findViewById(R.id.tv_titular_id);
             retenedorVista.tv_provincia = (TextView) convertView.findViewById(R.id.tv_provincia_id);
             retenedorVista.tv_fecha = (TextView) convertView.findViewById(R.id.tv_fecha_id);

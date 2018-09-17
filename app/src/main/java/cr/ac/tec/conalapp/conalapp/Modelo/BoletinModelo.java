@@ -1,7 +1,5 @@
 package cr.ac.tec.conalapp.conalapp.Modelo;
 
-import android.widget.ImageView;
-
 public class BoletinModelo {
 
     private String autor; // cambiar luego, manejar objeto usuario
@@ -15,8 +13,9 @@ public class BoletinModelo {
     private String armasSosp;
     private String vehiculosSosp;
     private String linkImagenGPS;
+    private Persona autorInfo;
 
-    public BoletinModelo(String autor, String titular, String provincia, String canton, String fecha, String hora, String descripcion, String sospechosos, String armasSosp, String vehiculosSosp, String linkImagenGPS) {
+    public BoletinModelo(String autor, String titular, String provincia, String canton, String fecha, String hora, String descripcion, String sospechosos, String armasSosp, String vehiculosSosp, String linkImagenGPS, Persona autorInfo) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
@@ -28,6 +27,15 @@ public class BoletinModelo {
         this.armasSosp = armasSosp;
         this.vehiculosSosp = vehiculosSosp;
         this.linkImagenGPS = linkImagenGPS;
+        this.autorInfo = autorInfo;
+    }
+
+    public Persona getAutorInfo() {
+        return autorInfo;
+    }
+
+    public void setAutorInfo(Persona autorInfo) {
+        this.autorInfo = autorInfo;
     }
 
     public String getAutor() {

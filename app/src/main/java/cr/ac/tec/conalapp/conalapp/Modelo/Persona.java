@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp;
+package cr.ac.tec.conalapp.conalapp.Modelo;
 
 public class Persona {
     private int id;
@@ -48,7 +48,11 @@ public class Persona {
     }
 
     public void setSobrenombre(String sobrenombre) {
-        this.sobrenombre = sobrenombre;
+        if (sobrenombre.equals("null")){
+            this.sobrenombre = "Sin definir";
+        }else{
+            this.sobrenombre = sobrenombre;
+        }
     }
 
     public String getLugarResidencia() {
@@ -56,7 +60,11 @@ public class Persona {
     }
 
     public void setLugarResidencia(String lugarResidencia) {
-        this.lugarResidencia = lugarResidencia;
+        if (lugarResidencia.equals("null")){
+            this.lugarResidencia = "Sin definir";
+        }else{
+            this.lugarResidencia = lugarResidencia;
+        }
     }
 
     public String getFechaNacimiento() {
@@ -64,7 +72,11 @@ public class Persona {
     }
 
     public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+        if (fechaNacimiento.equals("null")){
+            this.fechaNacimiento = "Sin definir";
+        }else{
+            this.fechaNacimiento = fechaNacimiento;
+        }
     }
 
     public String getBiografia() {
@@ -72,7 +84,12 @@ public class Persona {
     }
 
     public void setBiografia(String biografia) {
-        this.biografia = biografia;
+        if (biografia.equals("null")){
+            this.biografia = "Sin definir";
+        }else{
+            this.biografia = biografia;
+        }
+
     }
 
     public String getGenero() {
@@ -80,6 +97,10 @@ public class Persona {
     }
 
     public void setGenero(String genero) {
-        this.genero = genero;
+        if (genero.equals("null")){
+            this.genero = "Sin definir";
+        }else{
+            this.genero = genero;
+        }
     }
 }
