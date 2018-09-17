@@ -6,22 +6,15 @@ public class BoletinModelo {
 
     private String autor; // cambiar luego, manejar objeto usuario
     private String titular;
-    private String provincia; // dividir en distrito
+    private String provincia;
+    private String canton;
     private String fecha;
     private String hora;
+    private String descripcion;
+    private String sospechosos;
+    private String armasSosp;
+    private String vehiculosSosp;
     private String linkImagenGPS;
-    private String descrpcion;
-
-
-    public BoletinModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion) {
-        this.autor = autor;
-        this.titular = titular;
-        this.provincia = provincia;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.linkImagenGPS = linkImagenGPS;
-        this.descrpcion = descrpcion;
-    }
 
     public String getAutor() {
         return autor;
@@ -47,6 +40,14 @@ public class BoletinModelo {
         this.provincia = provincia;
     }
 
+    public String getCanton() {
+        return canton;
+    }
+
+    public void setCanton(String canton) {
+        this.canton = canton;
+    }
+
     public String getFecha() {
         return fecha;
     }
@@ -63,19 +64,43 @@ public class BoletinModelo {
         this.hora = hora;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getSospechosos() {
+        return sospechosos;
+    }
+
+    public void setSospechosos(String sospechosos) {
+        this.sospechosos = sospechosos;
+    }
+
+    public String getArmasSosp() {
+        return armasSosp;
+    }
+
+    public void setArmasSosp(String armasSosp) {
+        this.armasSosp = armasSosp;
+    }
+
+    public String getVehiculosSosp() {
+        return vehiculosSosp;
+    }
+
+    public void setVehiculosSosp(String vehiculosSosp) {
+        this.vehiculosSosp = vehiculosSosp;
+    }
+
     public String getLinkImagenGPS() {
         return linkImagenGPS;
     }
 
     public void setLinkImagenGPS(String linkImagenGPS) {
         this.linkImagenGPS = linkImagenGPS;
-    }
-
-    public String getDescrpcion() {
-        return descrpcion;
-    }
-
-    public void setDescrpcion(String descrpcion) {
-        this.descrpcion = descrpcion;
     }
 }

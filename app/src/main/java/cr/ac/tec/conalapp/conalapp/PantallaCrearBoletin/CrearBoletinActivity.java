@@ -79,7 +79,6 @@ import java.util.Calendar;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.R;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class CrearBoletinActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -750,44 +749,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
 
     private void RegistrarBoletinBD(String BD)
     {
-        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,
-                "Atención",
-                "Publicando boletín...");
 
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) { // response -> {"status":"false"} o true
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-                    if (!jsonObject.getString("status").equals("false"))
-                    {
-                        // MessageDialog("Se ha creado el enlace!", "Éxito", "Aceptar");
-                        Snackbar.make(CrearBoletinActivity.this.findViewById(android.R.id.content),
-                                "Se ha creado el enlace!", Snackbar.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        MessageDialog("Error al publicar el boletín!");
-                    }
-
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-                progressDialog.dismiss();
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                MessageDialog("Error al procesar la solicitud.\nIntente mas tarde!.");
-            }
-        });queue.add(stringRequest);
     }
 
     /**

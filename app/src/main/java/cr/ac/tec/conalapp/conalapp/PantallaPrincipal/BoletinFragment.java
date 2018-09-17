@@ -91,8 +91,6 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 BoletinModelo dataModel = array_boletines.get(position);
 
-                Snackbar.make(view, "Ayyy papitoooohh", Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
             }
         });
     }
