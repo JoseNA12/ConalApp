@@ -1,5 +1,7 @@
 package cr.ac.tec.conalapp.conalapp.Modelo;
 
+import android.widget.ImageView;
+
 public class BoletinModelo {
 
     private String autor; // cambiar luego, manejar objeto usuario
@@ -7,16 +9,17 @@ public class BoletinModelo {
     private String provincia; // dividir en distrito
     private String fecha;
     private String hora;
-    // Imagen GPS
+    private String linkImagenGPS;
     private String descrpcion;
 
 
-    public BoletinModelo(String autor, String titular, String provincia, String fecha, String hora, String descrpcion) {
+    public BoletinModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
         this.fecha = fecha;
         this.hora = hora;
+        this.linkImagenGPS = linkImagenGPS;
         this.descrpcion = descrpcion;
     }
 
@@ -58,6 +61,14 @@ public class BoletinModelo {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public String getLinkImagenGPS() {
+        return linkImagenGPS;
+    }
+
+    public void setLinkImagenGPS(String linkImagenGPS) {
+        this.linkImagenGPS = linkImagenGPS;
     }
 
     public String getDescrpcion() {

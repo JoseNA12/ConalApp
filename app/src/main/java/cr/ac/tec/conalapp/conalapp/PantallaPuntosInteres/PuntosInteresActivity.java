@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ public class PuntosInteresActivity extends AppCompatActivity {
     private Spinner sp_provincias, sp_cantones_por_provincia;
     private String[] provincias, cantones_san_jose, cantones_alajuela, cantones_cartago,
             cantones_guanacaste, cantones_heredia, cantones_puntarenas, cantones_limon;
+
+    private Button btn_agregar_punto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,15 @@ public class PuntosInteresActivity extends AppCompatActivity {
                 // your code here
             }
         });
+
+        btn_agregar_punto = (Button) findViewById(R.id.btn_agregar_punto_id);
+        btn_agregar_punto.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+
+            }
+
+        });
+
     }
 
     private void establecerAdaptadorSPCantones(String[] pLista)

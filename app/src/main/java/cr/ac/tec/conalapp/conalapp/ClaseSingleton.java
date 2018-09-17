@@ -31,7 +31,7 @@ public class ClaseSingleton {
     public static final String nLimon = "Limón";
 
 
-
+    public static final String linkImagenGPSNoDisponible = "https://firebasestorage.googleapis.com/v0/b/conalapp-74fc6.appspot.com/o/images%2Fimagen_gps_no_disponible.jpg?alt=media&token=54d7d602-087a-402f-a688-257e5195c93d";
 
     // -------------------------------------------------------------------------------- //
 
@@ -53,9 +53,9 @@ public class ClaseSingleton {
     /* PHP usuarios */
     public static final String GET_USER_PASS = URL_HOST + "archivosPHP/select_usuario_iniciar_sesion.php";
     public static final String INSERT_USER = URL_HOST + "archivosPHP/persona_insertar.php";
-    public static final String INSERT_NOTICIA = URL_HOST + "archivosPHP/noticia_insertar.php";
-    public static final String INSERT_REUNION= URL_HOST + "archivosPHP/reunion_insertar.php";
-    public static final String SELECT_ALL_NOTICIA = URL_HOST + "archivosPHP/noticia_select_all.php";
+    public static final String INSERT_BOLETIN = URL_HOST + "archivosPHP/boletin_insertar.php";
+    public static final String INSERT_REUNION = URL_HOST + "archivosPHP/reunion_insertar.php";
+    public static final String SELECT_ALL_BOLETIN = URL_HOST + "archivosPHP/boletin_select_all.php";
     public static final String SELECT_ALL_REUNION = URL_HOST + "archivosPHP/reunion_select_all.php";
 
 }

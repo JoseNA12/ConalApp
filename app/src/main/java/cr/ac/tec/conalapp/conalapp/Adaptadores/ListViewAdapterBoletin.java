@@ -11,9 +11,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
+import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
 public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implements View.OnClickListener {
@@ -116,7 +122,12 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         retenedorVista.btn_comentarios.setTag(position);
 
         retenedorVista.iv_gps.setOnClickListener(this);
-        retenedorVista.iv_gps.setTag(position);
+        //retenedorVista.iv_gps.setTag(position);
+        Glide.with(getContext())
+                .load(boletin.getLinkImagenGPS())
+                .fitCenter()
+                .centerCrop()
+                .into(retenedorVista.iv_gps);
 
         // Return the completed view to render on screen
         return convertView;

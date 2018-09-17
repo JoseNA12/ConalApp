@@ -13,11 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
 import cr.ac.tec.conalapp.conalapp.R;
@@ -70,10 +74,12 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     {
         listView = (ListView) view.findViewById(R.id.lv_boletines_id);
 
+        // hacer el request a la bd del boletin, el link
+
         array_boletines = new ArrayList<>();
-        array_boletines.add(new BoletinModelo("El brayan", "Asalto 2 heridos gravedad, delicuentes huyeron", "Cartago", "30/8/2018", "09:53 p.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
-        array_boletines.add(new BoletinModelo("El Suarez", "Vagabundo amigo de lo ajeno", "Cartago", "30/8/2018", "10:30 a.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
-        array_boletines.add(new BoletinModelo("Paisita carepicha", "Alerta de ladron", "Guanacaste", "30/8/2018", "12:53 p.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
+        array_boletines.add(new BoletinModelo("El brayan", "Asalto 2 heridos gravedad, delicuentes huyeron", "Cartago", "30/8/2018", "09:53 p.m", ClaseSingleton.linkImagenGPSNoDisponible, "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
+        //array_boletines.add(new BoletinModelo("El Suarez", "Vagabundo amigo de lo ajeno", "Cartago", "30/8/2018", "10:30 a.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
+        //array_boletines.add(new BoletinModelo("Paisita carepicha", "Alerta de ladron", "Guanacaste", "30/8/2018", "12:53 p.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
 
         adapter = new ListViewAdapterBoletin(array_boletines, getContext());
 

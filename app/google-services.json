@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "786625144865",
+    "firebase_url": "https://conalapp-74fc6.firebaseio.com",
+    "project_id": "conalapp-74fc6",
+    "storage_bucket": "conalapp-74fc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786625144865:android:4dcdd02784d0218f",
+        "android_client_info": {
+          "package_name": "cr.ac.tec.conalapp.conalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786625144865-shqko69cv3p2h1ip7ma80jv5pu1qq0op.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cr.ac.tec.conalapp.conalapp",
+            "certificate_hash": "46311f258b0b8db6a547f35633764742df405e06"
+          }
+        },
+        {
+          "client_id": "786625144865-ql3djk4i837hcfsu1qmon2595c9hhc9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoZnBhF7Z92hA55s1n76tYXxGqeoF9t08"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786625144865-ql3djk4i837hcfsu1qmon2595c9hhc9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
