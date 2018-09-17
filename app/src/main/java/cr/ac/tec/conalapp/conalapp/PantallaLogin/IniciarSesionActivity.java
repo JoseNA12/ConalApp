@@ -78,17 +78,13 @@ public class IniciarSesionActivity extends AppCompatActivity {
         usuarioContrasena = ET_usuarioContrasena.getText().toString();
 
         /* VALIDACIÓN: las entradas no deben ser vacías */
-        if (usuarioCorreo.equals("") || usuarioContrasena.equals("")) {
+        if (usuarioCorreo.trim().equals("") || usuarioContrasena.trim().equals("")) {
             errorMessageDialog("Error campos vacios");
 
         }else {
             progressDialog.show();
             executeQuery(ClaseSingleton.GET_USER_PASS + "?Correo=" + usuarioCorreo + "&Contrasena=" + usuarioContrasena);
-
-
         }
-
-
     }
 
     private void iniciarSesionResponse(String response){

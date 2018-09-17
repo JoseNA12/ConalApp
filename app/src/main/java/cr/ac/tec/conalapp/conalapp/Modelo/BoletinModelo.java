@@ -16,6 +16,20 @@ public class BoletinModelo {
     private String vehiculosSosp;
     private String linkImagenGPS;
 
+    public BoletinModelo(String autor, String titular, String provincia, String canton, String fecha, String hora, String descripcion, String sospechosos, String armasSosp, String vehiculosSosp, String linkImagenGPS) {
+        this.autor = autor;
+        this.titular = titular;
+        this.provincia = provincia;
+        this.canton = canton;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.descripcion = descripcion;
+        this.sospechosos = sospechosos;
+        this.armasSosp = armasSosp;
+        this.vehiculosSosp = vehiculosSosp;
+        this.linkImagenGPS = linkImagenGPS;
+    }
+
     public String getAutor() {
         return autor;
     }

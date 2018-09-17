@@ -1,6 +1,8 @@
 package cr.ac.tec.conalapp.conalapp.PantallaPrincipal;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +19,20 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
@@ -74,25 +88,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     {
         listView = (ListView) view.findViewById(R.id.lv_boletines_id);
 
-        // hacer el request a la bd del boletin, el link
-
-        array_boletines = new ArrayList<>();
-        array_boletines.add(new BoletinModelo("El brayan", "Asalto 2 heridos gravedad, delicuentes huyeron", "Cartago", "30/8/2018", "09:53 p.m", ClaseSingleton.linkImagenGPSNoDisponible, "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
-        //array_boletines.add(new BoletinModelo("El Suarez", "Vagabundo amigo de lo ajeno", "Cartago", "30/8/2018", "10:30 a.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
-        //array_boletines.add(new BoletinModelo("Paisita carepicha", "Alerta de ladron", "Guanacaste", "30/8/2018", "12:53 p.m", "Esta es la descripción del acontecimiento, tengan cuidado no anden solos."));
-
-        adapter = new ListViewAdapterBoletin(array_boletines, getContext());
-
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                BoletinModelo dataModel = array_boletines.get(position);
-
-            }
-        });
+        executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN);
     }
 
     private void initFloatingActiobButton(View pView)
@@ -120,4 +116,87 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
         }, 5000);
     }
 
+    private void obtenerDatosBoletinesResponse(String response){
+        array_boletines = new ArrayList<>();
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                errorMessageDialog("No ha sido posible cargar los boletines.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    jsonArray.getJSONObject(i).get("Titular").toString();
+
+                    String autor = jsonArray.getJSONObject(i).get("IdPersona").toString();
+                    String titular = jsonArray.getJSONObject(i).get("Titular").toString();
+                    String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
+                    String canton = jsonArray.getJSONObject(i).get("Canton").toString();
+                    String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
+                    String hora = jsonArray.getJSONObject(i).get("Hora").toString();
+                    String descripcion = jsonArray.getJSONObject(i).get("Descripcion").toString();
+                    String sospechosos = jsonArray.getJSONObject(i).get("Sospechosos").toString();
+                    String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
+                    String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
+                    String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+
+                    array_boletines.add(
+                            new BoletinModelo(autor, titular, provincia, canton, fecha, hora, descripcion,
+                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS));
+                }
+
+                adapter = new ListViewAdapterBoletin(array_boletines, getContext());
+
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        BoletinModelo dataModel = array_boletines.get(position);
+                    }
+                });
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void executeQuery(String URL) {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosBoletinesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
+    }
+
+    private void errorMessageDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                //      .setIcon(R.drawable.ic_img_diag_error_icon)
+                .setMessage(message).setTitle("Error")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

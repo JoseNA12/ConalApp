@@ -245,7 +245,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
@@ -624,9 +624,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
 
     public void uploadImage(Bitmap bitmap, String fname) {
 
-        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,
-                "Atención",
-                "Adjuntando imagen de la señal GPS...");
+        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,"Atención","Adjuntando imagen de la señal GPS...");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -735,22 +733,9 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 }
             }
         }
-       /*RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN +
-                "?IdPersona=" + 1 +
-                "&Titular=" + input_titular.getText().toString() +
-                "&Provincia=" + sp_provincias.getSelectedItem().toString() +
-                "&Canton=" + sp_cantones_por_provincia.getSelectedItem().toString() +
-                "&Fecha=" + input_fecha.getText().toString() +
-                "&Hora=" + input_hora.getText().toString() +
-                "&Descripcion=" + input_descripcion.toString() +
-                "&Sospechosos=" + stringSospechosos +
-                "&ArmasSosp=" + stringArmas +
-                "&VehiculosSosp=" + stringVehiculos +
-                "&EnlaceGPS=" + pEnlaceImagen
-        );*/
 
        RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), input_titular.getText().toString(), sp_provincias.getSelectedItem().toString(),
-               sp_cantones_por_provincia.getSelectedItem().toString(), input_fecha.getText().toString(), input_hora.getText().toString(), input_descripcion.toString(),
+               sp_cantones_por_provincia.getSelectedItem().toString(), input_fecha.getText().toString(), input_hora.getText().toString(), input_descripcion.getText().toString(),
                stringSospechosos, stringArmas, stringVehiculos, pEnlaceImagen);
     }
 
@@ -758,9 +743,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                                     final String Hora, final String Descripcion, final String Sospechosos, final String Armas, final String Vehiculos,
                                     final String EnlaceGPS)
     {
-        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,
-                "Atención",
-                "Publicando boletín...");
+        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,"Atención","Publicando boletín...");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -810,7 +793,6 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     /**

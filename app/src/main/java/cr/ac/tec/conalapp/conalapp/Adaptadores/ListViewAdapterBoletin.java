@@ -48,24 +48,28 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
     @Override
     public void onClick(View v) {
 
-        int position=(Integer) v.getTag();
-        Object object= getItem(position);
-        BoletinModelo boletin = (BoletinModelo)object;
-
-        switch (v.getId())
+        try
         {
-            case R.id.btn_sospechosos_id:
-                assert boletin != null;
-                Snackbar.make(v, "Sospechosos" , Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                break;
+            int position=(Integer) v.getTag();
+            Object object= getItem(position);
+            BoletinModelo boletin = (BoletinModelo)object;
 
-            case R.id.btn_comentarios_id:
-                assert boletin != null;
-                Snackbar.make(v, "Comentarios", Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                break;
+            switch (v.getId())
+            {
+                case R.id.btn_sospechosos_id:
+                    assert boletin != null;
+                    Snackbar.make(v, "Sospechosos" , Snackbar.LENGTH_LONG)
+                            .setAction("No action", null).show();
+                    break;
+
+                case R.id.btn_comentarios_id:
+                    assert boletin != null;
+                    Snackbar.make(v, "Comentarios", Snackbar.LENGTH_LONG)
+                            .setAction("No action", null).show();
+                    break;
+            }
         }
+        catch (ClassCastException e){ } // la imagen del gps no es seleccionable
     }
 
     @Override
@@ -114,7 +118,7 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         retenedorVista.tv_provincia.setText(boletin.getProvincia());
         retenedorVista.tv_fecha.setText(boletin.getFecha());
         retenedorVista.tv_hora.setText(boletin.getHora());
-        retenedorVista.tv_descripcion.setText(boletin.getDescrpcion());
+        retenedorVista.tv_descripcion.setText(boletin.getDescripcion());
 
         retenedorVista.btn_sospechosos.setOnClickListener(this);
         retenedorVista.btn_sospechosos.setTag(position);
