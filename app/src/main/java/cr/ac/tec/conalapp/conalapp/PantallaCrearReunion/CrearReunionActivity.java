@@ -1,7 +1,10 @@
 package cr.ac.tec.conalapp.conalapp.PantallaCrearReunion;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,9 +18,21 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
 public class CrearReunionActivity extends AppCompatActivity {
@@ -32,6 +47,7 @@ public class CrearReunionActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
 
     private Spinner sp_provincias, sp_cantones_por_provincia;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +65,13 @@ public class CrearReunionActivity extends AppCompatActivity {
         initSpinners();
         input_proposito = (TextInputEditText) findViewById(R.id.input_proposito_id);
         btn_crear_reunion = (Button) findViewById(R.id.btn_crear_reunion_id);
+        btn_crear_reunion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publicarReunion();
+            }
+        });
+
     }
 
     private void initInputFecha()
@@ -170,5 +193,91 @@ public class CrearReunionActivity extends AppCompatActivity {
     {
         ArrayAdapter<String> adapter_cant = new ArrayAdapter<String>(this,R.layout.spinner_layout,R.id.text, pLista);
         sp_cantones_por_provincia.setAdapter(adapter_cant);
+    }
+
+    private void publicarReunion(){
+
+        if (!input_titular.getText().toString().trim().equals(""))
+        {
+            if (!input_hora.getText().toString().equals("") && !input_fecha.getText().toString().equals(""))
+            {
+                executeQuery(ClaseSingleton.INSERT_REUNION, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), sp_provincias.getSelectedItem().toString(),
+                        sp_cantones_por_provincia.getSelectedItem().toString(), input_titular.getText().toString(),
+                        input_proposito.getText().toString(), input_hora.getText().toString(), input_fecha.getText().toString(), "EnlaceGPS");
+            }
+            else
+            {
+                MessageDialog("Debe ingresar una fecha y hora del acontecimiento!");
+            }
+        }
+        else
+        {
+            MessageDialog("Debe ingresar un titular!");
+        }
+
+
+    }
+    private void executeQuery(String URL, final String IdPersona, final String Provincia, final String Canton, final String Titular, final String Descripcion, final String Hora, final String Fecha, final String EnlaceGPS) {
+
+        progressDialog = ProgressDialog.show(this,
+                "Atención",
+                "Publicando reunión...");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) { // Si serv contesta
+                System.out.println(response);
+                RegistrarReunion_Response(response);
+            }
+        }, new Response.ErrorListener() {  //Tratar errores conexion con serv
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //MessageDialog(error.toString());
+                MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
+                System.out.print("get params");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("IdPersona", IdPersona);
+                params.put("Titular", Titular);
+                params.put("Provincia", Provincia);
+                params.put("Canton", Canton);
+                params.put("Fecha", Fecha);
+                params.put("Hora", Hora);
+                params.put("Descripcion", Descripcion);
+                params.put("EnlaceGPS", EnlaceGPS);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    private void RegistrarReunion_Response(String response){
+        progressDialog.dismiss();
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No se pudo publicar la reunión. Inténtelo de nuevo.");
+            }
+            else {
+                MessageDialog("Se ha publicado la reunión correctamente.");
+                //Intent intent = new Intent();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void MessageDialog(String message){ // mostrar mensaje emergente
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(message).setTitle("Atención!").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
