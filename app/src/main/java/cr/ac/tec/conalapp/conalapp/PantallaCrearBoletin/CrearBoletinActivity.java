@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.graphics.Bitmap;
@@ -75,6 +76,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.R;
@@ -732,7 +735,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 }
             }
         }
-        RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN +
+       /*RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN +
                 "?IdPersona=" + 1 +
                 "&Titular=" + input_titular.getText().toString() +
                 "&Provincia=" + sp_provincias.getSelectedItem().toString() +
@@ -744,11 +747,69 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 "&ArmasSosp=" + stringArmas +
                 "&VehiculosSosp=" + stringVehiculos +
                 "&EnlaceGPS=" + pEnlaceImagen
-        );
+        );*/
+
+       RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), input_titular.getText().toString(), sp_provincias.getSelectedItem().toString(),
+               sp_cantones_por_provincia.getSelectedItem().toString(), input_fecha.getText().toString(), input_hora.getText().toString(), input_descripcion.toString(),
+               stringSospechosos, stringArmas, stringVehiculos, pEnlaceImagen);
     }
 
-    private void RegistrarBoletinBD(String BD)
+    private void RegistrarBoletinBD(String URL, final String IdPersona, final String Titular, final String Provincia, final String Canton, final String Fecha,
+                                    final String Hora, final String Descripcion, final String Sospechosos, final String Armas, final String Vehiculos,
+                                    final String EnlaceGPS)
     {
+        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,
+                "Atención",
+                "Publicando boletín...");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) { // Si serv contesta
+                System.out.println(response);
+                RegistrarBoletinBD_Response(response);
+            }
+        }, new Response.ErrorListener() {  //Tratar errores conexion con serv
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //MessageDialog(error.toString());
+                MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
+                System.out.print("get params");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("IdPersona", IdPersona);
+                params.put("Titular", Titular);
+                params.put("Provincia", Provincia);
+                params.put("Canton", Canton);
+                params.put("Fecha", Fecha);
+                params.put("Hora", Hora);
+                params.put("Descripcion", Descripcion);
+                params.put("Sospechosos", Sospechosos);
+                params.put("ArmasSosp", Armas);
+                params.put("VehiculosSosp", Vehiculos);
+                params.put("EnlaceGPS", EnlaceGPS);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    private void RegistrarBoletinBD_Response(String response){
+        progressDialog.dismiss();
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No se pudo agregar el boletín.");
+            }
+            else {
+                MessageDialog("Se ha agregado el boletín correctamente.");
+                //Intent intent = new Intent();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
