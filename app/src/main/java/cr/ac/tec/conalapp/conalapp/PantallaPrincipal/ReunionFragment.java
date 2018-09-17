@@ -164,7 +164,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     autor.setLugarResidencia(lugarResidencia);
                     autor.setSobrenombre(sobrenombreAutor);
 
-                    array_reuniones.add(
+                    array_reuniones.add(0,
                             new ReunionModelo(autor.getNombre() + autor.getApellido(), titular, provincia, fecha, hora, linkImagenGPS, detalle, canton, autor));
                 }
 

@@ -1,6 +1,7 @@
 package cr.ac.tec.conalapp.conalapp.Adaptadores;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
@@ -27,7 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.PuntosInteresModelo;
 import cr.ac.tec.conalapp.conalapp.R;
 
@@ -35,8 +38,9 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
 
     private ArrayList<PuntosInteresModelo> dataSet;
     private Context mContext;
+    private ArrayList<PuntosInteresModelo> arrayListPuntosInteresModelo;
     //private int lastPosition = -1;
-
+    private ProgressDialog progressDialog;
     // View lookup cache
     private static class RetenedorVista {
         TextView tv_provincia;
@@ -48,12 +52,13 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
         super(context, R.layout.row_item_punto_interes, data);
         this.dataSet = data;
         this.mContext = context;
+        this.arrayListPuntosInteresModelo = data;
     }
 
     @Override
     public void onClick(View v) {
 
-        /*int position = (Integer) v.getTag();
+        int position = (Integer) v.getTag();
         Object object = getItem(position);
         PuntosInteresModelo puntosInteres = (PuntosInteresModelo) object;
 
@@ -61,8 +66,15 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
             case R.id.ibtn_borrar_punto_id:
                 assert puntosInteres != null;
 
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Eliminando punto de interés ...");
+                progressDialog.show();
+                executeQueryEliminarPuntoInteres(ClaseSingleton.DELETE_PUNTO_INTERES_BY_ID
+                        + "?IdPersona=" + ((PuntosInteresModelo) object).getIdUsuario()
+                        + "&Provincia=" + ((PuntosInteresModelo) object).getProvincia()
+                        + "&Canton=" + ((PuntosInteresModelo) object).getCanton(), object);
                 break;
-        }*/
+        }
     }
 
     @Override
@@ -108,7 +120,13 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
         return convertView;
     }
 
-    private void executeQueryEliminarPuntoInteres(String URL) {
+    public void refreshEvents() {
+        //this.arrayListPuntosInteresModelo.clear();
+        //this.arrayListPuntosInteresModelo.addAll(events);
+        notifyDataSetChanged();
+    }
+
+    private void executeQueryEliminarPuntoInteres(String URL, final Object object) {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         //errorMessageDialog(URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -120,11 +138,14 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
                     JSONObject jsonObject = new JSONObject(response);
 
                     if (jsonObject.getString("status").equals("false")){
-                        errorMessageDialog("No ha sido posible cargar los puntos de interes.\nVerifique su conexión a internet!");
+                        progressDialog.dismiss();
+                        errorMessageDialog("No ha sido el punto de intere.\nVerifique su conexión a internet!");
                     }
                     else
                     {
-
+                        arrayListPuntosInteresModelo.remove(object);
+                        refreshEvents();
+                        progressDialog.dismiss();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

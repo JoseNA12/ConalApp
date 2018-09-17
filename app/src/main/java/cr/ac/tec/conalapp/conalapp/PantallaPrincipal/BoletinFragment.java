@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,7 +40,7 @@ import cr.ac.tec.conalapp.conalapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BoletinFragment extends Fragment {
 
     private SwipeRefreshLayout swipeLayout;
     private View view;
@@ -71,7 +72,20 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private void initSwipeLayout(View pView)
     {
         swipeLayout = (SwipeRefreshLayout) pView.findViewById(R.id.swipe_container);
-        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        obtenerDatosBoletinesResponse(ClaseSingleton.SELECT_ALL_BOLETIN);
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+
         swipeLayout.setColorSchemeResources(android.R.color.holo_green_dark,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light,
@@ -96,20 +110,6 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
     }
 
-    /**
-     * As a trick, you may be found interesting to disable manual swipe gesture,
-     * maybe temporarily or because you only want to show progress animation programmatically.
-     * What you need to do is to use the method setEnabled() and set it to false.
-     */
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                swipeLayout.setRefreshing(false);
-            }
-        }, 5000);
-    }
-
     private void obtenerDatosBoletinesResponse(String response){
         array_boletines = new ArrayList<>();
 
@@ -125,9 +125,6 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    jsonArray.getJSONObject(i).get("Titular").toString();
-
-
                     String titular = jsonArray.getJSONObject(i).get("Titular").toString();
                     String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
                     String canton = jsonArray.getJSONObject(i).get("Canton").toString();
@@ -163,7 +160,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                     System.out.println("Autor " + autor.getNombre());
                     System.out.println("Autor " + autor.getId());
-                    array_boletines.add(
+                    array_boletines.add(0,
                             new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, provincia, canton, fecha, hora, descripcion,
                                     sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor));
                 }
@@ -179,6 +176,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         BoletinModelo dataModel = array_boletines.get(position);
                     }
                 });
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
