@@ -4,21 +4,23 @@ public class ReunionModelo {
 
     private String autor; // cambiar luego, manejar objeto usuario
     private String titular;
-    private String provincia; // dividir en distrito
+    private String provincia;
+    private String canton;
     private String distrito;
     private String fecha;
     private String hora;
-    // Imagen GPS
     private String descripcion;
+    private String linkImagenGPS;
 
-
-    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String descrpcion) {
+    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
         this.fecha = fecha;
         this.hora = hora;
         this.descripcion = descrpcion;
+        this.linkImagenGPS = linkImagenGPS;
+        this.canton = canton;
     }
 
     public String getAutor() {
@@ -45,6 +47,14 @@ public class ReunionModelo {
         this.provincia = provincia;
     }
 
+    public String getDistrito() {
+        return distrito;
+    }
+
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
+    }
+
     public String getFecha() {
         return fecha;
     }
@@ -65,16 +75,24 @@ public class ReunionModelo {
         return descripcion;
     }
 
-    public void setDescripcion(String descrpcion) {
-        this.descripcion = descrpcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getDistrito() {
-        return distrito;
+    public String getLinkImagenGPS() {
+        return linkImagenGPS;
     }
 
-    public void setDistrito(String distrito) {
-        this.distrito = distrito;
+    public void setLinkImagenGPS(String linkImagenGPS) {
+        this.linkImagenGPS = linkImagenGPS;
+    }
+
+    public String getCanton() {
+        return canton;
+    }
+
+    public void setCanton(String canton) {
+        this.canton = canton;
     }
 }
 

@@ -61,6 +61,7 @@ public class ClaseSingleton {
     public static final String SELECT_ALL_REUNION = URL_HOST + "archivosPHP/reunion_select_all.php";
 
     // PHP Puntos Interes
-    public static final String INSERT_PUNTO_INTERES= URL_HOST + "archivosPHP/puntosInteres_insertar.php";
+    public static final String INSERT_PUNTO_INTERES = URL_HOST + "archivosPHP/puntosInteres_insertar.php";
+    public static final String SELECT_PUNTO_INTERES_BY_USUARIO = URL_HOST + "archivosPHP/puntosInteres_select_by_id.php";
 
 }

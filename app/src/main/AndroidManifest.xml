@@ -81,6 +81,11 @@
             android:name=".PantallaCrearBoletin.CrearBoletinActivity"
             android:label="@string/nombre_pantalla_crear_boletin"
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
+
+        <activity
+            android:name=".PantallaAgregarInfoPerfil.AgregarInfoPerfil"
+            android:label="@string/nombre_pantalla_editar_info"
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
     </application>
 
 </manifest>

@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
@@ -42,24 +44,27 @@ public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implemen
     @Override
     public void onClick(View v) {
 
-        int position=(Integer) v.getTag();
-        Object object= getItem(position);
-        ReunionModelo boletin = (ReunionModelo)object;
-
-        switch (v.getId())
+        try
         {
-            case R.id.btn_comentarios_id:
-                assert boletin != null;
-                Snackbar.make(v, "Comentarios", Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-                break;
+            int position = (Integer) v.getTag();
+            Object object = getItem(position);
+            ReunionModelo boletin = (ReunionModelo) object;
+
+            switch (v.getId()) {
+                case R.id.btn_comentarios_id:
+                    assert boletin != null;
+                    Snackbar.make(v, "Comentarios", Snackbar.LENGTH_LONG)
+                            .setAction("No action", null).show();
+                    break;
+            }
         }
+        catch (ClassCastException e){ } // la imagen del gps no es seleccionable
     }
 
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        ReunionModelo boletin = getItem(position);
+        ReunionModelo reunionModelo = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ListViewAdapterReunion.RetenedorVista retenedorVista; // view lookup cache stored in tag
 
@@ -96,18 +101,22 @@ public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implemen
         result.startAnimation(animation);
         lastPosition = position;*/
 
-        retenedorVista.tv_nombre_prefil.setText(boletin.getAutor());
-        retenedorVista.tv_titular.setText(boletin.getTitular());
-        retenedorVista.tv_provincia.setText(boletin.getProvincia());
-        retenedorVista.tv_fecha.setText(boletin.getFecha());
-        retenedorVista.tv_hora.setText(boletin.getHora());
-        retenedorVista.tv_descripcion.setText(boletin.getDescripcion());
+        retenedorVista.tv_nombre_prefil.setText(reunionModelo.getAutor());
+        retenedorVista.tv_titular.setText(reunionModelo.getTitular());
+        retenedorVista.tv_provincia.setText(reunionModelo.getProvincia());
+        retenedorVista.tv_fecha.setText(reunionModelo.getFecha());
+        retenedorVista.tv_hora.setText(reunionModelo.getHora());
+        retenedorVista.tv_descripcion.setText(reunionModelo.getDescripcion());
 
         retenedorVista.btn_comentarios.setOnClickListener(this);
         retenedorVista.btn_comentarios.setTag(position);
 
         retenedorVista.iv_gps.setOnClickListener(this);
-        retenedorVista.iv_gps.setTag(position);
+        Glide.with(getContext())
+                .load(reunionModelo.getLinkImagenGPS())
+                .fitCenter()
+                .centerCrop()
+                .into(retenedorVista.iv_gps);
 
         // Return the completed view to render on screen
         return convertView;

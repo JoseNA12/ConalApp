@@ -182,11 +182,18 @@
     <string name="tv_usaron_vehiculos">¿Utilizaron vehículos?</string>
     <string name="input_hint_descripcion_vehiculo">Cuantos?, tipo, color, placas, ... </string>
     <string name="tv_acordas_ubicacion">¿Te acordás del lugar?</string>
+    <string name="tv_ubicar_lugar">¿Desea ubicar el lugar?</string>
     <string name="tv_ubica_aprox_ubicacion">Ubicá aproximadamente el lugar!</string>
+    <string name="tv_sospechosos_info">Sospechosos: </string>
+    <string name="tv_armas_sosp">Armas usadas: </string>
+    <string name="tv_vehiculos_sosp">Vehículos usados: </string>
 
     <string name="nombre_pantalla_crear_reunion">Crear Reunión</string>
     <string name="btn_crear_reunion">PUBLICAR REUNIÓN</string>
     <string name="_text_view">Provincia/Cantón</string>
+
+    <!-- Pantalla crear boletin y reunion -->
+    <string name="nombre_pantalla_editar_info">Editar Perfil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

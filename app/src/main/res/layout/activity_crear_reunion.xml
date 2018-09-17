@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PantallaCrearReunion.CrearReunionActivity">
@@ -95,6 +96,56 @@
             </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/sch_desea_ubicar_lugar_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/tv_ubicar_lugar"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:id="@+id/linear_layout_id"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_ubicar_lugar"
+                    android:textSize="14sp" />
+
+                <fragment
+                    android:id="@+id/map_fragment"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".PantallaCrearBoletin.CrearBoletinActivity">
+
+                    <ImageView
+                        android:id="@+id/ivMapTransparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@android:color/transparent" />
+                </fragment>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_descripcion"
-                android:maxLines="4" />
+                android:maxLines="15" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

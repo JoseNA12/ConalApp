@@ -68,7 +68,7 @@ public class ListViewAdapterContactos
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.row_item_contactos, parent, false);
 
-            retenedorVista.tv_nombre_centro = (TextView) convertView.findViewById(R.id.tv_nombre_centro_id);
+            retenedorVista.tv_nombre_centro = (TextView) convertView.findViewById(R.id.tv_provincia_id);
             retenedorVista.tv_provincia = (TextView) convertView.findViewById(R.id.tv_provincia_id);
             retenedorVista.tv_numero_telefono = (TextView) convertView.findViewById(R.id.tv_numero_telefono_id);
             retenedorVista.info = (ImageView) convertView.findViewById(R.id.item_info);

@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterPuntosInteres;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.Modelo.PuntosInteresModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaPrincipal.PrincipalActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
@@ -39,9 +43,12 @@ public class PuntosInteresActivity extends AppCompatActivity {
     private Spinner sp_provincias, sp_cantones_por_provincia;
     private String[] provincias, cantones_san_jose, cantones_alajuela, cantones_cartago,
             cantones_guanacaste, cantones_heredia, cantones_puntarenas, cantones_limon;
-    private Button btn_agregar_punto_id;
 
     private Button btn_agregar_punto;
+
+    private ListView lv_mis_puntos_interes;
+    private ArrayList<PuntosInteresModelo> array_puntos_interes;
+    private static ListViewAdapterPuntosInteres adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +68,29 @@ public class PuntosInteresActivity extends AppCompatActivity {
         cantones_puntarenas = getResources().getStringArray(R.array.arrar_cantones_puntarenas);
         cantones_limon = getResources().getStringArray(R.array.array_cantones_limon);
 
+        initSpinners();
+
+        btn_agregar_punto = (Button) findViewById(R.id.btn_agregar_punto_id);
+        btn_agregar_punto.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                agregarUbicacion();
+            }
+
+        });
+
+        lv_mis_puntos_interes = (ListView) findViewById(R.id.lv_mis_puntos_interes_id);
+
+        executeQueryCargarPuntosInteres(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO
+                + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+    }
+
+    private void initSpinners()
+    {
         sp_cantones_por_provincia = (Spinner)findViewById(R.id.sp_cantones_id);
 
         sp_provincias = (Spinner)findViewById(R.id.sp_provincias_id);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.spinner_layout,R.id.text, provincias);
-        sp_provincias.setAdapter(adapter);
+        ArrayAdapter<String> adapterSpiner = new ArrayAdapter<String>(this,R.layout.spinner_layout,R.id.text, provincias);
+        sp_provincias.setAdapter(adapterSpiner);
 
         sp_provincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -110,14 +135,6 @@ public class PuntosInteresActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-        });
-
-        btn_agregar_punto_id = (Button) findViewById(R.id.btn_agregar_punto_id);
-        btn_agregar_punto_id.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                agregarUbicacion();
-            }
-
         });
     }
 
@@ -178,6 +195,68 @@ public class PuntosInteresActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void obtenerDatosBoletinesResponse(String response){
+        array_puntos_interes = new ArrayList<>();
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                errorMessageDialog("No ha sido posible cargar los puntos de interes.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String idPreferencia = jsonArray.getJSONObject(i).get("IdPreferencia").toString();
+                    String idUsuario = jsonArray.getJSONObject(i).get("IdUsuario").toString();
+                    String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
+                    String canton = jsonArray.getJSONObject(i).get("Canton").toString();
+
+                    array_puntos_interes.add(
+                            new PuntosInteresModelo(idPreferencia, idUsuario, provincia, canton));
+                }
+
+                adapter = new ListViewAdapterPuntosInteres(array_puntos_interes, this);
+
+                lv_mis_puntos_interes.setAdapter(adapter);
+                lv_mis_puntos_interes.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        PuntosInteresModelo dataModel = array_puntos_interes.get(position);
+                    }
+                });
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void executeQueryCargarPuntosInteres(String URL) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosBoletinesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
+    }
+
     private void errorMessageDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 //      .setIcon(R.drawable.ic_img_diag_error_icon)

@@ -112,8 +112,9 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 swipeLayout.setRefreshing(false);
+                executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN); // CAMBIAR POR SEGUN EL ID USUARIO
             }
-        }, 5000);
+        }, 0);
     }
 
     private void obtenerDatosBoletinesResponse(String response){
@@ -131,8 +132,6 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    jsonArray.getJSONObject(i).get("Titular").toString();
-
                     String autor = jsonArray.getJSONObject(i).get("IdPersona").toString();
                     String titular = jsonArray.getJSONObject(i).get("Titular").toString();
                     String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();

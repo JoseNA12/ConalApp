@@ -734,14 +734,15 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
             }
         }
 
-       RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), input_titular.getText().toString(), sp_provincias.getSelectedItem().toString(),
+        executeQuery(ClaseSingleton.INSERT_BOLETIN, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), input_titular.getText().toString(), sp_provincias.getSelectedItem().toString(),
                sp_cantones_por_provincia.getSelectedItem().toString(), input_fecha.getText().toString(), input_hora.getText().toString(), input_descripcion.getText().toString(),
                stringSospechosos, stringArmas, stringVehiculos, pEnlaceImagen);
     }
 
-    private void RegistrarBoletinBD(String URL, final String IdPersona, final String Titular, final String Provincia, final String Canton, final String Fecha,
-                                    final String Hora, final String Descripcion, final String Sospechosos, final String Armas, final String Vehiculos,
-                                    final String EnlaceGPS)
+    private void executeQuery(String URL, final String IdPersona, final String Titular, final String Provincia,
+                              final String Canton, final String Fecha, final String Hora, final String Descripcion,
+                              final String Sospechosos, final String Armas, final String Vehiculos,
+                              final String EnlaceGPS)
     {
         progressDialog = ProgressDialog.show(CrearBoletinActivity.this,"Atención","Publicando boletín...");
 

@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,8 +38,12 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         TextView tv_hora;
         ImageView iv_gps;
         TextView tv_descripcion;
-        Button btn_sospechosos;
+        Switch sch_mostrar_sosp;
         Button btn_comentarios;
+        TextView tv_sospechososInfo;
+        TextView tv_armasSosp;
+        TextView tv_vehiculosSosp;
+        LinearLayout linear_layout_info;
     }
 
     public ListViewAdapterBoletin(ArrayList<BoletinModelo> data, Context context) {
@@ -56,12 +63,6 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
 
             switch (v.getId())
             {
-                case R.id.btn_sospechosos_id:
-                    assert boletin != null;
-                    Snackbar.make(v, "Sospechosos" , Snackbar.LENGTH_LONG)
-                            .setAction("No action", null).show();
-                    break;
-
                 case R.id.btn_comentarios_id:
                     assert boletin != null;
                     Snackbar.make(v, "Comentarios", Snackbar.LENGTH_LONG)
@@ -77,7 +78,7 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         // Get the data item for this position
         BoletinModelo boletin = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        ListViewAdapterBoletin.RetenedorVista retenedorVista; // view lookup cache stored in tag
+        final ListViewAdapterBoletin.RetenedorVista retenedorVista; // view lookup cache stored in tag
 
         final View result;
 
@@ -96,8 +97,14 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
 
             retenedorVista.iv_gps = (ImageView) convertView.findViewById(R.id.iv_gps_id);
 
-            retenedorVista.btn_sospechosos = (Button) convertView.findViewById(R.id.btn_sospechosos_id);
             retenedorVista.btn_comentarios = (Button) convertView.findViewById(R.id.btn_comentarios_id);
+            retenedorVista.sch_mostrar_sosp = (Switch) convertView.findViewById(R.id.sch_mostrar_sosp_id);
+
+            retenedorVista.tv_sospechososInfo = (TextView) convertView.findViewById(R.id.tv_sospechosos_info_id);
+            retenedorVista.tv_armasSosp = (TextView) convertView.findViewById(R.id.tv_armas_sosp_id);
+            retenedorVista.tv_vehiculosSosp = (TextView) convertView.findViewById(R.id.tv_vehiculos_sosp_id);
+
+            retenedorVista.linear_layout_info = (LinearLayout) convertView.findViewById(R.id.linear_layout_info_id);
 
             result = convertView;
 
@@ -120,10 +127,22 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         retenedorVista.tv_hora.setText(boletin.getHora());
         retenedorVista.tv_descripcion.setText(boletin.getDescripcion());
 
-        retenedorVista.btn_sospechosos.setOnClickListener(this);
-        retenedorVista.btn_sospechosos.setTag(position);
         retenedorVista.btn_comentarios.setOnClickListener(this);
         retenedorVista.btn_comentarios.setTag(position);
+
+        retenedorVista.tv_sospechososInfo.setText(boletin.getArmasSosp());
+        retenedorVista.tv_armasSosp.setText(boletin.getArmasSosp());
+        retenedorVista.tv_vehiculosSosp.setText(boletin.getVehiculosSosp());
+
+        retenedorVista.linear_layout_info.setTag(position);
+
+        retenedorVista.sch_mostrar_sosp.setTag(position);
+        retenedorVista.sch_mostrar_sosp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) { retenedorVista.linear_layout_info.setVisibility(View.VISIBLE); }
+                else { retenedorVista.linear_layout_info.setVisibility(View.GONE); }
+            }
+        });
 
         retenedorVista.iv_gps.setOnClickListener(this);
         //retenedorVista.iv_gps.setTag(position);
@@ -136,4 +155,5 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         // Return the completed view to render on screen
         return convertView;
     }
+
 }

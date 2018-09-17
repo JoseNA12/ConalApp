@@ -17,6 +17,7 @@ import cr.ac.tec.conalapp.conalapp.PantallaAboutUs.AboutUsActivity;
 import cr.ac.tec.conalapp.conalapp.Adaptadores.PagerAdapterPrincipal;
 import cr.ac.tec.conalapp.conalapp.PantallaConfiguracion.ConfiguracionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaContactos.ContactosActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaLogin.IniciarSesionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPuntosInteres.PuntosInteresActivity;
 import cr.ac.tec.conalapp.conalapp.R;
@@ -105,7 +106,7 @@ public class PrincipalActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.cerrar_sesion:
-                        Toast.makeText(PrincipalActivity.this, "Cerrar sesión",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), IniciarSesionActivity.class));
                         return true;
 
                     default:
