@@ -56,6 +56,10 @@ public class ClaseSingleton {
     public static final String INSERT_BOLETIN = URL_HOST + "archivosPHP/boletin_insertar.php";
     public static final String INSERT_REUNION = URL_HOST + "archivosPHP/reunion_insertar.php";
     public static final String SELECT_ALL_BOLETIN = URL_HOST + "archivosPHP/boletin_select_all.php";
+
     public static final String SELECT_ALL_REUNION = URL_HOST + "archivosPHP/reunion_select_all.php";
+
+    // PHP Puntos Interes
+    public static final String INSERT_PUNTO_INTERES= URL_HOST + "archivosPHP/puntosInteres_insertar.php";
 
 }
