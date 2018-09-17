@@ -53,14 +53,25 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
 
         });
 
-        nombreUsuario.setText(ClaseSingleton.USUARIO_ACTUAL.getNombre() + " " + ClaseSingleton.USUARIO_ACTUAL.getApellido());
-        sobrenombre.setText(ClaseSingleton.USUARIO_ACTUAL.getSobrenombre());
-        lugarResidencia.setText(ClaseSingleton.USUARIO_ACTUAL.getLugarResidencia());
-        genero.setText(ClaseSingleton.USUARIO_ACTUAL.getGenero());
-        biografia.setText(ClaseSingleton.USUARIO_ACTUAL.getBiografia());
-        anioNacimiento.setText(ClaseSingleton.USUARIO_ACTUAL.getFechaNacimiento());
-        email.setText(ClaseSingleton.USUARIO_ACTUAL.getCorreo());
 
+        String tipoPerfil = getIntent().getStringExtra("TipoPerfil");
+        if (tipoPerfil.equals("Ajeno")){
+            nombreUsuario.setText(getIntent().getStringExtra("Nombre"));
+            sobrenombre.setText(getIntent().getStringExtra("Sobrenombre"));
+            lugarResidencia.setText(getIntent().getStringExtra("LugarResidencia"));
+            genero.setText(getIntent().getStringExtra("Genero"));
+            biografia.setText(getIntent().getStringExtra("Biografia"));
+            anioNacimiento.setText(getIntent().getStringExtra("FechaNacimiento"));
+            email.setText(getIntent().getStringExtra("Correo"));
+        }else {
+            nombreUsuario.setText(ClaseSingleton.USUARIO_ACTUAL.getNombre() + " " + ClaseSingleton.USUARIO_ACTUAL.getApellido());
+            sobrenombre.setText(ClaseSingleton.USUARIO_ACTUAL.getSobrenombre());
+            lugarResidencia.setText(ClaseSingleton.USUARIO_ACTUAL.getLugarResidencia());
+            genero.setText(ClaseSingleton.USUARIO_ACTUAL.getGenero());
+            biografia.setText(ClaseSingleton.USUARIO_ACTUAL.getBiografia());
+            anioNacimiento.setText(ClaseSingleton.USUARIO_ACTUAL.getFechaNacimiento());
+            email.setText(ClaseSingleton.USUARIO_ACTUAL.getCorreo());
+        }
     }
 
     private void editarPerfil(){

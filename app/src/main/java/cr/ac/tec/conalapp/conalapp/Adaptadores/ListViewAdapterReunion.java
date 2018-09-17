@@ -1,6 +1,7 @@
 package cr.ac.tec.conalapp.conalapp.Adaptadores;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
+import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
 public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implements View.OnClickListener {
@@ -48,11 +50,11 @@ public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implemen
         {
             int position = (Integer) v.getTag();
             Object object = getItem(position);
-            ReunionModelo boletin = (ReunionModelo) object;
+            ReunionModelo reunionModelo = (ReunionModelo) object;
 
             switch (v.getId()) {
                 case R.id.btn_comentarios_id:
-                    assert boletin != null;
+                    assert reunionModelo != null;
                     Snackbar.make(v, "Comentarios", Snackbar.LENGTH_LONG)
                             .setAction("No action", null).show();
                     break;
@@ -64,7 +66,7 @@ public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implemen
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        ReunionModelo reunionModelo = getItem(position);
+        final ReunionModelo reunionModelo = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ListViewAdapterReunion.RetenedorVista retenedorVista; // view lookup cache stored in tag
 
@@ -77,6 +79,24 @@ public class ListViewAdapterReunion extends ArrayAdapter<ReunionModelo> implemen
             convertView = inflater.inflate(R.layout.row_item_reuniones, parent, false);
 
             retenedorVista.tv_nombre_prefil = (TextView) convertView.findViewById(R.id.tv_nombre_prefil_id);
+            retenedorVista.tv_nombre_prefil.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+
+                    Intent intent = new Intent(getContext(), PerfilUsuarioActivity.class);
+                    intent.putExtra("TipoPerfil", "Ajeno");
+                    intent.putExtra("Correo", reunionModelo.getAutorInfo().getCorreo());
+                    intent.putExtra("Nombre", reunionModelo.getAutorInfo().getNombre());
+                    intent.putExtra("Apellido", reunionModelo.getAutorInfo().getApellido());
+                    intent.putExtra("FechaNacimiento", reunionModelo.getAutorInfo().getFechaNacimiento());
+                    intent.putExtra("Biografia", reunionModelo.getAutorInfo().getBiografia());
+                    intent.putExtra("Genero", reunionModelo.getAutorInfo().getGenero());
+                    intent.putExtra("LugarResidencia", reunionModelo.getAutorInfo().getLugarResidencia());
+                    intent.putExtra("Sobrenombre", reunionModelo.getAutorInfo().getSobrenombre());
+                    mContext.startActivity(intent);
+                }
+
+            });
+            
             retenedorVista.tv_titular = (TextView) convertView.findViewById(R.id.tv_titular_id);
             retenedorVista.tv_provincia = (TextView) convertView.findViewById(R.id.tv_provincia_id);
             retenedorVista.tv_fecha = (TextView) convertView.findViewById(R.id.tv_fecha_id);

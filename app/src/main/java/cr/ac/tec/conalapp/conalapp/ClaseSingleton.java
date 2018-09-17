@@ -1,9 +1,6 @@
 package cr.ac.tec.conalapp.conalapp;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-
-import java.util.ArrayList;
+import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 
 public class ClaseSingleton {
 
@@ -48,20 +45,25 @@ public class ClaseSingleton {
 
     // Usuario Actual
     public static Persona USUARIO_ACTUAL = new Persona();
+
     // IP del servidor
     private static final String URL_HOST = "http://conalapp.000webhostapp.com/";
+
     /* PHP usuarios */
     public static final String GET_USER_PASS = URL_HOST + "archivosPHP/select_usuario_iniciar_sesion.php";
     public static final String INSERT_USER = URL_HOST + "archivosPHP/persona_insertar.php";
+    public static  final String SELECT_USER_BY_ID = URL_HOST + "archivosPHP/select_usuario_by_id.php";
 
+    // PHP Boletin
     public static final String INSERT_BOLETIN = URL_HOST + "archivosPHP/boletin_insertar.php";
-    public static final String INSERT_REUNION = URL_HOST + "archivosPHP/reunion_insertar.php";
     public static final String SELECT_ALL_BOLETIN = URL_HOST + "archivosPHP/boletin_select_all.php";
 
+    // PHP Reunion
+    public static final String INSERT_REUNION = URL_HOST + "archivosPHP/reunion_insertar.php";
     public static final String SELECT_ALL_REUNION = URL_HOST + "archivosPHP/reunion_select_all.php";
 
     // PHP Puntos Interes
-    public static final String INSERT_PUNTO_INTERES = URL_HOST + "archivosPHP/puntosInteres_insertar.php";
-    public static final String SELECT_PUNTO_INTERES_BY_USUARIO = URL_HOST + "archivosPHP/puntosInteres_select_by_id.php";
+    public static final String INSERT_PUNTO_INTERES= URL_HOST + "archivosPHP/puntosInteres_insertar.php";
+    public static final String SELECT_PUNTO_INTERES_BY_USUARIO= URL_HOST + "archivosPHP/puntosInteres_select_by_id.php";
 
 }

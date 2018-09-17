@@ -11,8 +11,9 @@ public class ReunionModelo {
     private String hora;
     private String descripcion;
     private String linkImagenGPS;
+    private Persona autorInfo;
 
-    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton) {
+    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton, Persona autorInfo) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
@@ -21,6 +22,15 @@ public class ReunionModelo {
         this.descripcion = descrpcion;
         this.linkImagenGPS = linkImagenGPS;
         this.canton = canton;
+        this.autorInfo = autorInfo;
+    }
+
+    public Persona getAutorInfo() {
+        return autorInfo;
+    }
+
+    public void setAutorInfo(Persona autorInfo) {
+        this.autorInfo = autorInfo;
     }
 
     public String getAutor() {
