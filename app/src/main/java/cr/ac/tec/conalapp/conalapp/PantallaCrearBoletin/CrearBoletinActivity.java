@@ -736,7 +736,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 }
             }
         }
-       /* RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN +
+       /*RegistrarBoletinBD(ClaseSingleton.INSERT_BOLETIN +
                 "?IdPersona=" + 1 +
                 "&Titular=" + input_titular.getText().toString() +
                 "&Provincia=" + sp_provincias.getSelectedItem().toString() +
