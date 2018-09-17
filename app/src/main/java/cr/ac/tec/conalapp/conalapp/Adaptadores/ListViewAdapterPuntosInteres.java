@@ -1,15 +1,30 @@
 package cr.ac.tec.conalapp.conalapp.Adaptadores;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -38,7 +53,7 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
     @Override
     public void onClick(View v) {
 
-        int position = (Integer) v.getTag();
+        /*int position = (Integer) v.getTag();
         Object object = getItem(position);
         PuntosInteresModelo puntosInteres = (PuntosInteresModelo) object;
 
@@ -47,7 +62,7 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
                 assert puntosInteres != null;
 
                 break;
-        }
+        }*/
     }
 
     @Override
@@ -91,5 +106,51 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    private void executeQueryEliminarPuntoInteres(String URL) {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response)
+            {
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (jsonObject.getString("status").equals("false")){
+                        errorMessageDialog("No ha sido posible cargar los puntos de interes.\nVerifique su conexión a internet!");
+                    }
+                    else
+                    {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
+    }
+
+    private void errorMessageDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                //      .setIcon(R.drawable.ic_img_diag_error_icon)
+                .setMessage(message).setTitle("Error")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -182,7 +182,7 @@ public class PuntosInteresActivity extends AppCompatActivity {
     }
 
     private void agregarUbicacionResponse(String response){  // Tratar respuesta
-        //progressDialog.dismiss();
+
         try{
             JSONObject jsonObject = new JSONObject(response);
             if (jsonObject.getString("status").equals("false")){
@@ -190,13 +190,15 @@ public class PuntosInteresActivity extends AppCompatActivity {
             }
             else {
                 infoMessageDialog("Se ha agregado el punto de interés correctamente.");
+                obtenerDatosPuntosInteresResponse(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO
+                        + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId()); // recargar la vista
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void obtenerDatosBoletinesResponse(String response){
+    private void obtenerDatosPuntosInteresResponse(String response){
         array_puntos_interes = new ArrayList<>();
 
         try{
@@ -244,7 +246,7 @@ public class PuntosInteresActivity extends AppCompatActivity {
             @Override
 
             public void onResponse(String response) {
-                obtenerDatosBoletinesResponse(response);  /* Para inicio de sesión*/
+                obtenerDatosPuntosInteresResponse(response);  /* Para inicio de sesión*/
 
             }
         }, new Response.ErrorListener() {
