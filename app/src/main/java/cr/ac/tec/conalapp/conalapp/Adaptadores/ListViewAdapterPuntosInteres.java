@@ -182,7 +182,7 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
 
                     if (jsonObject.getString("status").equals("false")){
                         progressDialog.dismiss();
-                        errorMessageDialog("No ha sido el punto de intere.\nVerifique su conexión a internet!");
+                        errorMessageDialog("No ha sido el punto de interés.\nVerifique su conexión a internet!");
                     }
                     else
                     {

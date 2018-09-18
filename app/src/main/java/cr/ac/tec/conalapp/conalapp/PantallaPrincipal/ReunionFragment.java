@@ -110,12 +110,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
      */
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
-                swipeLayout.setRefreshing(false);
-                //executeQuery(ClaseSingleton.SELECT_ALL_REUNION + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
-            }
-        }, 0);
+        executeQuery(ClaseSingleton.SELECT_ALL_REUNION + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
 
 
@@ -126,7 +121,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
             JSONObject jsonObject = new JSONObject(response);
 
             if (jsonObject.getString("status").equals("false")){
-                errorMessageDialog("No ha sido posible cargar los boletines.\nVerifique su conexión a internet!");
+                errorMessageDialog("No ha sido posible cargar las reuniones.\nVerifique su conexión a internet!");
             }
             else
             {
@@ -183,6 +178,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        swipeLayout.setRefreshing(false);
     }
 
     private void executeQuery(String URL) {
@@ -199,6 +195,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
             @Override
             public void onErrorResponse(VolleyError error) {
                 // progressDialog.dismiss();
+                swipeLayout.setRefreshing(false);
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
                 // errorMessageDialog(error.toString());
             }
