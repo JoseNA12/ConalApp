@@ -96,7 +96,7 @@ public class BoletinFragment extends Fragment {
     {
         listView = (ListView) view.findViewById(R.id.lv_boletines_id);
 
-        executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN);
+        executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
 
     private void initFloatingActiobButton(View pView)

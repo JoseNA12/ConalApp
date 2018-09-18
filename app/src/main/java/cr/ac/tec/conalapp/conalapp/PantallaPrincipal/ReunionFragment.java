@@ -89,7 +89,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
     {
         listView = (ListView) view.findViewById(R.id.lv_reuniones_id);
 
-        executeQuery(ClaseSingleton.SELECT_ALL_REUNION);
+        executeQuery(ClaseSingleton.SELECT_ALL_REUNION + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
 
     private void initFloatingActiobButton(View pView)
@@ -113,7 +113,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 swipeLayout.setRefreshing(false);
-                executeQuery(ClaseSingleton.SELECT_ALL_REUNION); // CAMBIAR POR SEGUN EL ID USUARIO
+                //executeQuery(ClaseSingleton.SELECT_ALL_REUNION + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
             }
         }, 0);
     }
