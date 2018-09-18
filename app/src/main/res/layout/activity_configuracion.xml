@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gris"
     tools:context=".PantallaConfiguracion.ConfiguracionActivity">
 
     <ScrollView
@@ -12,7 +13,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/blanco"
             android:divider="@color/negro"
             android:gravity="center"
             android:orientation="vertical"
@@ -22,20 +24,35 @@
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:text="@string/notificaciones" />
+                android:text="@string/notificaciones"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/crear_cuenta_id2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="@string/cerrar_cuenta"
                 android:textColor="@color/naranja"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_cerrar_cuenta_id"
+                android:layout_width="230dp"
+                android:layout_height="wrap_content"
+                android:background="@color/blanco"
+                android:text="@string/cerrar_cuenta"
+                android:textColor="@color/naranja" />
+
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/notificaciones"
+                android:visibility="invisible" />
 
         </LinearLayout>
     </ScrollView>

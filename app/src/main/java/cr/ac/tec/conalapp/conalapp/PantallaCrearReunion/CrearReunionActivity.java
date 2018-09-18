@@ -679,7 +679,7 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
             }
             else {
                 MessageDialog("Se ha publicado la reunión correctamente.");
-                //Intent intent = new Intent();
+                finish();
             }
         } catch (JSONException e) {
             e.printStackTrace();
