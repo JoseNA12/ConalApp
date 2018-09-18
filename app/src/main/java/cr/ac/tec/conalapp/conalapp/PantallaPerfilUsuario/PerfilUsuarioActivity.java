@@ -63,6 +63,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
             biografia.setText(getIntent().getStringExtra("Biografia"));
             anioNacimiento.setText(getIntent().getStringExtra("FechaNacimiento"));
             email.setText(getIntent().getStringExtra("Correo"));
+            btn_editar.setVisibility(View.INVISIBLE);
         }else {
             nombreUsuario.setText(ClaseSingleton.USUARIO_ACTUAL.getNombre() + " " + ClaseSingleton.USUARIO_ACTUAL.getApellido());
             sobrenombre.setText(ClaseSingleton.USUARIO_ACTUAL.getSobrenombre());
@@ -71,6 +72,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
             biografia.setText(ClaseSingleton.USUARIO_ACTUAL.getBiografia());
             anioNacimiento.setText(ClaseSingleton.USUARIO_ACTUAL.getFechaNacimiento());
             email.setText(ClaseSingleton.USUARIO_ACTUAL.getCorreo());
+            btn_editar.setVisibility(View.VISIBLE);
         }
     }
 
