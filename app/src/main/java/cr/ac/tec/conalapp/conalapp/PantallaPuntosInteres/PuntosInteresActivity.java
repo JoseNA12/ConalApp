@@ -54,6 +54,7 @@ public class PuntosInteresActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -199,9 +200,6 @@ public class PuntosInteresActivity extends AppCompatActivity {
                 errorMessageDialog("El punto de interés seleccionado ya se encuentra asociado.");
             }
             else {
-                Snackbar snackbar = Snackbar
-                        .make(getCurrentFocus(), "Se ha agregado el punto de interés correctamente.", Snackbar.LENGTH_SHORT);
-                snackbar.show();
                 progressDialog.setTitle("Solicitando información ...");
                 progressDialog.show();
                 executeQueryCargarPuntosInteres(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO

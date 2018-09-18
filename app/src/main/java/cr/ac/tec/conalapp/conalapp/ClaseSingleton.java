@@ -54,6 +54,7 @@ public class ClaseSingleton {
     public static final String INSERT_USER = URL_HOST + "archivosPHP/persona_insertar.php";
     public static  final String SELECT_USER_BY_ID = URL_HOST + "archivosPHP/select_usuario_by_id.php";
     public static final String UPDATE_USER = URL_HOST + "archivosPHP/persona_update.php";
+    public static  final String DELETE_USER = URL_HOST + "archivosPHP/persona_delete.php";
 
     // PHP Boletin
     public static final String INSERT_BOLETIN = URL_HOST + "archivosPHP/boletin_insertar.php";

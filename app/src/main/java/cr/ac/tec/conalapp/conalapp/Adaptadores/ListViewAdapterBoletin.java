@@ -155,7 +155,7 @@ public class ListViewAdapterBoletin extends ArrayAdapter<BoletinModelo> implemen
         retenedorVista.btn_comentarios.setOnClickListener(this);
         retenedorVista.btn_comentarios.setTag(position);
 
-        retenedorVista.tv_sospechososInfo.setText(boletin.getArmasSosp());
+        retenedorVista.tv_sospechososInfo.setText(boletin.getSospechosos());
         retenedorVista.tv_armasSosp.setText(boletin.getArmasSosp());
         retenedorVista.tv_vehiculosSosp.setText(boletin.getVehiculosSosp());
 

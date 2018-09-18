@@ -150,7 +150,4 @@ public class IniciarSesionActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
-
-
-
 }

@@ -31,7 +31,7 @@ import cr.ac.tec.conalapp.conalapp.R;
 
 public class RegistroUsuarioActivity extends AppCompatActivity {
     private TextInputEditText ET_usuarioCorreo;
-    private TextInputEditText ET_usuarioContrasena;
+    private TextInputEditText ET_usuarioContrasena, ET_usuarioContrasenaRepetir;
     private TextInputEditText ET_usuarioNombre;
     private TextInputEditText ET_usuarioApellido;
 
@@ -59,6 +59,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
 
         ET_usuarioCorreo = findViewById(R.id.ET_usuarioCorreo);
         ET_usuarioContrasena = findViewById(R.id.ET_usuarioContrasena);
+        ET_usuarioContrasenaRepetir = findViewById(R.id.ET_usuarioContrasenaREP);
         ET_usuarioApellido = findViewById(R.id.ET_usuarioApellido);
         ET_usuarioNombre = findViewById(R.id.ET_usuarioNombre);
         btn_registrar = findViewById(R.id.btn_registrar_id);
@@ -84,10 +85,16 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             errorMessageDialog("Error campos vacios");
 
         }else {
-            progressDialog.show();
-            executeQuery(ClaseSingleton.INSERT_USER, usuarioNombre, usuarioApellido, usuarioCorreo, usuarioContrasena);
 
-
+            if (ET_usuarioContrasenaRepetir.getText().toString().equals(ET_usuarioContrasena.getText().toString()))
+            {
+                progressDialog.show();
+                executeQuery(ClaseSingleton.INSERT_USER, usuarioNombre, usuarioApellido, usuarioCorreo, usuarioContrasena);
+            }
+           else
+            {
+                errorMessageDialog("Las contraseñas no coinciden!");
+            }
         }
     }
 
