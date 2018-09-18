@@ -160,7 +160,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:text="Email: "
+                        android:text="Email"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         tools:layout_editor_absoluteY="98dp" />

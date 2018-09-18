@@ -150,31 +150,39 @@ public class AgregarInfoPerfil extends AppCompatActivity {
         if(nombre.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getNombre());
         else nuevoPerfil.setNombre(nombre);
 
-        if(apellido.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getApellido());
-        else nuevoPerfil.setNombre(apellido);
+        if(apellido.isEmpty()) nuevoPerfil.setApellido(usuarioActual.getApellido());
+        else nuevoPerfil.setApellido(apellido);
 
-        if(correo.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getCorreo());
-        else nuevoPerfil.setNombre(correo);
+        if(correo.isEmpty()) nuevoPerfil.setCorreo(usuarioActual.getCorreo());
+        else nuevoPerfil.setCorreo(correo);
 
-        if(lugarResidencia.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getLugarResidencia());
-        else nuevoPerfil.setNombre(lugarResidencia);
+        if(lugarResidencia.isEmpty()) nuevoPerfil.setLugarResidencia(usuarioActual.getLugarResidencia());
+        else nuevoPerfil.setLugarResidencia(lugarResidencia);
 
-        if(fechaNacimiento.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getFechaNacimiento());
-        else nuevoPerfil.setNombre(fechaNacimiento);
+        if(fechaNacimiento.isEmpty()) nuevoPerfil.setFechaNacimiento(usuarioActual.getFechaNacimiento());
+        else nuevoPerfil.setFechaNacimiento(fechaNacimiento);
 
-        if(biografia.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getBiografia());
-        else nuevoPerfil.setNombre(biografia);
+        if(biografia.isEmpty()) nuevoPerfil.setBiografia(usuarioActual.getBiografia());
+        else nuevoPerfil.setBiografia(biografia);
 
-        if(sobrenombre.isEmpty()) nuevoPerfil.setNombre(usuarioActual.getSobrenombre());
-        else nuevoPerfil.setNombre(sobrenombre);
+        if(sobrenombre.isEmpty()) nuevoPerfil.setSobrenombre(usuarioActual.getSobrenombre());
+        else nuevoPerfil.setSobrenombre(sobrenombre);
 
         if(Rbtn_Hombre.isChecked()) nuevoPerfil.setGenero("Hombre");
         else nuevoPerfil.setGenero("Mujer");
+
+        String[] fecha = fechaNacimiento.split("-");
+        Calendar calendar = Calendar.getInstance();
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH) + 1;
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
 
         if (contrasena.isEmpty() || repContrasena.isEmpty()){
             errorMessageDialog("Ingrese su actual contraseña o una nueva, en ambos campos");
         }else if(!contrasena.equals(repContrasena)){
             errorMessageDialog("Error en contraseña.\nVerifique que ambas contraseñas son iguales.");
+        }else if(Integer.parseInt(fecha[0])>=anio && Integer.parseInt(fecha[1])>=mes && Integer.parseInt(fecha[2])>=dia){
+            errorMessageDialog("Fecha de nacimiento inválida.");
         }else{
             progressDialog.show();
             executeQuery(ClaseSingleton.UPDATE_USER, contrasena);
@@ -202,8 +210,8 @@ public class AgregarInfoPerfil extends AppCompatActivity {
                 params.put("IdPersona", String.valueOf(nuevoPerfil.getId()));
                 params.put("Nombre", nuevoPerfil.getNombre());
                 params.put("Apellido", nuevoPerfil.getApellido());
-                params.put("Contrasena", contrasena);
                 params.put("Correo", nuevoPerfil.getCorreo());
+                params.put("Contrasena", contrasena);
                 params.put("FechaNacimiento", nuevoPerfil.getFechaNacimiento());
                 params.put("Biografia", nuevoPerfil.getBiografia());
                 params.put("Genero", nuevoPerfil.getGenero());
@@ -236,20 +244,22 @@ public class AgregarInfoPerfil extends AppCompatActivity {
                 errorMessageDialog("Error al editar perfil.");
             }
             else {
-                ClaseSingleton.USUARIO_ACTUAL.setId(jsonObject.getJSONObject("value").getInt("IdPersona"));
-                ClaseSingleton.USUARIO_ACTUAL.setCorreo(jsonObject.getJSONObject("value").getString("Correo"));
-                ClaseSingleton.USUARIO_ACTUAL.setNombre(jsonObject.getJSONObject("value").getString("Nombre"));
-                ClaseSingleton.USUARIO_ACTUAL.setApellido(jsonObject.getJSONObject("value").getString("Apellido"));
-                ClaseSingleton.USUARIO_ACTUAL.setFechaNacimiento(jsonObject.getJSONObject("value").getString("FechaNacimiento"));
-                ClaseSingleton.USUARIO_ACTUAL.setBiografia(jsonObject.getJSONObject("value").getString("Biografia"));
-                ClaseSingleton.USUARIO_ACTUAL.setGenero(jsonObject.getJSONObject("value").getString("Genero"));
-                ClaseSingleton.USUARIO_ACTUAL.setLugarResidencia(jsonObject.getJSONObject("value").getString("LugarResidencia"));
-                ClaseSingleton.USUARIO_ACTUAL.setSobrenombre(jsonObject.getJSONObject("value").getString("Sobrenombre"));
+                ClaseSingleton.USUARIO_ACTUAL.setCorreo(nuevoPerfil.getCorreo());
+                ClaseSingleton.USUARIO_ACTUAL.setNombre(nuevoPerfil.getNombre());
+                ClaseSingleton.USUARIO_ACTUAL.setApellido(nuevoPerfil.getApellido());
+                ClaseSingleton.USUARIO_ACTUAL.setFechaNacimiento(nuevoPerfil.getFechaNacimiento());
+                ClaseSingleton.USUARIO_ACTUAL.setBiografia(nuevoPerfil.getBiografia());
+                ClaseSingleton.USUARIO_ACTUAL.setGenero(nuevoPerfil.getGenero());
+                ClaseSingleton.USUARIO_ACTUAL.setLugarResidencia(nuevoPerfil.getLugarResidencia());
+                ClaseSingleton.USUARIO_ACTUAL.setSobrenombre(nuevoPerfil.getSobrenombre());
 
-                finish();
+                Intent intent = new Intent(this, PerfilUsuarioActivity.class);
+                intent.putExtra("TipoPerfil", "Propio");
+                startActivity(intent);
+                this.finish();
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            errorMessageDialog("Error al editar perfil.");
         }
     }
 }
