@@ -191,24 +191,24 @@ public class AgregarInfoPerfil extends AppCompatActivity {
         }, new Response.ErrorListener() {  //Tratar errores conexion con serv
             @Override
             public void onErrorResponse(VolleyError error) {
-                errorMessageDialog(error.toString());
+                progressDialog.dismiss();
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
             }
         }) {
             @Override
             protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
-                System.out.print("get params");
+                // System.out.print("get params");
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("IdPersona", String.valueOf(nuevoPerfil.getId()));
                 params.put("Nombre", nuevoPerfil.getNombre());
                 params.put("Apellido", nuevoPerfil.getApellido());
                 params.put("Correo", nuevoPerfil.getCorreo());
                 params.put("Contrasena", contrasena);
-                params.put("FechaNacimiento", nuevoPerfil.getFechaNacimiento());
-                params.put("Biografia", nuevoPerfil.getBiografia());
-                params.put("Genero", nuevoPerfil.getGenero());
-                params.put("LugarResidencia", nuevoPerfil.getLugarResidencia());
-                params.put("Sobrenombre", nuevoPerfil.getSobrenombre());
+                params.put("fechaNacimiento", nuevoPerfil.getFechaNacimiento());
+                params.put("biografia", nuevoPerfil.getBiografia());
+                params.put("genero", nuevoPerfil.getGenero());
+                params.put("lugarResidencia", nuevoPerfil.getLugarResidencia());
+                params.put("sobrenombre", nuevoPerfil.getSobrenombre());
                 return params;
             }
         };

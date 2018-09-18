@@ -162,6 +162,8 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
         });queue.add(stringRequest);
     }
 
+
+
     private void errorMessageDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 //      .setIcon(R.drawable.ic_img_diag_error_icon)
