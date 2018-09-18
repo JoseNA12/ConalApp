@@ -28,7 +28,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.PuntosInteresModelo;
@@ -69,10 +71,10 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
                 progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Eliminando punto de interés ...");
                 progressDialog.show();
-                executeQueryEliminarPuntoInteres(ClaseSingleton.DELETE_PUNTO_INTERES_BY_ID
-                        + "?IdPersona=" + ((PuntosInteresModelo) object).getIdUsuario()
-                        + "&Provincia=" + ((PuntosInteresModelo) object).getProvincia()
-                        + "&Canton=" + ((PuntosInteresModelo) object).getCanton(), object);
+                executeQueryEliminarPuntoInteres(ClaseSingleton.DELETE_PUNTO_INTERES_BY_ID,
+                         ((PuntosInteresModelo) object).getIdUsuario(),
+                        ((PuntosInteresModelo) object).getProvincia(),
+                        ((PuntosInteresModelo) object).getCanton(), object);
                 break;
         }
     }
@@ -126,7 +128,48 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
         notifyDataSetChanged();
     }
 
-    private void executeQueryEliminarPuntoInteres(String URL, final Object object) {
+    private void executeQueryEliminarPuntoInteres(String URL, final String IdUsuario, final String Provincia, final String Canton, final Object object) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) { // Si serv contesta
+                System.out.println(response);
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    if (jsonObject.getString("status").equals("false")){
+                        progressDialog.dismiss();
+                        errorMessageDialog("No ha sido el punto de intere.\nVerifique su conexión a internet!");
+                    }
+                    else
+                    {
+                        arrayListPuntosInteresModelo.remove(object);
+                        refreshEvents();
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {  //Tratar errores conexion con serv
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //MessageDialog(error.toString());
+                errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
+                System.out.print("get params");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("IdPersona", IdUsuario);
+                params.put("Provincia", Provincia);
+                params.put("Canton", Canton);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(getContext()).add(stringRequest);
+/*
         RequestQueue queue = Volley.newRequestQueue(getContext());
         //errorMessageDialog(URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -159,7 +202,7 @@ public class ListViewAdapterPuntosInteres extends ArrayAdapter<PuntosInteresMode
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
                 // errorMessageDialog(error.toString());
             }
-        });queue.add(stringRequest);
+        });queue.add(stringRequest);*/
     }
 
 
