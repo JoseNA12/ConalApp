@@ -789,7 +789,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
             }
             else {
                 MessageDialog("Se ha agregado el boletín correctamente.");
-                //Intent intent = new Intent();
+                finish();
             }
         } catch (JSONException e) {
             e.printStackTrace();

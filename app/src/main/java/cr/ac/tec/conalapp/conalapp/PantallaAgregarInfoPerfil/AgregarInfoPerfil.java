@@ -202,13 +202,13 @@ public class AgregarInfoPerfil extends AppCompatActivity {
                 params.put("IdPersona", String.valueOf(nuevoPerfil.getId()));
                 params.put("Nombre", nuevoPerfil.getNombre());
                 params.put("Apellido", nuevoPerfil.getApellido());
-                params.put("Correo", nuevoPerfil.getCorreo());
                 params.put("Contrasena", contrasena);
-                params.put("fechaNacimiento", nuevoPerfil.getFechaNacimiento());
-                params.put("biografia", nuevoPerfil.getBiografia());
-                params.put("genero", nuevoPerfil.getGenero());
-                params.put("lugarResidencia", nuevoPerfil.getLugarResidencia());
-                params.put("sobrenombre", nuevoPerfil.getSobrenombre());
+                params.put("Correo", nuevoPerfil.getCorreo());
+                params.put("FechaNacimiento", nuevoPerfil.getFechaNacimiento());
+                params.put("Biografia", nuevoPerfil.getBiografia());
+                params.put("Genero", nuevoPerfil.getGenero());
+                params.put("LugarResidencia", nuevoPerfil.getLugarResidencia());
+                params.put("Sobrenombre", nuevoPerfil.getSobrenombre());
                 return params;
             }
         };

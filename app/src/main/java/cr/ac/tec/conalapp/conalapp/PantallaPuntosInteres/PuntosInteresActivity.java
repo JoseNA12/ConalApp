@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -198,7 +199,9 @@ public class PuntosInteresActivity extends AppCompatActivity {
                 errorMessageDialog("El punto de interés seleccionado ya se encuentra asociado.");
             }
             else {
-                infoMessageDialog("Se ha agregado el punto de interés correctamente.");
+                Snackbar snackbar = Snackbar
+                        .make(getCurrentFocus(), "Se ha agregado el punto de interés correctamente.", Snackbar.LENGTH_SHORT);
+                snackbar.show();
                 progressDialog.setTitle("Solicitando información ...");
                 progressDialog.show();
                 executeQueryCargarPuntosInteres(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO
