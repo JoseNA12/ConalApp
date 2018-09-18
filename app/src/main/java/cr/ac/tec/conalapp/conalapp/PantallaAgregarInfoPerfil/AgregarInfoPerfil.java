@@ -246,8 +246,7 @@ public class AgregarInfoPerfil extends AppCompatActivity {
                 ClaseSingleton.USUARIO_ACTUAL.setLugarResidencia(jsonObject.getJSONObject("value").getString("LugarResidencia"));
                 ClaseSingleton.USUARIO_ACTUAL.setSobrenombre(jsonObject.getJSONObject("value").getString("Sobrenombre"));
 
-                Intent intent = new Intent(this, PerfilUsuarioActivity.class);
-                startActivity(intent);
+                finish();
             }
         } catch (JSONException e) {
             e.printStackTrace();
