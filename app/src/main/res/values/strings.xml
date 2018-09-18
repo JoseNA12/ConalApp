@@ -29,7 +29,7 @@
     <string name="hint_nombre">Nombre</string>
     <string name="hint_apellido">Apellido</string>
     <string name="hint_rep_contraseña">Repetir contraseña</string>
-    <string name="hint_anio_nacimiento">Año de nacimiento</string>
+    <string name="hint_anio_nacimiento">Fecha de nacimiento</string>
     <string name="hint_lugar_residencia">Lugar de Residencia</string>
     <string name="hint_biografia">Biografía</string>
     <string name="hint_genero">Género</string>

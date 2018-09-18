@@ -79,7 +79,7 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     private void editarPerfil(){
         Intent intent = new Intent(this, AgregarInfoPerfil.class);
         startActivity(intent);
-
+        this.finish();
     }
 
 
