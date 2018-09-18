@@ -40,7 +40,7 @@ import cr.ac.tec.conalapp.conalapp.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BoletinFragment extends Fragment {
+public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeLayout;
     private View view;
@@ -72,20 +72,7 @@ public class BoletinFragment extends Fragment {
     private void initSwipeLayout(View pView)
     {
         swipeLayout = (SwipeRefreshLayout) pView.findViewById(R.id.swipe_container);
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeLayout.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        obtenerDatosBoletinesResponse(ClaseSingleton.SELECT_ALL_BOLETIN);
-                        swipeLayout.setRefreshing(false);
-                    }
-                }, 3000);
-            }
-        });
-
+        swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeResources(android.R.color.holo_green_dark,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light,
@@ -108,6 +95,18 @@ public class BoletinFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * As a trick, you may be found interesting to disable manual swipe gesture,
+     * maybe temporarily or because you only want to show progress animation programmatically.
+     * What you need to do is to use the method setEnabled() and set it to false.
+     */
+    @Override
+    public void onRefresh() {
+
+        executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+
     }
 
     private void obtenerDatosBoletinesResponse(String response){
@@ -181,6 +180,7 @@ public class BoletinFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        swipeLayout.setRefreshing(false);
     }
 
     private void executeQuery(String URL) {
@@ -197,6 +197,7 @@ public class BoletinFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // progressDialog.dismiss();
+                swipeLayout.setRefreshing(false);
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
                 // errorMessageDialog(error.toString());
             }

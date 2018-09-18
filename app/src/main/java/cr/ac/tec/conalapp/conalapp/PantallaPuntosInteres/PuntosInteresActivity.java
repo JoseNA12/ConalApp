@@ -51,6 +51,8 @@ public class PuntosInteresActivity extends AppCompatActivity {
     private ArrayList<PuntosInteresModelo> array_puntos_interes;
     private static ListViewAdapterPuntosInteres adapter;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +83,9 @@ public class PuntosInteresActivity extends AppCompatActivity {
 
         lv_mis_puntos_interes = (ListView) findViewById(R.id.lv_mis_puntos_interes_id);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando información ...");
+        progressDialog.show();
         executeQueryCargarPuntosInteres(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO
                 + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
@@ -150,7 +155,8 @@ public class PuntosInteresActivity extends AppCompatActivity {
         String provincia = sp_provincias.getSelectedItem().toString();
         String canton = sp_cantones_por_provincia.getSelectedItem().toString();
 
-        //  progressDialog.show();
+        progressDialog.setTitle("Enviando información ...");
+        progressDialog.show();
         executeQuery(ClaseSingleton.INSERT_PUNTO_INTERES,String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), provincia,canton);
 
     }
@@ -159,13 +165,14 @@ public class PuntosInteresActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) { // Si serv contesta
-                System.out.println(response);
+                // System.out.println(response);
                 agregarUbicacionResponse(response);
             }
         }, new Response.ErrorListener() {  //Tratar errores conexion con serv
             @Override
             public void onErrorResponse(VolleyError error) {
-                errorMessageDialog(error.toString());
+                // errorMessageDialog(error.toString());
+                progressDialog.dismiss();
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
             }
         }) {
@@ -187,11 +194,14 @@ public class PuntosInteresActivity extends AppCompatActivity {
         try{
             JSONObject jsonObject = new JSONObject(response);
             if (jsonObject.getString("status").equals("false")){
+                progressDialog.dismiss();
                 errorMessageDialog("El punto de interés seleccionado ya se encuentra asociado.");
             }
             else {
                 infoMessageDialog("Se ha agregado el punto de interés correctamente.");
-                obtenerDatosPuntosInteresResponse(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO
+                progressDialog.setTitle("Solicitando información ...");
+                progressDialog.show();
+                executeQueryCargarPuntosInteres(ClaseSingleton.SELECT_PUNTO_INTERES_BY_USUARIO
                         + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId()); // recargar la vista
             }
         } catch (JSONException e) {
@@ -206,7 +216,7 @@ public class PuntosInteresActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(response);
 
             if (jsonObject.getString("status").equals("false")){
-                errorMessageDialog("No ha sido posible cargar los puntos de interes.\nVerifique su conexión a internet!");
+                errorMessageDialog("No ha sido posible cargar los puntos de interés.\nVerifique su conexión a internet!");
             }
             else
             {
@@ -238,6 +248,7 @@ public class PuntosInteresActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        progressDialog.dismiss();
     }
 
     private void executeQueryCargarPuntosInteres(String URL) {
@@ -253,7 +264,7 @@ public class PuntosInteresActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // progressDialog.dismiss();
+                progressDialog.dismiss();
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
                 // errorMessageDialog(error.toString());
             }
