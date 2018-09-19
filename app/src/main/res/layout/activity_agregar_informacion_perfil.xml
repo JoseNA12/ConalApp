@@ -83,9 +83,10 @@
             android:id="@+id/input_fechaNacimiento_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:editable="false"
             android:ems="10"
-            android:inputType="date"
-            android:hint="@string/hint_fechanacimiento"/>
+            android:hint="@string/hint_fechanacimiento"
+            android:inputType="date" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_biografia_id"

@@ -111,7 +111,8 @@ public class AgregarInfoPerfil extends AppCompatActivity {
 
     private void initInputFecha()
     {
-
+        ET_fechaNacimiento.setKeyListener(null);
+        ET_fechaNacimiento.setFocusable(false);
         ET_fechaNacimiento.setInputType(InputType.TYPE_NULL); // no mostrar el teclado
         ET_fechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
