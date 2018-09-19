@@ -124,11 +124,11 @@
                         android:id="@+id/tv_fecha_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="10dp"
 
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:text="Biografía"
+                        android:text="Biografía:"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView27" />
@@ -157,10 +157,10 @@
                         android:id="@+id/textView27"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:text="Email"
+                        android:text="Email:"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         tools:layout_editor_absoluteY="98dp" />
@@ -188,10 +188,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:clickable="true"
-                        android:text="Género"
+                        android:text="Género:"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         tools:layout_editor_absoluteY="99dp" />
@@ -216,9 +216,9 @@
                         android:id="@+id/textView16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="10dp"
                         android:clickable="true"
-                        android:text="@string/hint_anio_nacimiento"
+                        android:text="Año de nacimiento:"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         tools:layout_editor_absoluteY="98dp" />
