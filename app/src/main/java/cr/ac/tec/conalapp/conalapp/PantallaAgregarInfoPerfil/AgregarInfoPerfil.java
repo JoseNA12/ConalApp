@@ -103,6 +103,7 @@ public class AgregarInfoPerfil extends AppCompatActivity {
         ET_contrasena.setText("");
         ET_repetirContrasena.setText("");
         ET_biografia.setText(usuarioActual.getBiografia());
+        ET_fechaNacimiento.setText(usuarioActual.getFechaNacimiento());
         ET_lugarResidencia.setText(usuarioActual.getLugarResidencia());
         ET_sobrenombre.setText(usuarioActual.getSobrenombre());
         Rbtn_Hombre.setChecked(true);
@@ -181,7 +182,7 @@ public class AgregarInfoPerfil extends AppCompatActivity {
             errorMessageDialog("Ingrese su actual contraseña o una nueva, en ambos campos");
         }else if(!contrasena.equals(repContrasena)){
             errorMessageDialog("Error en contraseña.\nVerifique que ambas contraseñas son iguales.");
-        }else if(Integer.parseInt(fecha[0])>=anio && Integer.parseInt(fecha[1])>=mes && Integer.parseInt(fecha[2])>=dia){
+        }else if(fecha.length>=3 && Integer.parseInt(fecha[0])>=anio && Integer.parseInt(fecha[1])>=mes && Integer.parseInt(fecha[2])>=dia){
             errorMessageDialog("Fecha de nacimiento inválida.");
         }else{
             progressDialog.show();
