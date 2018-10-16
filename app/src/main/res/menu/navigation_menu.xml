@@ -20,6 +20,9 @@
         android:id="@+id/menu_middle"
         android:checkableBehavior="single">
 
+        <item android:id="@+id/estadisticas"
+            android:icon="@drawable/ic_estadistica_3"
+            android:title="@string/estadisticas"/>
         <item android:id="@+id/configuracion"
             android:icon="@drawable/ic_configuracion"
             android:title="@string/configuracion"/>

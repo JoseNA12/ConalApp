@@ -44,6 +44,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.android.volley:volley:1.0.0'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3' // graficas
+
 }
 
 apply plugin: 'com.google.gms.google-services'

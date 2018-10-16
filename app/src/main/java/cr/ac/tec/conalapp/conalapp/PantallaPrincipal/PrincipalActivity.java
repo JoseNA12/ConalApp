@@ -10,13 +10,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import cr.ac.tec.conalapp.conalapp.PantallaAboutUs.AboutUsActivity;
 import cr.ac.tec.conalapp.conalapp.Adaptadores.PagerAdapterPrincipal;
+import cr.ac.tec.conalapp.conalapp.PantallaComunidades.ComunidadesActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaConfiguracion.ConfiguracionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaContactos.ContactosActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaEstadisticas.EstadisticasActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaLogin.IniciarSesionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPuntosInteres.PuntosInteresActivity;
@@ -33,6 +37,8 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_principal);
 
         inicializarComponentes();
@@ -40,9 +46,13 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private void inicializarComponentes()
     {
-        //toolbar = (Toolbar) findViewById(R.id.toolbar); // quité la barra de la interfaz
-        //setSupportActionBar(toolbar);
+        initTabLayout();
+        initDrawerLayout();
+        initNavigationView();
+    }
 
+    private void initTabLayout()
+    {
         tabLayout = (TabLayout) findViewById(R.id.tab_layout_id);
         tabLayout.addTab(tabLayout.newTab().setText("Boletines"));
         tabLayout.addTab(tabLayout.newTab().setText("Reuniones"));
@@ -69,7 +79,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    private void initDrawerLayout()
+    {
         drawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout_id);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,R.string.Open, R.string.Close);
 
@@ -77,7 +90,10 @@ public class PrincipalActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    private void initNavigationView()
+    {
         navigationView = (NavigationView)findViewById(R.id.navigationView_id);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -97,6 +113,10 @@ public class PrincipalActivity extends AppCompatActivity {
 
                     case R.id.contactos_emergencia:
                         startActivity(new Intent(getApplicationContext(), ContactosActivity.class));
+                        return true;
+
+                    case R.id.estadisticas:
+                        startActivity(new Intent(getApplicationContext(), EstadisticasActivity.class));
                         return true;
 
                     case R.id.configuracion:
@@ -121,10 +141,25 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        // handle preses on the actiob bar items
+        switch (item.getItemId())
+        {
+            case R.id.action_comunidades:
+                startActivity(new Intent(getApplicationContext(), ComunidadesActivity.class));
+                return true;
+        }
+
         if(actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Inflate the menu; this adds to the action bar if it is present
+        getMenuInflater().inflate(R.menu.menu_comunidades, menu);
+        return true;
     }
 
 }

@@ -27,7 +27,6 @@
         android:roundIcon="@drawable/ic_logo_solo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -81,11 +80,19 @@
             android:name=".PantallaCrearBoletin.CrearBoletinActivity"
             android:label="@string/nombre_pantalla_crear_boletin"
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
-
         <activity
             android:name=".PantallaAgregarInfoPerfil.AgregarInfoPerfil"
             android:label="@string/nombre_pantalla_editar_info"
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
+        <activity
+            android:name=".PantallaEstadisticas.EstadisticasActivity"
+            android:label="@string/estadisticas"
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
+        <activity
+            android:name=".PantallaComunidades.ComunidadesActivity"
+            android:label="@string/comunidades"
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity"
+            />
     </application>
 
 </manifest>
