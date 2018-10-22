@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import cr.ac.tec.conalapp.conalapp.PantallaAboutUs.AboutUsActivity;
 import cr.ac.tec.conalapp.conalapp.Adaptadores.PagerAdapterPrincipal;
@@ -158,7 +157,7 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds to the action bar if it is present
-        getMenuInflater().inflate(R.menu.menu_comunidades, menu);
+        getMenuInflater().inflate(R.menu.menu_action_bar_main, menu);
         return true;
     }
 

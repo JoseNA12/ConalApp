@@ -23,6 +23,7 @@
     <string name="configuracion">Configuración</string>
     <string name="estadisticas">Estadisticas</string>
     <string name="comunidades">Comunidades</string>
+    <string name="crear_comunidades">Crear Comunidad</string>
     <string name="sobre_nosotros">Sobre Nosotros</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
 
@@ -205,9 +206,8 @@
     <!-- Pantalla crear boletin y reunion -->
     <string name="nombre_pantalla_editar_info">Editar Perfil</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_maps">Map</string>
+    <!-- Pantalla crear comunidad -->
+    <string name="btn_crear_comunidad">CREAR COMUNIDAD</string>
 
 
 </resources>

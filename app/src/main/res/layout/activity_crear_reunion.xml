@@ -124,7 +124,7 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tv_ubicar_lugar"
+                    android:text="@string/tv_ubica_aprox_ubicacion"
                     android:textSize="14sp" />
 
                 <fragment

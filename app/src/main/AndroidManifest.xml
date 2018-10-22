@@ -91,8 +91,12 @@
         <activity
             android:name=".PantallaComunidades.ComunidadesActivity"
             android:label="@string/comunidades"
-            android:parentActivityName=".PantallaPrincipal.PrincipalActivity"
-            />
+            android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
+        <activity
+            android:name=".PantallaComunidades.CrearComunidadActivity"
+            android:label="@string/crear_comunidades"
+            android:parentActivityName=".PantallaComunidades.ComunidadesActivity"
+        />
     </application>
 
 </manifest>

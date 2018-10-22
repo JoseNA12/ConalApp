@@ -1,6 +1,7 @@
 package cr.ac.tec.conalapp.conalapp.PantallaPrincipal;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private static ListViewAdapterBoletin adapter;
 
     private FloatingActionButton floatingActionButtonCrearBoletin;
+    private ProgressDialog progressDialog;
+    
     public BoletinFragment() {
         // Required empty public constructor
     }
@@ -64,9 +67,17 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     private void inicializarComponentes(View pView)
     {
+        initProgressDialog();
         initSwipeLayout(pView);
         initListView(pView);
         initFloatingActiobButton(pView);
+    }
+
+    private void initProgressDialog()
+    {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Cargando información...");
+        progressDialog.setCancelable(false);
     }
 
     private void initSwipeLayout(View pView)
@@ -83,6 +94,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
     {
         listView = (ListView) view.findViewById(R.id.lv_boletines_id);
 
+        progressDialog.show();
         executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
 
@@ -181,6 +193,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
             e.printStackTrace();
         }
         swipeLayout.setRefreshing(false);
+        progressDialog.dismiss();
     }
 
     private void executeQuery(String URL) {
@@ -198,6 +211,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
             public void onErrorResponse(VolleyError error) {
                 // progressDialog.dismiss();
                 swipeLayout.setRefreshing(false);
+                progressDialog.dismiss();
                 errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
                 // errorMessageDialog(error.toString());
             }

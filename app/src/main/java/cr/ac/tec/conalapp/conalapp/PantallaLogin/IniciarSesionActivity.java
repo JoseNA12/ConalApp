@@ -42,8 +42,6 @@ public class IniciarSesionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_iniciar_sesion);
 
         inicializarComponentes();
@@ -80,7 +78,6 @@ public class IniciarSesionActivity extends AppCompatActivity {
         usuarioCorreo = ET_usuarioCorreo.getText().toString();
         usuarioContrasena = ET_usuarioContrasena.getText().toString();
 
-        /* VALIDACIÓN: las entradas no deben ser vacías */
         if (usuarioCorreo.trim().equals("") || usuarioContrasena.trim().equals("")) {
             errorMessageDialog("Error campos vacios");
 

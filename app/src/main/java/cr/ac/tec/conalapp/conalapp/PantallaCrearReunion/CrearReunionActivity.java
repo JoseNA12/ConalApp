@@ -50,6 +50,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -131,6 +133,8 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
     private StorageReference mStorageRef;
 
     private Uri downloadUri = null;
+
+    private Marker posicionCentro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -415,6 +419,17 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+
+                            mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                                @Override
+                                public void onCameraIdle() {
+                                    if (posicionCentro != null)
+                                    {
+                                        posicionCentro.remove();
+                                    }
+                                    posicionCentro = mMap.addMarker(new MarkerOptions().position(mMap.getCameraPosition().target));
+                                }
+                            });
 
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
