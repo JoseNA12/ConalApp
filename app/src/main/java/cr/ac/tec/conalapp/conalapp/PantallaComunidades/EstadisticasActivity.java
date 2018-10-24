@@ -1,69 +1,66 @@
 package cr.ac.tec.conalapp.conalapp.PantallaComunidades;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
-import android.widget.SeekBar;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.animation.Easing;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.MPPointF;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.R;
 
 // https://github.com/PhilJay/MPAndroidChart/blob/master/MPChartExample/src/com/xxmassdeveloper/mpchartexample/BarChartActivityMultiDataset.java
 
 public class EstadisticasActivity extends AppCompatActivity {
 
+    private Map<String, Integer> datos;
     private BarChart barChart;
     private float barWidth = 0.5f; // x4 DataSet
     private float barSpace = 0.015f; // x4 DataSet
     private float groupSpace = 0.03f;
-
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas);
 
-        initChar();
+        initComponentes();
 
-        ObtenerValoresComunidades();
+        executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES);
+    }
+
+    private void initComponentes()
+    {
+        initChar();
+        initProgressDialog();
     }
 
     private void initChar()
@@ -92,11 +89,18 @@ public class EstadisticasActivity extends AppCompatActivity {
 
     }
 
+    private void initProgressDialog()
+    {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando información...");
+        progressDialog.setCancelable(false);
+    }
+
     private void ObtenerValoresComunidades()
     {
         // TODO: suponiendo que hago el request al servidor y me da un hashmap con las comunidades y
         // los valores de las cantidades de los actos delictivos
-        Map<String, Integer> datos = new HashMap<String, Integer>();
+        /*datos = new HashMap<String, Integer>();
         datos.put("Comunidad 1", 12);
         datos.put("Comunidad 2", 23);
         datos.put("Comunidad 3", 6);
@@ -105,7 +109,7 @@ public class EstadisticasActivity extends AppCompatActivity {
         datos.put("Comunidad 6", 7);
         datos.put("Comunidad 7", 17);
         datos.put("Comunidad 8", 18);
-        datos.put("Comunidad 9", 9);
+        datos.put("Comunidad 9", 9);*/
 
         //------------------------------------------------------------------------------------
 
@@ -137,8 +141,6 @@ public class EstadisticasActivity extends AppCompatActivity {
         //barChart.groupBars(0, groupSpace, barSpace);
 
         barChart.invalidate();
-
-        Log.d("NEPE", barChart.getLegend().getEntries().toString());
     }
 
     private int DameUnColor()
@@ -148,7 +150,7 @@ public class EstadisticasActivity extends AppCompatActivity {
         return color;
     }
 
-    public void ejecutar()
+    /*public void ejecutar()
     {
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> yVals2 = new ArrayList<BarEntry>();
@@ -194,7 +196,7 @@ public class EstadisticasActivity extends AppCompatActivity {
 
             barChart.setData(data);
         }
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -203,7 +205,7 @@ public class EstadisticasActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.action_refrescar_estadisticas:
-                ObtenerValoresComunidades();
+                executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES);
                 return true;
         }
 
@@ -214,79 +216,71 @@ public class EstadisticasActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds to the action bar if it is present
         getMenuInflater().inflate(R.menu.menu_action_bar_estadisticas_main, menu);
-
         return true;
     }
 
-    /* NO BORRAR
-    private void setData(int count, float range) {
+    private void obtenerDatosComunidadesWithCountBoletinesResponse(String response){
+        datos = new HashMap<String, Integer>();
 
-        float mult = range;
+        try{
+            JSONObject jsonObject = new JSONObject(response);
 
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No ha sido posible cargar los datos.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
 
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
-        for (int i = 0; i < count ; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5)));
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String nombreComunidad = jsonArray.getJSONObject(i).get("Nombre").toString();
+                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadBoletines").toString(); // TODO: Ojo al valor de la columna
+
+                    datos.put(nombreComunidad, Integer.valueOf(cantidadBoletines));
+                }
+
+                ObtenerValoresComunidades();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Provincias");
-
-        //dataSet.setDrawIcons(false);
-
-        //dataSet.setSliceSpace(3f);
-        //dataSet.setIconsOffset(new MPPointF(0, 40));
-        //dataSet.setSelectionShift(5f);
-
-        // add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
-        //dataSet.setSelectionShift(0f);
-
-        PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
-        mChart.setData(data);
-
-        // undo all highlights
-        mChart.highlightValues(null);
-
-        mChart.invalidate();
+        progressDialog.dismiss();
     }
 
-    private SpannableString generateCenterSpannableText() {
+    private void executeQuery(String URL) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
 
-        SpannableString s = new SpannableString("Actos delictivos\ndatos del momento");
-        s.setSpan(new RelativeSizeSpan(1.7f), 0, 16, 0);
-        s.setSpan(new StyleSpan(Typeface.NORMAL), 16, s.length() - 17, 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 16, s.length() - 17, 0);
+            public void onResponse(String response) {
+                obtenerDatosComunidadesWithCountBoletinesResponse(response);  /* Para inicio de sesión*/
 
-        s.setSpan(new RelativeSizeSpan(.8f), 16, s.length() - 17, 0);
-        s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 17, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 17, s.length(), 0);
-        return s;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                progressDialog.dismiss();
+                MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
     }
-    */
+
+    private void MessageDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                //      .setIcon(R.drawable.ic_img_diag_error_icon)
+                .setMessage(message).setTitle("Error")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
 

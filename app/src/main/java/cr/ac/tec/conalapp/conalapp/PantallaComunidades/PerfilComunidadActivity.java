@@ -16,7 +16,7 @@ public class PerfilComunidadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_comunidad);
 
-        // TODO: recibir el parametro que envia BusquedaComunidadesActivity (nombre de la comunidad)
+        // TODO: recibir el parametro que envia BusquedaComunidadesActivity (ID de la comunidad)
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PerfilComunidadActivity extends AppCompatActivity {
             case R.id.action_estadisticas_perfil:
                 Intent i =  new Intent(getApplicationContext(), EstadisticasComunidadActivity.class);
 
-                // TODO: enviar el parametro a EstadisticasComunidadActivity (nombre de la comunidad)
+                // TODO: enviar el parametro a EstadisticasComunidadActivity (ID de la comunidad)
                 startActivity(i);
                 return true;
         }

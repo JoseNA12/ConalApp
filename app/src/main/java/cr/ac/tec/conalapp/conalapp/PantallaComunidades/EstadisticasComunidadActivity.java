@@ -1,5 +1,8 @@
 package cr.ac.tec.conalapp.conalapp.PantallaComunidades;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,12 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -17,20 +26,42 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.R;
+
+// https://github.com/PhilJay/MPAndroidChart
 
 public class EstadisticasComunidadActivity extends AppCompatActivity {
 
+    private int cantidadBoletines, cantidadReuniones = 0;
     private PieChart mChart;
+    private ProgressDialog progressDialog;
+    private String IDComunidadActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estadisticas_comunidad);
 
+        initComponentes();
+    }
+
+    private void initComponentes()
+    {
+        initProgressDialog();
         initCharPastel();
+
+        // TODO: recibir el parametro que envia PerfilComunidadActivity (ID de la comunidad)
+
+        IDComunidadActual = "0"; // recibir el parametro
+
+        executeQuery_Boletines(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdComunidad=" + IDComunidadActual);
     }
 
     private void initCharPastel()
@@ -42,7 +73,7 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
 
         mChart.setDragDecelerationFrictionCoef(0.95f);
 
-        mChart.setCenterText(generateCenterSpannableText());
+        //mChart.setCenterText(generateCenterSpannableText());
 
         mChart.setDrawHoleEnabled(true);
         mChart.setHoleColor(Color.WHITE);
@@ -64,15 +95,15 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
         // mChart.setDrawUnitsInChart(true);
 
 
-        setData(4, 100);
+        // setData(2, 100);
 
         mChart.animateY(1400);
         // mChart.spin(2000, 0, 360);
 
         Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
         l.setXEntrySpace(7f);
         l.setYEntrySpace(0f);
@@ -83,6 +114,13 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
         mChart.setEntryLabelTextSize(14f);
     }
 
+    private void initProgressDialog()
+    {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando información...");
+        progressDialog.setCancelable(false);
+    }
+
     private void setData(int count, float range) {
 
         float mult = range;
@@ -91,11 +129,14 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (int i = 0; i < count ; i++) {
-            entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5)));
-        }
+        //for (int i = 0; i < count ; i++) {
+            //entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5), "Labell"));
+        //}
 
-        PieDataSet dataSet = new PieDataSet(entries, "Provincias");
+        entries.add(new PieEntry((float) ((this.cantidadBoletines * mult) + mult / 5), "Boletines"));
+        entries.add(new PieEntry((float) ((this.cantidadReuniones * mult) + mult / 5), "Reuniones"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "Datos");
 
         //dataSet.setDrawIcons(false);
 
@@ -139,9 +180,9 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
         mChart.invalidate();
     }
 
-    private SpannableString generateCenterSpannableText() {
+    /*private SpannableString generateCenterSpannableText() {
 
-        SpannableString s = new SpannableString("Actos delictivos\ndatos del momento");
+        SpannableString s = new SpannableString("");
         s.setSpan(new RelativeSizeSpan(1.7f), 0, 16, 0);
         s.setSpan(new StyleSpan(Typeface.NORMAL), 16, s.length() - 17, 0);
         s.setSpan(new ForegroundColorSpan(Color.GRAY), 16, s.length() - 17, 0);
@@ -150,5 +191,116 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
         s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 17, s.length(), 0);
         s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 17, s.length(), 0);
         return s;
+    }*/
+
+    private void obtenerDatosCantidadBoletinesResponse(String response){
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No ha sido posible cargar los datos.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadBoletines").toString(); // TODO: Ojo al valor de la columna
+
+                    this.cantidadBoletines = Integer.valueOf(cantidadBoletines);
+                }
+
+                executeQuery_Reuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdComunidad=" + IDComunidadActual);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        progressDialog.dismiss();
+    }
+
+    private void executeQuery_Boletines(String URL) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosCantidadBoletinesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                progressDialog.dismiss();
+                MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
+    }
+
+    private void obtenerDatosCantidadReunionesResponse(String response){
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No ha sido posible cargar los datos.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadReuniones").toString(); // TODO: Ojo al valor de la columna
+
+                    this.cantidadBoletines = Integer.valueOf(cantidadBoletines);
+                }
+
+                setData(2, 100);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        progressDialog.dismiss();
+    }
+
+    private void executeQuery_Reuniones(String URL) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosCantidadReunionesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                progressDialog.dismiss();
+                MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
+    }
+
+    private void MessageDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                //      .setIcon(R.drawable.ic_img_diag_error_icon)
+                .setMessage(message).setTitle("Error")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

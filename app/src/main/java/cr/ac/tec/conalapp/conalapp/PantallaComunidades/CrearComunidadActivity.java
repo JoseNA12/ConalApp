@@ -1,6 +1,7 @@
 package cr.ac.tec.conalapp.conalapp.PantallaComunidades;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +15,27 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterComunidadInforme;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
+import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
 import cr.ac.tec.conalapp.conalapp.R;
 
 public class CrearComunidadActivity extends AppCompatActivity {
@@ -29,6 +46,8 @@ public class CrearComunidadActivity extends AppCompatActivity {
     private Spinner sp_provincias, sp_cantones_por_provincia;
     private String promptProvincias = "Seleccione una provincia";
     private String promptCantones = "Seleccione un canton";
+
+    private ProgressDialog progressDialog;
 
     private String[] provincias, cantones_san_jose, cantones_alajuela, cantones_cartago,
             cantones_guanacaste, cantones_heredia, cantones_puntarenas, cantones_limon;
@@ -43,10 +62,18 @@ public class CrearComunidadActivity extends AppCompatActivity {
 
     private void inicializarComponentes()
     {
+        initProgressDialog();
         initEditText();
         initButtons();
         initListView();
         initSpinner();
+    }
+
+    private void initProgressDialog()
+    {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando información...");
+        progressDialog.setCancelable(false);
     }
 
     private void initEditText()
@@ -165,12 +192,63 @@ public class CrearComunidadActivity extends AppCompatActivity {
             }
             else
             {
-                // Crear comunidad, executeQuery(...);
+                executeQuery(ClaseSingleton.INSERT_COMUNIDAD, input_nombre.getText().toString(),
+                        input_descripcion.getText().toString(), provincia, canton);
             }
         }
         else
         {
             MessageDialog("Por favor, ingrese un nombre para la comunidad.");
+        }
+    }
+
+    private void executeQuery(String URL, final String nombre, final String descripcion, final String provincia,
+                              final String canton) {
+
+        progressDialog = ProgressDialog.show(this,"Atención","Creando comunidad...");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) { // Si serv contesta
+                System.out.println(response);
+                RegistrarReunion_Response(response);
+            }
+        }, new Response.ErrorListener() {  //Tratar errores conexion con serv
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //MessageDialog(error.toString());
+                progressDialog.dismiss();
+                MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
+                System.out.print("get params");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("IdPersona", String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()));
+                params.put("Nombre", nombre);
+                params.put("Descripcion", descripcion);
+                params.put("Provincia", provincia);
+                params.put("Canton", canton);
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(stringRequest);
+    }
+
+    private void RegistrarReunion_Response(String response){
+        progressDialog.dismiss();
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No se pudo crear la comunidad. Inténtelo de nuevo o maa tarde.");
+            }
+            else {
+                MessageDialog("Se ha creado la comunidad correctamente.");
+                finish();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

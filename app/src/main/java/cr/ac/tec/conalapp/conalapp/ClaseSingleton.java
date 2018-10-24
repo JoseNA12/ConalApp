@@ -65,10 +65,19 @@ public class ClaseSingleton {
     public static final String SELECT_ALL_REUNION = URL_HOST + "archivosPHP/reunion_select_all.php";
 
     // PHP Puntos Interes
-
     public static final String INSERT_PUNTO_INTERES = URL_HOST + "archivosPHP/puntosInteres_insertar.php";
     public static final String SELECT_PUNTO_INTERES_BY_USUARIO = URL_HOST + "archivosPHP/puntosInteres_select_by_id.php";
     public static final String DELETE_PUNTO_INTERES_BY_ID = URL_HOST + "archivosPHP/puntosInteres_delete_by_id.php";
 
+    // PHP Comunidades
+    public static final String INSERT_COMUNIDAD = URL_HOST + "archivosPHP/.php"; // TODO: Meter el nombre del php
+    // Request con todas las comunidades por haber (select *)
+    public static final String SELECT_ALL_COMUNIDAD = URL_HOST + "archivosPHP/.php";
+    // Request de todas las comunidades por haber, unicamente el nombre (select nombre), mas la cantidad de boletines asociados
+    public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES = URL_HOST + "archivosPHP/.php";
+    // devuelve la cantidad de boletines asociados a una comunidad, recibe el ID de la comunidad
+    public static final String SELECT_ALL_COUNT_BOLETINES_BY_ID = URL_HOST + "archivosPHP/.php"; // el ID es de la comunidad
+    // devuelve la cantidad de reuniones asociados a una comunidad, recibe el ID de la comunidad
+    public static final String SELECT_ALL_COUNT_REUNIONES_BY_ID = URL_HOST + "archivosPHP/.php"; // el ID es de la comunidad
 
 }
