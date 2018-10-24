@@ -85,7 +85,7 @@
             android:label="@string/nombre_pantalla_editar_info"
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
-            android:name=".PantallaEstadisticas.EstadisticasActivity"
+            android:name=".PantallaComunidades.EstadisticasActivity"
             android:label="@string/estadisticas"
             android:parentActivityName=".PantallaPrincipal.PrincipalActivity" />
         <activity
@@ -95,8 +95,20 @@
         <activity
             android:name=".PantallaComunidades.CrearComunidadActivity"
             android:label="@string/crear_comunidades"
-            android:parentActivityName=".PantallaComunidades.ComunidadesActivity"
-        />
+            android:parentActivityName=".PantallaComunidades.ComunidadesActivity" />
+        <activity
+            android:name=".PantallaComunidades.PerfilComunidadActivity"
+            android:label="@string/comunidad"
+            android:parentActivityName=".PantallaComunidades.BusquedaComunidadesActivity" />
+        <activity
+            android:name=".PantallaComunidades.EstadisticasComunidadActivity"
+            android:label="@string/estadisticas"
+            android:parentActivityName=".PantallaComunidades.BusquedaComunidadesActivity" />
+        <activity
+            android:name=".PantallaComunidades.BusquedaComunidadesActivity"
+            android:label="@string/buscar_comunidades"
+            android:parentActivityName=".PantallaComunidades.ComunidadesActivity" />
+
     </application>
 
 </manifest>

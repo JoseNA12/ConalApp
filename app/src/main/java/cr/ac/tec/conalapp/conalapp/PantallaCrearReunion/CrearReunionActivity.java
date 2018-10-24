@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
@@ -23,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -69,8 +71,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
@@ -82,6 +86,10 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
     private TextInputEditText input_titular, input_proposito;
     private EditText input_fecha, input_hora;
     private Button btn_crear_reunion;
+
+    private AutoCompleteTextView actv_comunidades;
+
+    private Map<String, String> comunidadesActuales = new HashMap<String, String>(); // orden: <key, value>
 
     private String[] provincias, cantones_san_jose, cantones_alajuela, cantones_cartago,
             cantones_guanacaste, cantones_heredia, cantones_puntarenas, cantones_limon;
@@ -182,6 +190,8 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
             }
         });
 
+        actv_comunidades = (AutoCompleteTextView) findViewById(R.id.actv_comunidades_id);
+
         scrollView = (ScrollView) findViewById(R.id.scroll_view_id);
 
         initInputFecha();
@@ -190,7 +200,19 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
         initFrameLayout();
         initImageView();
         initSwitchs();
+        initAutoCompleteTV();
     }
+
+    private void initAutoCompleteTV()
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, getNombreComunidades());
+        //Getting the instance of AutoCompleteTextView
+        actv_comunidades.setThreshold(1);//will start working from first character
+        actv_comunidades.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        actv_comunidades.setTextColor(Color.rgb(204, 77, 41));
+    }
+
 
     private void initInputFecha()
     {
@@ -368,6 +390,41 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
         sp_cantones_por_provincia.setAdapter(adapter_cant);
     }
 
+    private String[] getNombreComunidades() // hacer el request a la BD con los nombres de las comunidades
+    {
+        // TODO: El request debe trear el nombre de las comunidades junto a su ID (primary key)
+        comunidadesActuales = new HashMap<String, String>();
+        comunidadesActuales.put("1", "Comunidad 1");
+        comunidadesActuales.put("2", "Comunidad 2");
+        comunidadesActuales.put("3", "Comunidad 3");
+        comunidadesActuales.put("4", "Comunidad 4");
+
+        return diccionario_to_array(comunidadesActuales);
+    }
+
+    private String[] diccionario_to_array(Map<String, String> pDiccionario) // solo <String, String>
+    {
+        List<String> miLista = new ArrayList<String>();
+
+        for (Map.Entry<String, String> pDatos : pDiccionario.entrySet())
+        {
+            miLista.add(pDatos.getValue());
+        }
+        return miLista.toArray(new String[comunidadesActuales.size()]);
+    }
+
+    private String getIDComunidad(String pNombreComunidadEscogida)
+    {
+        if (pNombreComunidadEscogida.trim().length() == 0) { return ""; } // no ingresó nada, almacene "" en la tabla
+        for (Map.Entry<String, String> entry : comunidadesActuales.entrySet())
+        {
+            if (entry.getValue().equals(pNombreComunidadEscogida))
+            {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
 
     /**
      * Saves the state of the map when the activity is paused.
@@ -613,30 +670,37 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
         });
     }
 
-    private void btn_action_publicarReunion(){
-
-        if (!input_titular.getText().toString().trim().equals(""))
+    private void btn_action_publicarReunion()
+    {
+        if (getIDComunidad(actv_comunidades.getText().toString()) != null)
         {
-            if (!input_hora.getText().toString().equals("") && !input_fecha.getText().toString().equals(""))
+            if (!input_titular.getText().toString().trim().equals(""))
             {
-                if (sch_desea_ubicar_lugar.isChecked())
+                if (!input_hora.getText().toString().equals("") && !input_fecha.getText().toString().equals(""))
                 {
-                    // https://www.journaldev.com/9708/android-asynctask-example-tutorial
-                    captureScreen(); // -> despues de tomar la captura y subir la imagen, llama a registrarBoletinBD
+                    if (sch_desea_ubicar_lugar.isChecked())
+                    {
+                        // https://www.journaldev.com/9708/android-asynctask-example-tutorial
+                        captureScreen(); // -> despues de tomar la captura y subir la imagen, llama a registrarBoletinBD
+                    }
+                    else
+                    {
+                        procesarSolicitudReunion(ClaseSingleton.linkImagenGPSNoDisponible);
+                    }
                 }
                 else
                 {
-                    procesarSolicitudReunion(ClaseSingleton.linkImagenGPSNoDisponible);
+                    MessageDialog("Debe ingresar una fecha y hora del acontecimiento!");
                 }
             }
             else
             {
-                MessageDialog("Debe ingresar una fecha y hora del acontecimiento!");
+                MessageDialog("Debe ingresar un titular!");
             }
         }
         else
         {
-            MessageDialog("Debe ingresar un titular!");
+            MessageDialog("La comunidad ingresada no existe!. Por favor, verifique el nombre ingresado.");
         }
     }
 
@@ -664,6 +728,7 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
             @Override
             public void onErrorResponse(VolleyError error) {
                 //MessageDialog(error.toString());
+                progressDialog.dismiss();
                 MessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
             }
         }) {

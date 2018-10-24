@@ -21,13 +21,13 @@
         android:checkableBehavior="single">
 
         <item android:id="@+id/estadisticas"
-            android:icon="@drawable/ic_estadistica_3"
+            android:icon="@drawable/ic_estadisticas_negro"
             android:title="@string/estadisticas"/>
         <item android:id="@+id/configuracion"
             android:icon="@drawable/ic_configuracion"
             android:title="@string/configuracion"/>
         <item android:id="@+id/sobre_nosotros"
-            android:icon="@drawable/ic_sobre_team"
+            android:icon="@drawable/ic_team"
             android:title="@string/sobre_nosotros"/>
     </group>
     <group

@@ -19,7 +19,7 @@ import cr.ac.tec.conalapp.conalapp.Adaptadores.PagerAdapterPrincipal;
 import cr.ac.tec.conalapp.conalapp.PantallaComunidades.ComunidadesActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaConfiguracion.ConfiguracionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaContactos.ContactosActivity;
-import cr.ac.tec.conalapp.conalapp.PantallaEstadisticas.EstadisticasActivity;
+import cr.ac.tec.conalapp.conalapp.PantallaComunidades.EstadisticasActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaLogin.IniciarSesionActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
 import cr.ac.tec.conalapp.conalapp.PantallaPuntosInteres.PuntosInteresActivity;

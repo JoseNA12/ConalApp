@@ -7,7 +7,7 @@
     <item
         android:id="@+id/action_comunidades"
         android:title="Item"
-        android:icon="@drawable/ic_comunidad"
+        android:icon="@drawable/ic_comunidad_3"
         app:showAsAction="always"
         />
 </menu>

@@ -22,8 +22,6 @@
     <string name="contactos_emergencia">Contactos de Emergecia</string>
     <string name="configuracion">Configuración</string>
     <string name="estadisticas">Estadisticas</string>
-    <string name="comunidades">Comunidades</string>
-    <string name="crear_comunidades">Crear Comunidad</string>
     <string name="sobre_nosotros">Sobre Nosotros</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
 
@@ -202,12 +200,17 @@
     <string name="nombre_pantalla_crear_reunion">Crear Reunión</string>
     <string name="btn_crear_reunion">PUBLICAR REUNIÓN</string>
     <string name="_text_view">Provincia/Cantón</string>
+    <string name="__text_view">Comunidad (opcional)</string>
 
     <!-- Pantalla crear boletin y reunion -->
     <string name="nombre_pantalla_editar_info">Editar Perfil</string>
 
-    <!-- Pantalla crear comunidad -->
+    <!-- Pantalla comunidades -->
     <string name="btn_crear_comunidad">CREAR COMUNIDAD</string>
+    <string name="comunidades">Comunidades</string>
+    <string name="comunidad">Comunidad</string>
+    <string name="crear_comunidades">Crear Comunidad</string>
+    <string name="buscar_comunidades">Buscar Comunidades</string>
 
 
 </resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_nombre_comunidad_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:maxLength="30"
+        android:text="Nombre comunidad"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_provincia_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_nombre_comunidad_id"
+        android:text="Provincia" />
+
+    <TextView
+        android:id="@+id/tv_espacio_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_nombre_comunidad_id"
+        android:layout_toRightOf="@+id/tv_provincia_id"
+        android:text=" - " />
+
+    <TextView
+        android:id="@+id/tv_canton_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_espacio_id"
+        android:layout_below="@+id/tv_nombre_comunidad_id"
+        android:text="Canton" />
+
+</RelativeLayout>

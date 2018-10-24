@@ -5,15 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PantallaComunidades.EstadisticasActivity">
+    tools:context=".PantallaComunidades.EstadisticasComunidadActivity">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart_comunidades"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="14dp">
-
-    </com.github.mikephil.charting.charts.BarChart>
+        android:layout_margin="10dp" />
 
 </LinearLayout>

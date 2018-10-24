@@ -14,8 +14,7 @@
         android:icon="@drawable/ic_buscar"
         android:orderInCategory="100"
         android:title="Buscar"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always"
         />
 
 </menu>

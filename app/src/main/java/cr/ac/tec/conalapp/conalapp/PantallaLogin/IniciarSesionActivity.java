@@ -51,6 +51,7 @@ public class IniciarSesionActivity extends AppCompatActivity {
     {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Iniciando sesión ...");
+        progressDialog.setCancelable(false);
 
         ET_usuarioCorreo = findViewById(R.id.input_email_id);
         ET_usuarioContrasena = findViewById(R.id.input_contrasenia_id);

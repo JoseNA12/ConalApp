@@ -2,12 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".PantallaComunidades.EstadisticasActivity">
+    tools:context=".PantallaComunidades.PerfilComunidadActivity">
 
     <item
-        android:id="@+id/action_refrescar_estadisticas"
-        android:icon="@drawable/ic_refrescar"
+        android:id="@+id/action_estadisticas_perfil"
+        android:icon="@drawable/ic_estadisticas_blanco"
         android:title=""
         app:showAsAction="always" />
-
 </menu>

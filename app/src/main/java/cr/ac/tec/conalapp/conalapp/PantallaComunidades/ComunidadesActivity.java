@@ -38,7 +38,6 @@ import cr.ac.tec.conalapp.conalapp.R;
 public class ComunidadesActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeLayout;
-    private MenuItem buscar_comunidad_item;
     private ArrayList<ReunionModelo> array_informes_comunidades;
     private ListView listView;
     private static ListViewAdapterComunidadInforme adapter;
@@ -56,7 +55,6 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
     {
         initProgressDialog();
         initSwipeLayout();
-        initSearchView();
         initListView();
     }
 
@@ -75,11 +73,6 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light,
                 android.R.color.holo_blue_dark);
-    }
-
-    private  void initSearchView()
-    {
-
     }
 
     private void initListView()
@@ -101,7 +94,7 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                 return true;
 
             case R.id.action_buscar_comunidad:
-                // startActivity(new Intent(getApplicationContext(), CrearComunidadActivity.class));
+                startActivity(new Intent(getApplicationContext(), BusquedaComunidadesActivity.class));
                 return true;
         }
 
@@ -112,28 +105,6 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
     public boolean onCreateOptionsMenu(Menu menu){
         // Inflate the menu; this adds to the action bar if it is present
         getMenuInflater().inflate(R.menu.menu_action_bar_comunidades, menu);
-
-        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-
-                Toast.makeText(ComunidadesActivity.this, "Expandido", Toast.LENGTH_SHORT).show();
-
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-
-                Toast.makeText(ComunidadesActivity.this, "Colapsado", Toast.LENGTH_SHORT).show();
-
-                return true;
-            }
-        };
-
-        buscar_comunidad_item = menu.findItem(R.id.action_buscar_comunidad);
-        buscar_comunidad_item.setOnActionExpandListener(onActionExpandListener);
-
         return true;
     }
 

@@ -1,4 +1,4 @@
-package cr.ac.tec.conalapp.conalapp.PantallaEstadisticas;
+package cr.ac.tec.conalapp.conalapp.PantallaComunidades;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -63,63 +63,6 @@ public class EstadisticasActivity extends AppCompatActivity {
 
         initChar();
 
-        /* NO BORRAR, ES PARA LAS ESTADISTICAS DE LA COMUNIDAD EN CONCRETO
-        // TODO: Poner en el xml de la pantalla (dentro del layout):
-        <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
-        // private PieChart mChart;
-
-        mChart = findViewById(R.id.chart1);
-        mChart.setUsePercentValues(true);
-        mChart.getDescription().setEnabled(false);
-        mChart.setExtraOffsets(5, 5, 5, 5);
-
-        mChart.setDragDecelerationFrictionCoef(0.95f);
-
-        mChart.setCenterText(generateCenterSpannableText());
-
-        mChart.setDrawHoleEnabled(true);
-        mChart.setHoleColor(Color.WHITE);
-
-        mChart.setTransparentCircleColor(Color.WHITE);
-        mChart.setTransparentCircleAlpha(110);
-
-        mChart.setHoleRadius(58f);
-        mChart.setTransparentCircleRadius(61f);
-
-        mChart.setDrawCenterText(true);
-
-        mChart.setRotationAngle(0);
-        // enable rotation of the chart by touch
-        mChart.setRotationEnabled(true);
-        mChart.setHighlightPerTapEnabled(true);
-
-        // mChart.setUnit(" €");
-        // mChart.setDrawUnitsInChart(true);
-
-
-        setData(4, 100);
-
-        mChart.animateY(1400);
-        // mChart.spin(2000, 0, 360);
-
-        Legend l = mChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(0f);
-        l.setYOffset(0f);
-
-        // entry label styling
-        mChart.setEntryLabelColor(Color.BLACK);
-        mChart.setEntryLabelTextSize(14f);
-        */
         ObtenerValoresComunidades();
     }
 
@@ -151,7 +94,7 @@ public class EstadisticasActivity extends AppCompatActivity {
 
     private void ObtenerValoresComunidades()
     {
-        // suponiendo que hago el request al servidor y me da un hashmap con las comunidades y
+        // TODO: suponiendo que hago el request al servidor y me da un hashmap con las comunidades y
         // los valores de las cantidades de los actos delictivos
         Map<String, Integer> datos = new HashMap<String, Integer>();
         datos.put("Comunidad 1", 12);

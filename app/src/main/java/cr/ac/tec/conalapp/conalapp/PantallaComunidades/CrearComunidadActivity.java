@@ -1,5 +1,7 @@
 package cr.ac.tec.conalapp.conalapp.PantallaComunidades;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -20,9 +23,12 @@ import cr.ac.tec.conalapp.conalapp.R;
 
 public class CrearComunidadActivity extends AppCompatActivity {
 
+    private EditText input_nombre, input_descripcion;
     private ListView listView;
-    private Button btn_comunidad;
+    private Button btn_crear_comunidad;
     private Spinner sp_provincias, sp_cantones_por_provincia;
+    private String promptProvincias = "Seleccione una provincia";
+    private String promptCantones = "Seleccione un canton";
 
     private String[] provincias, cantones_san_jose, cantones_alajuela, cantones_cartago,
             cantones_guanacaste, cantones_heredia, cantones_puntarenas, cantones_limon;
@@ -31,15 +37,32 @@ public class CrearComunidadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_comunidad);
-        inicializarComponentes();
 
+        inicializarComponentes();
     }
 
     private void inicializarComponentes()
     {
+        initEditText();
+        initButtons();
         initListView();
-        initBoton();
         initSpinner();
+    }
+
+    private void initEditText()
+    {
+        input_nombre = (EditText) findViewById(R.id.input_nombre_id);
+        input_descripcion = (EditText) findViewById(R.id.input_descripcion_id);
+    }
+
+    private void initButtons()
+    {
+        btn_crear_comunidad = findViewById(R.id.btn_crear_comunidad_id);
+        btn_crear_comunidad.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                btn_action_crearComunidad();
+            }
+        });
     }
 
     private void initListView()
@@ -47,11 +70,6 @@ public class CrearComunidadActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lv_boletines_id);
 
         // executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
-    }
-
-    private void initBoton()
-    {
-        btn_comunidad = (Button) findViewById(R.id.btn_crear_reunion_id);
     }
 
     private void initSpinner()
@@ -128,9 +146,44 @@ public class CrearComunidadActivity extends AppCompatActivity {
     {
         List<String> list = new ArrayList<>(Arrays.asList(pLista));
 
-        if (esCanton) { list.add(0, "Seleccione un canton"); }
-        else { list.add(0, "Seleccione una provincia"); }
+        if (esCanton) { list.add(0, promptCantones); }
+        else { list.add(0, promptProvincias); }
 
         return list.toArray(new String[list.size()]);
+    }
+
+    private void btn_action_crearComunidad()
+    {
+        if (!input_nombre.getText().toString().trim().equals(""))
+        {
+            String provincia = sp_provincias.getSelectedItem().toString();
+            String canton = sp_cantones_por_provincia.getSelectedItem().toString();
+
+            if (!provincia.equals(promptProvincias) && canton.equals(promptCantones))
+            {
+                MessageDialog("Por favor, seleccione un canton.");
+            }
+            else
+            {
+                // Crear comunidad, executeQuery(...);
+            }
+        }
+        else
+        {
+            MessageDialog("Por favor, ingrese un nombre para la comunidad.");
+        }
+    }
+
+    private void MessageDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                //      .setIcon(R.drawable.ic_img_diag_error_icon)
+                .setMessage(message).setTitle("Error")
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        return;
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
