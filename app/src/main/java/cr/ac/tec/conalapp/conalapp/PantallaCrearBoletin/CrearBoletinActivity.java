@@ -819,13 +819,13 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
 
         executeQuery(ClaseSingleton.INSERT_BOLETIN, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()), input_titular.getText().toString(), sp_provincias.getSelectedItem().toString(),
                sp_cantones_por_provincia.getSelectedItem().toString(), input_fecha.getText().toString(), input_hora.getText().toString(), input_descripcion.getText().toString(),
-               stringSospechosos, stringArmas, stringVehiculos, pEnlaceImagen);
+               stringSospechosos, stringArmas, stringVehiculos, pEnlaceImagen, getIDComunidad(actv_comunidades.getText().toString()));
     }
 
     private void executeQuery(String URL, final String IdPersona, final String Titular, final String Provincia,
                               final String Canton, final String Fecha, final String Hora, final String Descripcion,
                               final String Sospechosos, final String Armas, final String Vehiculos,
-                              final String EnlaceGPS)
+                              final String EnlaceGPS, final String IdComunidad)
     {
         progressDialog = ProgressDialog.show(CrearBoletinActivity.this,"Atención","Publicando boletín...");
 
@@ -858,6 +858,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 params.put("ArmasSosp", Armas);
                 params.put("VehiculosSosp", Vehiculos);
                 params.put("EnlaceGPS", EnlaceGPS);
+                params.put("IdComunidad", IdComunidad);
                 return params;
             }
         };

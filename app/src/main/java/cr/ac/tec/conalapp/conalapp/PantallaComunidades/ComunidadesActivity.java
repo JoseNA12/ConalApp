@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,8 +28,8 @@ import java.util.ArrayList;
 
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterComunidadInforme;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
-import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
 import cr.ac.tec.conalapp.conalapp.R;
 
 // https://www.youtube.com/watch?v=rCmF2Ie1m0Y
@@ -38,7 +37,7 @@ import cr.ac.tec.conalapp.conalapp.R;
 public class ComunidadesActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeLayout;
-    private ArrayList<ReunionModelo> array_informes_comunidades;
+    private ArrayList<BoletinModelo> array_informes_comunidades;
     private ListView listView;
     private static ListViewAdapterComunidadInforme adapter;
     private ProgressDialog progressDialog;
@@ -109,7 +108,8 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
     }
 
     public void onRefresh() {
-        executeQuery(ClaseSingleton.SELECT_ALL_REUNION + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+        executeQuery(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+         // SELECT_ALL_COUNT_REUNIONES_BY_ID
     }
 
 
@@ -129,12 +129,16 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     String titular = jsonArray.getJSONObject(i).get("Titular").toString();
-                    String detalle = jsonArray.getJSONObject(i).get("Detalle").toString();
-                    String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
                     String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
-                    String hora = jsonArray.getJSONObject(i).get("Hora").toString();
                     String canton = jsonArray.getJSONObject(i).get("Canton").toString();
+                    String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
+                    String hora = jsonArray.getJSONObject(i).get("Hora").toString();
+                    String descripcion = jsonArray.getJSONObject(i).get("Descripcion").toString();
+                    String sospechosos = jsonArray.getJSONObject(i).get("Sospechosos").toString();
+                    String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
+                    String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
                     String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+                    String nombreComu = jsonArray.getJSONObject(i).get("Comunidad").toString();
 
                     // Info usuario
                     String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
@@ -158,8 +162,11 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                     autor.setLugarResidencia(lugarResidencia);
                     autor.setSobrenombre(sobrenombreAutor);
 
-                    array_informes_comunidades.add(0,
-                            new ReunionModelo(autor.getNombre() + autor.getApellido(), titular, provincia, fecha, hora, linkImagenGPS, detalle, canton, autor));
+                    System.out.println("Autor " + autor.getNombre());
+                    System.out.println("Autor " + autor.getId());
+                    array_informes_comunidades.add(i,
+                            new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, provincia, canton, fecha, hora, descripcion,
+                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, nombreComu));
                 }
 
                 adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
@@ -170,7 +177,7 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        ReunionModelo dataModel = array_informes_comunidades.get(position);
+                        BoletinModelo dataModel = array_informes_comunidades.get(position);
                     }
                 });
             }

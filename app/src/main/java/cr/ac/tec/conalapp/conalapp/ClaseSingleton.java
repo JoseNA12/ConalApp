@@ -7,10 +7,11 @@ public class ClaseSingleton {
 
     private static ClaseSingleton instancia;
 
-    private ClaseSingleton(){}
+    private ClaseSingleton() {
+    }
 
-    public static synchronized ClaseSingleton getInstance(){
-        if(instancia == null){
+    public static synchronized ClaseSingleton getInstance() {
+        if (instancia == null) {
             instancia = new ClaseSingleton();
         }
         return instancia;
@@ -35,10 +36,10 @@ public class ClaseSingleton {
     /**
      * Gmail: conalapp@gmail.com
      * Passw: conalapptec123
-     *
+     * <p>
      * 000webhost: conalapp@gmail.com
      * Passw: conalapptec123
-     *
+     * <p>
      * BaseDatos: conalappbd
      * Passw: conalapptec123
      */
@@ -52,9 +53,9 @@ public class ClaseSingleton {
     /* PHP usuarios */
     public static final String GET_USER_PASS = URL_HOST + "archivosPHP/select_usuario_iniciar_sesion.php";
     public static final String INSERT_USER = URL_HOST + "archivosPHP/persona_insertar.php";
-    public static  final String SELECT_USER_BY_ID = URL_HOST + "archivosPHP/select_usuario_by_id.php";
+    public static final String SELECT_USER_BY_ID = URL_HOST + "archivosPHP/select_usuario_by_id.php";
     public static final String UPDATE_USER = URL_HOST + "archivosPHP/persona_update.php";
-    public static  final String DELETE_USER = URL_HOST + "archivosPHP/persona_delete.php";
+    public static final String DELETE_USER = URL_HOST + "archivosPHP/persona_delete.php";
 
     // PHP Boletin
     public static final String INSERT_BOLETIN = URL_HOST + "archivosPHP/boletin_insertar.php";
@@ -70,14 +71,17 @@ public class ClaseSingleton {
     public static final String DELETE_PUNTO_INTERES_BY_ID = URL_HOST + "archivosPHP/puntosInteres_delete_by_id.php";
 
     // PHP Comunidades
-    public static final String INSERT_COMUNIDAD = URL_HOST + "archivosPHP/.php"; // TODO: Meter el nombre del php
-    // Request con todas las comunidades por haber (select *)
-    public static final String SELECT_ALL_COMUNIDAD = URL_HOST + "archivosPHP/.php";
-    // Request de todas las comunidades por haber, unicamente el nombre (select nombre), mas la cantidad de boletines asociados
-    public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES = URL_HOST + "archivosPHP/.php";
-    // devuelve la cantidad de boletines asociados a una comunidad, recibe el ID de la comunidad
-    public static final String SELECT_ALL_COUNT_BOLETINES_BY_ID = URL_HOST + "archivosPHP/.php"; // el ID es de la comunidad
-    // devuelve la cantidad de reuniones asociados a una comunidad, recibe el ID de la comunidad
-    public static final String SELECT_ALL_COUNT_REUNIONES_BY_ID = URL_HOST + "archivosPHP/.php"; // el ID es de la comunidad
+    public static final String INSERT_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_insertar.php"; // TODO: Meter el nombre del php
+    public static final String SELECT_ALL_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_select_all.php";
+    public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES = URL_HOST + "archivosPHP/comunidad_count_boletines.php";
+    public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_REUNIONES = URL_HOST + "archivosPHP/comunidad_count_reunones.php";
+
+    // TODOS LOS NOMBRES DE COMUNIDAD Y SU COUNT DE REUNIONES
+    public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_REUNIONES_ALL = URL_HOST + "archivosPHP/comunidad_count_reunones_all.php";
+
+    // TODOS LOS NOMBRES DE COMUNIDAD Y SU COUNT DE BOLETINES
+    public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES_ALL = URL_HOST + "archivosPHP/comunidad_count_boletines_all.php";
+    public static final String SELECT_ALL_COUNT_BOLETINES_BY_ID = URL_HOST + "archivosPHP/comunidad_select_boletines_by_persona.php"; // el ID es de la persona
+    public static final String SELECT_ALL_COUNT_REUNIONES_BY_ID = URL_HOST + "archivosPHP/comunidad_select_reuniones_by_persona.php"; // el ID es de la persona
 
 }

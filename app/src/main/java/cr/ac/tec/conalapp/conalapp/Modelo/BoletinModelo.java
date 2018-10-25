@@ -14,8 +14,9 @@ public class BoletinModelo {
     private String vehiculosSosp;
     private String linkImagenGPS;
     private Persona autorInfo;
+    private String idComunidad;
 
-    public BoletinModelo(String autor, String titular, String provincia, String canton, String fecha, String hora, String descripcion, String sospechosos, String armasSosp, String vehiculosSosp, String linkImagenGPS, Persona autorInfo) {
+    public BoletinModelo(String autor, String titular, String provincia, String canton, String fecha, String hora, String descripcion, String sospechosos, String armasSosp, String vehiculosSosp, String linkImagenGPS, Persona autorInfo, String idComunidad) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
@@ -28,6 +29,15 @@ public class BoletinModelo {
         this.vehiculosSosp = vehiculosSosp;
         this.linkImagenGPS = linkImagenGPS;
         this.autorInfo = autorInfo;
+        this.idComunidad = idComunidad;
+    }
+
+    public String getIdComunidad() {
+        return idComunidad;
+    }
+
+    public void setIdComunidad(String idComunidad) {
+        this.idComunidad = idComunidad;
     }
 
     public Persona getAutorInfo() {

@@ -3,11 +3,9 @@ package cr.ac.tec.conalapp.conalapp.PantallaComunidades;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteBindOrColumnIndexOutOfRangeException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,13 +14,11 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,9 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterComunidadInforme;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
-import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
 import cr.ac.tec.conalapp.conalapp.R;
 

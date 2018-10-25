@@ -54,7 +54,7 @@ public class EstadisticasActivity extends AppCompatActivity {
 
         initComponentes();
 
-        executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES);
+        executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES_ALL);
     }
 
     private void initComponentes()
@@ -205,7 +205,7 @@ public class EstadisticasActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.action_refrescar_estadisticas:
-                executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES);
+                executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES_ALL);
                 return true;
         }
 
