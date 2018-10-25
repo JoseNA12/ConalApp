@@ -146,6 +146,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
                     String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
                     String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+                    String IdComunidad = jsonArray.getJSONObject(i).get("IdComunidad").toString();
 
                     // Info usuario
                     String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
@@ -171,9 +172,9 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                     System.out.println("Autor " + autor.getNombre());
                     System.out.println("Autor " + autor.getId());
-                    array_boletines.add(0,
+                    array_boletines.add(i,
                             new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, provincia, canton, fecha, hora, descripcion,
-                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor));
+                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, IdComunidad));
                 }
 
                 adapter = new ListViewAdapterBoletin(array_boletines, getContext());

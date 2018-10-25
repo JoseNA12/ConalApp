@@ -709,12 +709,12 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
         executeQuery(ClaseSingleton.INSERT_REUNION, String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()),
                 sp_provincias.getSelectedItem().toString(), sp_cantones_por_provincia.getSelectedItem().toString(),
                 input_titular.getText().toString(), input_proposito.getText().toString(), input_hora.getText().toString(),
-                input_fecha.getText().toString(), pEnlaceImagen);
+                input_fecha.getText().toString(), pEnlaceImagen, getIDComunidad(actv_comunidades.getText().toString()));
     }
 
     private void executeQuery(String URL, final String IdPersona, final String Provincia, final String Canton,
                               final String Titular, final String Descripcion, final String Hora,
-                              final String Fecha, final String EnlaceGPS) {
+                              final String Fecha, final String EnlaceGPS, final String IdComunidad) {
 
         progressDialog = ProgressDialog.show(this,"Atención","Publicando reunión...");
 
@@ -744,6 +744,7 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
                 params.put("Hora", Hora);
                 params.put("Descripcion", Descripcion);
                 params.put("EnlaceGPS", EnlaceGPS);
+                params.put("IdComunidad", IdComunidad);
                 return params;
             }
         };

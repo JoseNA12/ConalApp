@@ -16,14 +16,14 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
+import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
 
-public class ListViewAdapterComunidadInforme extends ArrayAdapter<ReunionModelo> implements View.OnClickListener {
+public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo> implements View.OnClickListener {
 
-    private ArrayList<ReunionModelo> dataSet;
+    private ArrayList<BoletinModelo> dataSet;
     private Context mContext;
 
     private static class RetenedorVista {
@@ -38,7 +38,7 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<ReunionModelo>
         Button btn_comentarios;
     }
 
-    public ListViewAdapterComunidadInforme(ArrayList<ReunionModelo> data, Context context) {
+    public ListViewAdapterComunidadInforme(ArrayList<BoletinModelo> data, Context context) {
         super(context, R.layout.row_item_comunidades, data);
         this.dataSet = data;
         this.mContext = context;
@@ -51,7 +51,7 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<ReunionModelo>
         {
             int position = (Integer) v.getTag();
             Object object = getItem(position);
-            ReunionModelo reunionModelo = (ReunionModelo) object;
+            BoletinModelo reunionModelo = (BoletinModelo) object;
 
             switch (v.getId()) {
                 case R.id.btn_comentarios_id:
@@ -67,7 +67,7 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<ReunionModelo>
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
-        final ReunionModelo comunidadInformeModelo = getItem(position);
+        final BoletinModelo comunidadInformeModelo = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         ListViewAdapterComunidadInforme.RetenedorVista retenedorVista; // view lookup cache stored in tag
 

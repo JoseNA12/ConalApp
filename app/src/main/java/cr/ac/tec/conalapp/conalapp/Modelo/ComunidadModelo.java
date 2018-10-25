@@ -6,12 +6,32 @@ public class ComunidadModelo {
     private String descripcion;
     private String provincia;
     private String canton;
+    private String creador;
+    private String idComunidad;
 
-    public ComunidadModelo(String nombre, String descripcion, String provincia, String canton) {
+    public ComunidadModelo(String idComunidad, String nombre, String creador, String descripcion, String provincia, String canton) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.provincia = provincia;
         this.canton = canton;
+        this.creador = creador;
+        this.idComunidad = idComunidad;
+    }
+
+    public String getIdComunidad() {
+        return idComunidad;
+    }
+
+    public void setIdComunidad(String idComunidad) {
+        this.idComunidad = idComunidad;
+    }
+
+    public String getCreador() {
+        return creador;
+    }
+
+    public void setCreador(String creador) {
+        this.creador = creador;
     }
 
     public String getNombre() {

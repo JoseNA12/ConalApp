@@ -69,7 +69,7 @@ public class BusquedaComunidadesActivity extends AppCompatActivity implements Se
         initSearchView();
 
         progressDialog.show();
-        executeQuery(ClaseSingleton.SELECT_ALL_BOLETIN + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+        executeQuery(ClaseSingleton.SELECT_ALL_COMUNIDAD);
     }
 
     private void initProgressDialog()
@@ -112,19 +112,15 @@ public class BusquedaComunidadesActivity extends AppCompatActivity implements Se
 
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    String titular = jsonArray.getJSONObject(i).get("Titular").toString();
                     String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
                     String canton = jsonArray.getJSONObject(i).get("Canton").toString();
-                    String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
-                    String hora = jsonArray.getJSONObject(i).get("Hora").toString();
                     String descripcion = jsonArray.getJSONObject(i).get("Descripcion").toString();
-                    String sospechosos = jsonArray.getJSONObject(i).get("Sospechosos").toString();
-                    String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
-                    String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
-                    String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+                    String nombre =jsonArray.getJSONObject(i).get("Comunidad").toString();
+                    String idComunidad = jsonArray.getJSONObject(i).get("IdComunidad").toString();
+                    String creador =  jsonArray.getJSONObject(i).get("IdPersonaCreadora").toString();
 
                     arraylist_comunidades.add(0,
-                            new ComunidadModelo(titular, "", "San José", "Desamparados"));
+                            new ComunidadModelo(idComunidad, nombre, creador, descripcion, provincia, canton));
                 }
 
                 adapter = new ListViewAdapterBusquedaComunidades(this, arraylist_comunidades);
@@ -138,7 +134,10 @@ public class BusquedaComunidadesActivity extends AppCompatActivity implements Se
                         ComunidadModelo dataModel = arraylist_comunidades.get(position);
 
                         Intent i =  new Intent(getApplicationContext(), PerfilComunidadActivity.class);
-                        i.putExtra("TipoPerfil", dataModel.getNombre());
+                        i.putExtra("IdComu", dataModel.getIdComunidad());
+                        i.putExtra("Nombre", dataModel.getNombre());
+                        i.putExtra("Provincia", dataModel.getProvincia());
+                        i.putExtra("Canton", dataModel.getCanton());
                         startActivity(i);
                     }
                 });

@@ -12,8 +12,9 @@ public class ReunionModelo {
     private String descripcion;
     private String linkImagenGPS;
     private Persona autorInfo;
+    private String idComunidad;
 
-    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton, Persona autorInfo) {
+    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton, Persona autorInfo, String idComunidad) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
@@ -23,6 +24,15 @@ public class ReunionModelo {
         this.linkImagenGPS = linkImagenGPS;
         this.canton = canton;
         this.autorInfo = autorInfo;
+        this.idComunidad = idComunidad;
+    }
+
+    public String getIdComunidad() {
+        return idComunidad;
+    }
+
+    public void setIdComunidad(String idComunidad) {
+        this.idComunidad = idComunidad;
     }
 
     public Persona getAutorInfo() {

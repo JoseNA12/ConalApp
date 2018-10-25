@@ -6,10 +6,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -31,10 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterReunion;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
-import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearReunion.CrearReunionActivity;
@@ -147,6 +143,7 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     String hora = jsonArray.getJSONObject(i).get("Hora").toString();
                     String canton = jsonArray.getJSONObject(i).get("Canton").toString();
                     String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+                    String IdComunidad = jsonArray.getJSONObject(i).get("IdComunidad").toString();
 
                     // Info usuario
                     String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
@@ -170,8 +167,8 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     autor.setLugarResidencia(lugarResidencia);
                     autor.setSobrenombre(sobrenombreAutor);
 
-                    array_reuniones.add(0,
-                            new ReunionModelo(autor.getNombre() + autor.getApellido(), titular, provincia, fecha, hora, linkImagenGPS, detalle, canton, autor));
+                    array_reuniones.add(i,
+                            new ReunionModelo(autor.getNombre() + autor.getApellido(), titular, provincia, fecha, hora, linkImagenGPS, detalle, canton, autor, IdComunidad));
                 }
 
                 adapter = new ListViewAdapterReunion(array_reuniones, getContext());
