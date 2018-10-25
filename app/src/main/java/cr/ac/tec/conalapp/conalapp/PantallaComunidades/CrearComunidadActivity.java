@@ -204,8 +204,8 @@ public class CrearComunidadActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) { // Si serv contesta
-                System.out.println(response);
-                RegistrarReunion_Response(response);
+                // System.out.println(response);
+                RegistrarComunidad_Response(response);
             }
         }, new Response.ErrorListener() {  //Tratar errores conexion con serv
             @Override
@@ -217,7 +217,7 @@ public class CrearComunidadActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
-                System.out.print("get params");
+                //System.out.print("get params");
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("IdPersona", String.valueOf(ClaseSingleton.USUARIO_ACTUAL.getId()));
                 params.put("Nombre", nombre);
@@ -230,12 +230,12 @@ public class CrearComunidadActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
-    private void RegistrarReunion_Response(String response){
+    private void RegistrarComunidad_Response(String response){
         progressDialog.dismiss();
         try{
             JSONObject jsonObject = new JSONObject(response);
             if (jsonObject.getString("status").equals("false")){
-                MessageDialog("No se pudo crear la comunidad. Inténtelo de nuevo o maa tarde.");
+                MessageDialog("No se pudo crear la comunidad. Inténtelo de nuevo o más tarde.");
             }
             else {
                 MessageDialog("Se ha creado la comunidad correctamente.");

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -82,11 +83,11 @@ public class EstadisticasActivity extends AppCompatActivity {
         l.setYOffset(0f);
         l.setXOffset(10f);
         l.setYEntrySpace(0f);
-        l.setTextSize(8f);
+        l.setTextSize(10f);
 
         // hide the X legends
         barChart.getAxisRight().setEnabled(false);
-
+        barChart.getXAxis().setDrawLabels(false);
     }
 
     private void initProgressDialog()
@@ -226,6 +227,7 @@ public class EstadisticasActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(response);
 
             if (jsonObject.getString("status").equals("false")){
+
                 MessageDialog("No ha sido posible cargar los datos.\nVerifique su conexión a internet!");
             }
             else
@@ -235,7 +237,7 @@ public class EstadisticasActivity extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
                     String nombreComunidad = jsonArray.getJSONObject(i).get("Nombre").toString();
-                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadBoletines").toString(); // TODO: Ojo al valor de la columna
+                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadBoletines").toString();
 
                     datos.put(nombreComunidad, Integer.valueOf(cantidadBoletines));
                 }
@@ -250,6 +252,9 @@ public class EstadisticasActivity extends AppCompatActivity {
     }
 
     private void executeQuery(String URL) {
+
+        progressDialog = ProgressDialog.show(this,"Atención","Obteniendo datos...");
+
         RequestQueue queue = Volley.newRequestQueue(this);
         //errorMessageDialog(URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {

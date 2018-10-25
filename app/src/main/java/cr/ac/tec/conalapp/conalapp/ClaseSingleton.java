@@ -71,7 +71,7 @@ public class ClaseSingleton {
     public static final String DELETE_PUNTO_INTERES_BY_ID = URL_HOST + "archivosPHP/puntosInteres_delete_by_id.php";
 
     // PHP Comunidades
-    public static final String INSERT_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_insertar.php"; // TODO: Meter el nombre del php
+    public static final String INSERT_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_insertar.php"; //
     public static final String SELECT_ALL_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_select_all.php";
     public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES = URL_HOST + "archivosPHP/comunidad_count_boletines.php";
     public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_REUNIONES = URL_HOST + "archivosPHP/comunidad_count_reunones.php";

@@ -70,6 +70,7 @@ import com.google.firebase.storage.UploadTask;
 
 import android.location.Location;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -84,7 +85,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
+import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
+import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.R;
 
 
@@ -193,6 +197,10 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
+    private void ObtenerDatosComunidades()
+    {
+
+    }
 
     private void inicializarComponentes()
     {
@@ -220,7 +228,9 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         initImageView();
         initSpinners();
         initSwitchs();
-        initAutoCompleteTV();
+
+        executeQuery_obtenerComunidades(ClaseSingleton.SELECT_ALL_COMUNIDAD);
+        // initAutoCompleteTV();
 
         // FirebaseOptions opts = FirebaseApp.getInstance().getOptions();
         // Log.i(TAG, "Bucket = " + opts.getStorageBucket());
@@ -470,11 +480,11 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         // TODO: Hacer el request a la BD con los nombres de las comunidades asociadas al usuario
         // El request debe trear el nombre de las comunidades junto a su ID (primary key)
         // Seria como: comunidadesActuales = executeQuery(); y listo
-        comunidadesActuales = new HashMap<String, String>();
+        /*comunidadesActuales = new HashMap<String, String>();
         comunidadesActuales.put("1", "Comunidad 1");
         comunidadesActuales.put("2", "Comunidad 2");
         comunidadesActuales.put("3", "Comunidad 3");
-        comunidadesActuales.put("4", "Comunidad 4");
+        comunidadesActuales.put("4", "Comunidad 4");*/
 
         // -------------------------------------------------------------------------------------
 
@@ -832,7 +842,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) { // Si serv contesta
-                System.out.println(response);
+                Log.d("NEPE", response);
                 RegistrarBoletinBD_Response(response);
             }
         }, new Response.ErrorListener() {  //Tratar errores conexion con serv
@@ -845,9 +855,10 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         }) {
             @Override
             protected Map<String, String> getParams() { // Armar Map para enviar al serv mediante un POST
-                System.out.print("get params");
+
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("IdPersona", IdPersona);
+                params.put("IdComunidad", IdComunidad);
                 params.put("Titular", Titular);
                 params.put("Provincia", Provincia);
                 params.put("Canton", Canton);
@@ -858,7 +869,6 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 params.put("ArmasSosp", Armas);
                 params.put("VehiculosSosp", Vehiculos);
                 params.put("EnlaceGPS", EnlaceGPS);
-                params.put("IdComunidad", IdComunidad);
                 return params;
             }
         };
@@ -879,6 +889,59 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void obtenerDatosComunidadesResponse(String response){
+        comunidadesActuales = new HashMap<String, String>();
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No ha sido posible cargar los datos de las comunidades.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String idComunidad = jsonArray.getJSONObject(i).get("IdComunidad").toString();
+                    String nombreComunidad = jsonArray.getJSONObject(i).get("Comunidad").toString();
+
+                    comunidadesActuales.put(idComunidad, nombreComunidad);
+                }
+                initAutoCompleteTV();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        progressDialog.dismiss();
+    }
+
+    private void executeQuery_obtenerComunidades(String URL) {
+
+        progressDialog = ProgressDialog.show(CrearBoletinActivity.this,"Atención","Obteniendo datos...");
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosComunidadesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                progressDialog.dismiss();
+                MessageDialog("No ha sido posible obtener las comunidades. " +
+                        "En caso de querer asociar la publicación a una comunidad debe intentarlo más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
     }
 
     /**
