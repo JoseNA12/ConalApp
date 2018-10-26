@@ -14,9 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
+import cr.ac.tec.conalapp.conalapp.Modelo.TipoInforme;
 import cr.ac.tec.conalapp.conalapp.PantallaPerfilUsuario.PerfilUsuarioActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
@@ -25,6 +28,7 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
 
     private ArrayList<BoletinModelo> dataSet;
     private Context mContext;
+    private String mTipoInforme;
 
     private static class RetenedorVista {
         TextView tv_nombre_prefil;
@@ -34,14 +38,16 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
         TextView tv_hora;
         ImageView iv_gps;
         TextView tv_descripcion;
+        TextView tv_tipo_informe;
 
         Button btn_comentarios;
     }
 
-    public ListViewAdapterComunidadInforme(ArrayList<BoletinModelo> data, Context context) {
+    public ListViewAdapterComunidadInforme(ArrayList<BoletinModelo> data, String tipoInforme, Context context) {
         super(context, R.layout.row_item_comunidades, data);
         this.dataSet = data;
         this.mContext = context;
+        this.mTipoInforme = tipoInforme;
     }
 
     @Override
@@ -106,6 +112,8 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
 
             retenedorVista.iv_gps = (ImageView) convertView.findViewById(R.id.iv_gps_id);
 
+            retenedorVista.tv_tipo_informe = (TextView) convertView.findViewById(R.id.tv_tipo_informe_id);
+
             retenedorVista.btn_comentarios = (Button) convertView.findViewById(R.id.btn_comentarios_id);
 
             result = convertView;
@@ -128,6 +136,8 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
         retenedorVista.tv_fecha.setText(comunidadInformeModelo.getFecha());
         retenedorVista.tv_hora.setText(comunidadInformeModelo.getHora());
         retenedorVista.tv_descripcion.setText(comunidadInformeModelo.getDescripcion());
+
+        retenedorVista.tv_tipo_informe.setText(mTipoInforme);
 
         retenedorVista.btn_comentarios.setOnClickListener(this);
         retenedorVista.btn_comentarios.setTag(position);

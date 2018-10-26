@@ -37,7 +37,7 @@
 
 
             <ImageView
-                android:id="@+id/btn_seguir_comunidad"
+                android:id="@+id/btn_seguir_comunidad_id"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_alignParentRight="true"
@@ -48,15 +48,14 @@
 
                 android:clickable="true"
                 android:cropToPadding="true"
-                android:src="@drawable/ic_dejar_de_seguir"
-                android:tint="@color/negro" />
+                android:src="@drawable/ic_dejar_de_seguir" />
 
             <TextView
                 android:id="@+id/tv_nombre_comunidad_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_below="@+id/btn_seguir_comunidad"
+                android:layout_below="@+id/btn_seguir_comunidad_id"
                 android:layout_centerHorizontal="true"
                 android:maxLength="30"
                 android:text="Nombre Comunidad"

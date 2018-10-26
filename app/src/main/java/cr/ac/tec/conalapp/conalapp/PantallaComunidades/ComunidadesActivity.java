@@ -4,14 +4,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +33,7 @@ import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterComunidadInforme;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
 import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
+import cr.ac.tec.conalapp.conalapp.Modelo.TipoInforme;
 import cr.ac.tec.conalapp.conalapp.R;
 
 // https://www.youtube.com/watch?v=rCmF2Ie1m0Y
@@ -79,7 +83,7 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
         listView = (ListView) findViewById(R.id.lv_comunidades_id);
 
         progressDialog.show();
-        executeQuery(ClaseSingleton.SELECT_ALL_REUNION + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+        executeQuery(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
 
     @Override
@@ -119,57 +123,68 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
         try{
             JSONObject jsonObject = new JSONObject(response);
 
+            Log.d("NEPE", response);
+
             if (jsonObject.getString("status").equals("false")){
-                errorMessageDialog("No ha sido posible cargar las reuniones.\nVerifique su conexión a internet!");
+                errorMessageDialog("No ha sido posible cargar los boletines.\nVerifique su conexión a internet!");
             }
             else
             {
-                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
-
-                for (int i = 0; i < jsonArray.length(); i++)
+                if (!jsonObject.getString("status").equals("no hay comunidades"))
                 {
-                    String titular = jsonArray.getJSONObject(i).get("Titular").toString();
-                    String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
-                    String canton = jsonArray.getJSONObject(i).get("Canton").toString();
-                    String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
-                    String hora = jsonArray.getJSONObject(i).get("Hora").toString();
-                    String descripcion = jsonArray.getJSONObject(i).get("Descripcion").toString();
-                    String sospechosos = jsonArray.getJSONObject(i).get("Sospechosos").toString();
-                    String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
-                    String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
-                    String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
-                    String nombreComu = jsonArray.getJSONObject(i).get("Comunidad").toString();
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
 
-                    // Info usuario
-                    String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
-                    String nombreAutor = jsonArray.getJSONObject(i).get("Nombre").toString();
-                    String apellidoAutor = jsonArray.getJSONObject(i).get("Apellido").toString();
-                    String correoAutor = jsonArray.getJSONObject(i).get("Correo").toString();
-                    String sobrenombreAutor = jsonArray.getJSONObject(i).get("sobrenombre").toString();
-                    String lugarResidencia = jsonArray.getJSONObject(i).get("lugarResidencia").toString();
-                    String generoAutor = jsonArray.getJSONObject(i).get("genero").toString();
-                    String fechaNacimiento = jsonArray.getJSONObject(i).get("fechaNacimiento").toString();
-                    String biografia = jsonArray.getJSONObject(i).get("biografia").toString();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        String titular = jsonArray.getJSONObject(i).get("Titular").toString();
+                        String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
+                        String canton = jsonArray.getJSONObject(i).get("Canton").toString();
+                        String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
+                        String hora = jsonArray.getJSONObject(i).get("Hora").toString();
+                        String descripcion = jsonArray.getJSONObject(i).get("Descripcion").toString();
+                        String sospechosos = jsonArray.getJSONObject(i).get("Sospechosos").toString();
+                        String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
+                        String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
+                        String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+                        String nombreComu = jsonArray.getJSONObject(i).get("Comunidad").toString();
 
-                    Persona autor = new Persona();
-                    autor.setId(Integer.valueOf(idAutor));
-                    autor.setCorreo(correoAutor);
-                    autor.setNombre(nombreAutor);
-                    autor.setApellido(apellidoAutor);
-                    autor.setFechaNacimiento(fechaNacimiento);
-                    autor.setBiografia(biografia);
-                    autor.setGenero(generoAutor);
-                    autor.setLugarResidencia(lugarResidencia);
-                    autor.setSobrenombre(sobrenombreAutor);
+                        // Info usuario
+                        String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
+                        String nombreAutor = jsonArray.getJSONObject(i).get("Nombre").toString();
+                        String apellidoAutor = jsonArray.getJSONObject(i).get("Apellido").toString();
+                        String correoAutor = jsonArray.getJSONObject(i).get("Correo").toString();
+                        String sobrenombreAutor = jsonArray.getJSONObject(i).get("sobrenombre").toString();
+                        String lugarResidencia = jsonArray.getJSONObject(i).get("lugarResidencia").toString();
+                        String generoAutor = jsonArray.getJSONObject(i).get("genero").toString();
+                        String fechaNacimiento = jsonArray.getJSONObject(i).get("fechaNacimiento").toString();
+                        String biografia = jsonArray.getJSONObject(i).get("biografia").toString();
 
-                    System.out.println("Autor " + autor.getNombre());
-                    System.out.println("Autor " + autor.getId());
-                    array_informes_comunidades.add(i,
-                            new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, provincia, canton, fecha, hora, descripcion,
-                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, nombreComu));
+                        Persona autor = new Persona();
+                        autor.setId(Integer.valueOf(idAutor));
+                        autor.setCorreo(correoAutor);
+                        autor.setNombre(nombreAutor);
+                        autor.setApellido(apellidoAutor);
+                        autor.setFechaNacimiento(fechaNacimiento);
+                        autor.setBiografia(biografia);
+                        autor.setGenero(generoAutor);
+                        autor.setLugarResidencia(lugarResidencia);
+                        autor.setSobrenombre(sobrenombreAutor);
+
+                        System.out.println("Autor " + autor.getNombre());
+                        System.out.println("Autor " + autor.getId());
+                        array_informes_comunidades.add(i,
+                                new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, nombreComu, canton, fecha, hora, descripcion,
+                                        sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, nombreComu));
+                    }
+
+                }
+                else {
+                    //Toast.makeText(this, "Sin comunidades asociadas", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
+                            "Sin comunidades asociadas", Snackbar.LENGTH_SHORT).show();
                 }
 
-                adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
+                adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, TipoInforme.BOLETIN.getNombreInforme(), this);
 
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener()

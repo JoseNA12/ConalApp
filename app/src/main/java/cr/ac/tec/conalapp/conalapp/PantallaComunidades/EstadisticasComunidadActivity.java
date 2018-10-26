@@ -11,6 +11,8 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +31,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -44,6 +47,8 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private String IDComunidadActual;
 
+    private TextView tv_cant_boletines, tv_cant_reuniones;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +61,19 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
     {
         initProgressDialog();
         initCharPastel();
+        initTextViews();
 
         // TODO: recibir el parametro que envia PerfilComunidadActivity (ID de la comunidad)
 
-        IDComunidadActual = "0"; // recibir el parametro
+        IDComunidadActual = getIntent().getStringExtra("IdComu");
 
-        executeQuery_Boletines(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdComunidad=" + IDComunidadActual);
+        executeQuery_Boletines(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID_COMUNIDAD + "?IdComunidad=" + IDComunidadActual);
+    }
+
+    private void initTextViews()
+    {
+        tv_cant_boletines = (TextView) findViewById(R.id.tv_cant_boletines_id);
+        tv_cant_reuniones = (TextView) findViewById(R.id.tv_cant_reuniones_id);
     }
 
     private void initCharPastel()
@@ -133,8 +145,10 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
             //entries.add(new PieEntry((float) ((Math.random() * mult) + mult / 5), "Labell"));
         //}
 
-        entries.add(new PieEntry((float) ((this.cantidadBoletines * mult) + mult / 5), "Boletines"));
-        entries.add(new PieEntry((float) ((this.cantidadReuniones * mult) + mult / 5), "Reuniones"));
+        int total = this.cantidadBoletines + this.cantidadReuniones;
+
+        entries.add(new PieEntry((float) ((this.cantidadBoletines * mult) / total), "Boletines"));
+        entries.add(new PieEntry((float) ((this.cantidadReuniones * mult) / total), "Reuniones"));
 
         PieDataSet dataSet = new PieDataSet(entries, "Datos");
 
@@ -198,8 +212,10 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
         try{
             JSONObject jsonObject = new JSONObject(response);
 
+            Log.d("NEPE", jsonObject.getString("status"));
+
             if (jsonObject.getString("status").equals("false")){
-                MessageDialog("No ha sido posible cargar los datos.\nVerifique su conexión a internet!");
+                MessageDialog("No ha sido posible cargar los datos de boletines.\nVerifique su conexión a internet!");
             }
             else
             {
@@ -207,12 +223,15 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
 
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadBoletines").toString(); // TODO: Ojo al valor de la columna
+                    // String cantidadBoletines = jsonObject.getJSONObject("value").getString("IdPersona");
+                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadBoletines").toString();
 
                     this.cantidadBoletines = Integer.valueOf(cantidadBoletines);
-                }
 
-                executeQuery_Reuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdComunidad=" + IDComunidadActual);
+                    tv_cant_boletines.setText("Cantidad de boletines: " + cantidadBoletines);
+                }
+                progressDialog.dismiss();
+                executeQuery_Reuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID_COMUNIDAD + "?IdComunidad=" + IDComunidadActual);
 
             }
         } catch (JSONException e) {
@@ -222,6 +241,8 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
     }
 
     private void executeQuery_Boletines(String URL) {
+        progressDialog = ProgressDialog.show(this,"Atención","Cargando boletines...");
+
         RequestQueue queue = Volley.newRequestQueue(this);
         //errorMessageDialog(URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -248,7 +269,7 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(response);
 
             if (jsonObject.getString("status").equals("false")){
-                MessageDialog("No ha sido posible cargar los datos.\nVerifique su conexión a internet!");
+                MessageDialog("No ha sido posible cargar los datos de las reuniones.\nVerifique su conexión a internet!");
             }
             else
             {
@@ -256,9 +277,11 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
 
                 for (int i = 0; i < jsonArray.length(); i++)
                 {
-                    String cantidadBoletines = jsonArray.getJSONObject(i).get("CantidadReuniones").toString(); // TODO: Ojo al valor de la columna
+                    String cantidadReuniones = jsonArray.getJSONObject(i).get("CantidadReuniones").toString(); // TODO: Ojo al valor de la columna
 
-                    this.cantidadBoletines = Integer.valueOf(cantidadBoletines);
+                    this.cantidadReuniones = Integer.valueOf(cantidadReuniones);
+
+                    tv_cant_reuniones.setText("Cantidad de reuniones: " + cantidadReuniones);
                 }
 
                 setData(2, 100);
@@ -271,6 +294,8 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
     }
 
     private void executeQuery_Reuniones(String URL) {
+        progressDialog = ProgressDialog.show(this,"Atención","Cargando reuniones...");
+
         RequestQueue queue = Volley.newRequestQueue(this);
         //errorMessageDialog(URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {

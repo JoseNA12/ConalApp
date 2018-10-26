@@ -138,6 +138,7 @@ public class BusquedaComunidadesActivity extends AppCompatActivity implements Se
                         i.putExtra("Nombre", dataModel.getNombre());
                         i.putExtra("Provincia", dataModel.getProvincia());
                         i.putExtra("Canton", dataModel.getCanton());
+                        i.putExtra("Descripcion", dataModel.getDescripcion());
                         startActivity(i);
                     }
                 });

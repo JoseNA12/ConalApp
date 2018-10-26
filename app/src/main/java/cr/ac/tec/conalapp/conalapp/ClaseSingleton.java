@@ -81,7 +81,15 @@ public class ClaseSingleton {
 
     // TODOS LOS NOMBRES DE COMUNIDAD Y SU COUNT DE BOLETINES
     public static final String SELECT_ALL_COMUNIDAD_WITH_COUNT_BOLETINES_ALL = URL_HOST + "archivosPHP/comunidad_count_boletines_all.php";
-    public static final String SELECT_ALL_COUNT_BOLETINES_BY_ID = URL_HOST + "archivosPHP/comunidad_select_boletines_by_persona.php"; // el ID es de la persona
+    public static final String SELECT_ALL_COUNT_BOLETINES_BY_ID = URL_HOST + "archivosPHP/comunidad_select_boletines_by_persona.php"; // el ID es de la personas
     public static final String SELECT_ALL_COUNT_REUNIONES_BY_ID = URL_HOST + "archivosPHP/comunidad_select_reuniones_by_persona.php"; // el ID es de la persona
+
+    public static final String SELECT_ALL_COUNT_BOLETINES_BY_ID_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_count_boletines.php"; // el ID es de comunidad
+    public static final String SELECT_ALL_COUNT_REUNIONES_BY_ID_COMUNIDAD = URL_HOST + "archivosPHP/comunidad_count_reunones.php"; // el ID es de comunidad
+
+    public static  final String CHECK_FOLLOW_COMUNIDAD_BY_ID_USUARIO = URL_HOST + "archivosPHP/check_follow_comunidad.php";
+
+    public static final String FOLLOW_COMUNIDAD = URL_HOST + "archivosPHP/follow_comunidad.php";
+    public static final String UNFOLLOW_COMUNIDAD = URL_HOST + "archivosPHP/unfollow_comunidad.php";
 
 }
