@@ -33,6 +33,7 @@ import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterReunion;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.Modelo.ReunionModelo;
+import cr.ac.tec.conalapp.conalapp.Modelo.TipoInforme;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearReunion.CrearReunionActivity;
 import cr.ac.tec.conalapp.conalapp.R;
 
@@ -168,7 +169,8 @@ public class ReunionFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     autor.setSobrenombre(sobrenombreAutor);
 
                     array_reuniones.add(i,
-                            new ReunionModelo(autor.getNombre() + autor.getApellido(), titular, provincia, fecha, hora, linkImagenGPS, detalle, canton, autor, IdComunidad));
+                            new ReunionModelo(autor.getNombre() + autor.getApellido(), titular,
+                                    provincia, fecha, hora, linkImagenGPS, detalle, canton, autor, IdComunidad, TipoInforme.REUNION.getNombreInforme()));
                 }
 
                 adapter = new ListViewAdapterReunion(array_reuniones, getContext());

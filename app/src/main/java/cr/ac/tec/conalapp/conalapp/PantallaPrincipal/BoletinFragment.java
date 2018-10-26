@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import cr.ac.tec.conalapp.conalapp.Adaptadores.ListViewAdapterBoletin;
 import cr.ac.tec.conalapp.conalapp.ClaseSingleton;
 import cr.ac.tec.conalapp.conalapp.Modelo.BoletinModelo;
+import cr.ac.tec.conalapp.conalapp.Modelo.TipoInforme;
 import cr.ac.tec.conalapp.conalapp.PantallaCrearBoletin.CrearBoletinActivity;
 import cr.ac.tec.conalapp.conalapp.Modelo.Persona;
 import cr.ac.tec.conalapp.conalapp.R;
@@ -174,7 +175,7 @@ public class BoletinFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     System.out.println("Autor " + autor.getId());
                     array_boletines.add(i,
                             new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, provincia, canton, fecha, hora, descripcion,
-                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, IdComunidad));
+                                    sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, IdComunidad, TipoInforme.BOLETIN.getNombreInforme()));
                 }
 
                 adapter = new ListViewAdapterBoletin(array_boletines, getContext());

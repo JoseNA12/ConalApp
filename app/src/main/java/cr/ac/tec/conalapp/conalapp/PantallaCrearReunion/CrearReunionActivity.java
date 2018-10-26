@@ -37,6 +37,7 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -63,6 +64,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -200,7 +202,9 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
         initFrameLayout();
         initImageView();
         initSwitchs();
-        initAutoCompleteTV();
+        // initAutoCompleteTV();
+
+        executeQuery_obtenerComunidades(ClaseSingleton.SELECT_ALL_COMUNIDAD);
     }
 
     private void initAutoCompleteTV()
@@ -393,11 +397,11 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
     private String[] getNombreComunidades() // hacer el request a la BD con los nombres de las comunidades
     {
         // TODO: El request debe trear el nombre de las comunidades junto a su ID (primary key)
-        comunidadesActuales = new HashMap<String, String>();
+        /*comunidadesActuales = new HashMap<String, String>();
         comunidadesActuales.put("1", "Comunidad 1");
         comunidadesActuales.put("2", "Comunidad 2");
         comunidadesActuales.put("3", "Comunidad 3");
-        comunidadesActuales.put("4", "Comunidad 4");
+        comunidadesActuales.put("4", "Comunidad 4");*/
 
         return diccionario_to_array(comunidadesActuales);
     }
@@ -759,12 +763,65 @@ public class CrearReunionActivity extends AppCompatActivity implements OnMapRead
                 MessageDialog("No se pudo publicar la reunión. Inténtelo de nuevo.");
             }
             else {
-                MessageDialog("Se ha publicado la reunión correctamente.");
+                // MessageDialog("Se ha publicado la reunión correctamente.");
                 finish();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void obtenerDatosComunidadesResponse(String response){
+        comunidadesActuales = new HashMap<String, String>();
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                MessageDialog("No ha sido posible cargar los datos de las comunidades.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    String idComunidad = jsonArray.getJSONObject(i).get("IdComunidad").toString();
+                    String nombreComunidad = jsonArray.getJSONObject(i).get("Comunidad").toString();
+
+                    comunidadesActuales.put(idComunidad, nombreComunidad);
+                }
+                initAutoCompleteTV();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        progressDialog.dismiss();
+    }
+
+    private void executeQuery_obtenerComunidades(String URL) {
+
+        progressDialog = ProgressDialog.show(CrearReunionActivity.this,"Atención","Obteniendo datos...");
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosComunidadesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                progressDialog.dismiss();
+                MessageDialog("No ha sido posible obtener las comunidades. " +
+                        "En caso de querer asociar la publicación a una comunidad debe intentarlo más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
     }
 
     private void MessageDialog(String message){ // mostrar mensaje emergente

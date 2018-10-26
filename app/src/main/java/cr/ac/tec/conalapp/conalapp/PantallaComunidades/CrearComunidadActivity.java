@@ -178,7 +178,10 @@ public class CrearComunidadActivity extends AppCompatActivity {
         if (!input_nombre.getText().toString().trim().equals(""))
         {
             String provincia = sp_provincias.getSelectedItem().toString();
-            String canton = sp_cantones_por_provincia.getSelectedItem().toString();
+            String canton = "";
+
+            try { canton = sp_cantones_por_provincia.getSelectedItem().toString(); }
+            catch(NullPointerException e){ canton = ""; }
 
             if (!provincia.equals(promptProvincias) && canton.equals(promptCantones))
             {
@@ -186,6 +189,10 @@ public class CrearComunidadActivity extends AppCompatActivity {
             }
             else
             {
+                if (provincia.equals(promptProvincias)) // No quizo meter provincia y cantón
+                {
+                    provincia = ""; canton = "";
+                }
                 executeQuery(ClaseSingleton.INSERT_COMUNIDAD, input_nombre.getText().toString(),
                         input_descripcion.getText().toString(), provincia, canton);
             }
@@ -238,7 +245,7 @@ public class CrearComunidadActivity extends AppCompatActivity {
                 MessageDialog("No se pudo crear la comunidad. Inténtelo de nuevo o más tarde.");
             }
             else {
-                MessageDialog("Se ha creado la comunidad correctamente.");
+                //MessageDialog("Se ha creado la comunidad correctamente.");
                 finish();
             }
         } catch (JSONException e) {
@@ -249,7 +256,7 @@ public class CrearComunidadActivity extends AppCompatActivity {
     private void MessageDialog(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 //      .setIcon(R.drawable.ic_img_diag_error_icon)
-                .setMessage(message).setTitle("Error")
+                .setMessage(message).setTitle("Atención")
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         return;

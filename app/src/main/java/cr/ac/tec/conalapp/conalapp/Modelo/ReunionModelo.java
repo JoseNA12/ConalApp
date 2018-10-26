@@ -14,7 +14,9 @@ public class ReunionModelo {
     private Persona autorInfo;
     private String idComunidad;
 
-    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton, Persona autorInfo, String idComunidad) {
+    private String tipoInforme;
+
+    public ReunionModelo(String autor, String titular, String provincia, String fecha, String hora, String linkImagenGPS, String descrpcion, String canton, Persona autorInfo, String idComunidad, String pTipoInforme) {
         this.autor = autor;
         this.titular = titular;
         this.provincia = provincia;
@@ -25,6 +27,8 @@ public class ReunionModelo {
         this.canton = canton;
         this.autorInfo = autorInfo;
         this.idComunidad = idComunidad;
+
+        this.tipoInforme = pTipoInforme;
     }
 
     public String getIdComunidad() {
@@ -113,6 +117,14 @@ public class ReunionModelo {
 
     public void setCanton(String canton) {
         this.canton = canton;
+    }
+
+    public String getTipoInforme() {
+        return tipoInforme;
+    }
+
+    public void setTipoInforme(String tipoInforme) {
+        this.tipoInforme = tipoInforme;
     }
 }
 

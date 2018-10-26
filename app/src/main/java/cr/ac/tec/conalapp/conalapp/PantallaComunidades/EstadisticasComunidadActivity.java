@@ -184,8 +184,8 @@ public class EstadisticasComunidadActivity extends AppCompatActivity {
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(14f);
+        data.setValueTextColor(Color.BLACK);
         mChart.setData(data);
 
         // undo all highlights

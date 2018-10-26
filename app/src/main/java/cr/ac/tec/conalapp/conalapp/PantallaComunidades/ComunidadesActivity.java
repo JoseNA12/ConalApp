@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -82,8 +81,9 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
     {
         listView = (ListView) findViewById(R.id.lv_comunidades_id);
 
+        progressDialog.setMessage("Cargando boletines..."); progressDialog.show();
         progressDialog.show();
-        executeQuery(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+        executeQuery_getBoletines(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
     }
 
     @Override
@@ -112,10 +112,9 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
     }
 
     public void onRefresh() {
-        executeQuery(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+        executeQuery_getBoletines(ClaseSingleton.SELECT_ALL_COUNT_BOLETINES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
          // SELECT_ALL_COUNT_REUNIONES_BY_ID
     }
-
 
     private void obtenerDatosBoletinesResponse(String response){
         array_informes_comunidades = new ArrayList<>();
@@ -123,13 +122,13 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
         try{
             JSONObject jsonObject = new JSONObject(response);
 
-            Log.d("NEPE", response);
-
             if (jsonObject.getString("status").equals("false")){
                 errorMessageDialog("No ha sido posible cargar los boletines.\nVerifique su conexión a internet!");
             }
             else
             {
+                Log.d("PEPA", response);
+
                 if (!jsonObject.getString("status").equals("no hay comunidades"))
                 {
                     JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
@@ -170,11 +169,13 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                         autor.setLugarResidencia(lugarResidencia);
                         autor.setSobrenombre(sobrenombreAutor);
 
-                        System.out.println("Autor " + autor.getNombre());
-                        System.out.println("Autor " + autor.getId());
+                        //System.out.println("Autor " + autor.getNombre());
+                        //System.out.println("Autor " + autor.getId());
                         array_informes_comunidades.add(i,
                                 new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, nombreComu, canton, fecha, hora, descripcion,
-                                        sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, nombreComu));
+                                        sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, nombreComu, TipoInforme.BOLETIN.getNombreInforme()));
+
+                        executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
                     }
 
                 }
@@ -184,7 +185,7 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                             "Sin comunidades asociadas", Snackbar.LENGTH_SHORT).show();
                 }
 
-                adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, TipoInforme.BOLETIN.getNombreInforme(), this);
+                /*adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
 
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -194,16 +195,25 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
 
                         BoletinModelo dataModel = array_informes_comunidades.get(position);
                     }
-                });
+                });*/
+
+                swipeLayout.setRefreshing(false);
+                progressDialog.dismiss();
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            swipeLayout.setRefreshing(false);
+            progressDialog.dismiss();
+            executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
         }
         swipeLayout.setRefreshing(false);
         progressDialog.dismiss();
     }
 
-    private void executeQuery(String URL) {
+    private void executeQuery_getBoletines(String URL) {
+
+        //progressDialog.setMessage("Cargando boletines..."); progressDialog.show();
+
         RequestQueue queue = Volley.newRequestQueue(this);
         //errorMessageDialog(URL);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
@@ -211,6 +221,119 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
 
             public void onResponse(String response) {
                 obtenerDatosBoletinesResponse(response);  /* Para inicio de sesión*/
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // progressDialog.dismiss();
+                swipeLayout.setRefreshing(false);
+                progressDialog.dismiss();
+                errorMessageDialog("No se puede conectar al servidor en estos momentos.\nIntente conectarse más tarde.");
+                // errorMessageDialog(error.toString());
+            }
+        });queue.add(stringRequest);
+    }
+
+    private void obtenerDatosReunionesResponse(String response){
+
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+
+            if (jsonObject.getString("status").equals("false")){
+                errorMessageDialog("No ha sido posible cargar las reuniones.\nVerifique su conexión a internet!");
+            }
+            else
+            {
+                if (!jsonObject.getString("status").equals("no hay comunidades"))
+                {
+                    JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
+
+                    for (int i = 0; i < jsonArray.length(); i++)
+                    {
+                        String titular = jsonArray.getJSONObject(i).get("Titular").toString();
+                        String provincia = jsonArray.getJSONObject(i).get("Provincia").toString();
+                        String canton = jsonArray.getJSONObject(i).get("Canton").toString();
+                        String fecha = jsonArray.getJSONObject(i).get("Fecha").toString();
+                        String hora = jsonArray.getJSONObject(i).get("Hora").toString();
+                        String descripcion = jsonArray.getJSONObject(i).get("Detalle").toString();
+                        //String sospechosos = jsonArray.getJSONObject(i).get("Sospechosos").toString();
+                        //String armasSosp = jsonArray.getJSONObject(i).get("ArmasSosp").toString();
+                        //String vehiculosSosp = jsonArray.getJSONObject(i).get("VehiculosSosp").toString();
+                        String linkImagenGPS = jsonArray.getJSONObject(i).get("EnlaceGPS").toString();
+                        String nombreComu = jsonArray.getJSONObject(i).get("Comunidad").toString();
+
+                        // Info usuario
+                        String idAutor = jsonArray.getJSONObject(i).get("IdPersona").toString();
+                        String nombreAutor = jsonArray.getJSONObject(i).get("Nombre").toString();
+                        String apellidoAutor = jsonArray.getJSONObject(i).get("Apellido").toString();
+                        String correoAutor = jsonArray.getJSONObject(i).get("Correo").toString();
+                        String sobrenombreAutor = jsonArray.getJSONObject(i).get("sobrenombre").toString();
+                        String lugarResidencia = jsonArray.getJSONObject(i).get("lugarResidencia").toString();
+                        String generoAutor = jsonArray.getJSONObject(i).get("genero").toString();
+                        String fechaNacimiento = jsonArray.getJSONObject(i).get("fechaNacimiento").toString();
+                        String biografia = jsonArray.getJSONObject(i).get("biografia").toString();
+
+                        Persona autor = new Persona();
+                        autor.setId(Integer.valueOf(idAutor));
+                        autor.setCorreo(correoAutor);
+                        autor.setNombre(nombreAutor);
+                        autor.setApellido(apellidoAutor);
+                        autor.setFechaNacimiento(fechaNacimiento);
+                        autor.setBiografia(biografia);
+                        autor.setGenero(generoAutor);
+                        autor.setLugarResidencia(lugarResidencia);
+                        autor.setSobrenombre(sobrenombreAutor);
+
+                        //System.out.println("Autor " + autor.getNombre());
+                        //System.out.println("Autor " + autor.getId());
+                        array_informes_comunidades.add(i,
+                                new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, nombreComu, canton, fecha, hora, descripcion,
+                                        "", "", "", linkImagenGPS, autor, nombreComu, TipoInforme.REUNION.getNombreInforme()));
+                    }
+
+                }
+                else {
+                    //Toast.makeText(this, "Sin comunidades asociadas", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
+                            "Sin comunidades asociadas", Snackbar.LENGTH_SHORT).show();
+                }
+
+                Log.d("NEPE", String.valueOf(array_informes_comunidades.size()));
+
+            }
+        } catch (JSONException e) {
+            //e.printStackTrace();
+            Log.d("NEPE", "Comunidad asociada pero sin boletines y/o reuniones");
+        }
+
+        adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
+
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                BoletinModelo dataModel = array_informes_comunidades.get(position);
+            }
+        });
+
+        swipeLayout.setRefreshing(false);
+        progressDialog.dismiss();
+    }
+
+    private void executeQuery_getReuniones(String URL) {
+
+        progressDialog.setMessage("Cargando reuniones..."); progressDialog.show();
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //errorMessageDialog(URL);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+
+            public void onResponse(String response) {
+                obtenerDatosReunionesResponse(response);  /* Para inicio de sesión*/
 
             }
         }, new Response.ErrorListener() {

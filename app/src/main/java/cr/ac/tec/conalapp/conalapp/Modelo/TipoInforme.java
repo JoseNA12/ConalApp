@@ -3,7 +3,7 @@ package cr.ac.tec.conalapp.conalapp.Modelo;
 public enum TipoInforme {
 
     BOLETIN("Boletín"),
-    NOTICIA("Noticia");
+    REUNION("Reunión");
 
     String nombreInforme;
 

@@ -197,11 +197,6 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
         mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
-    private void ObtenerDatosComunidades()
-    {
-
-    }
-
     private void inicializarComponentes()
     {
         input_titular = (TextInputEditText) findViewById(R.id.input_titular_id);
@@ -883,7 +878,7 @@ public class CrearBoletinActivity extends AppCompatActivity implements OnMapRead
                 MessageDialog("No se pudo agregar el boletín.");
             }
             else {
-                MessageDialog("Se ha agregado el boletín correctamente.");
+                //MessageDialog("Se ha agregado el boletín correctamente.");
                 finish();
             }
         } catch (JSONException e) {

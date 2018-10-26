@@ -28,7 +28,6 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
 
     private ArrayList<BoletinModelo> dataSet;
     private Context mContext;
-    private String mTipoInforme;
 
     private static class RetenedorVista {
         TextView tv_nombre_prefil;
@@ -43,11 +42,10 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
         Button btn_comentarios;
     }
 
-    public ListViewAdapterComunidadInforme(ArrayList<BoletinModelo> data, String tipoInforme, Context context) {
+    public ListViewAdapterComunidadInforme(ArrayList<BoletinModelo> data, Context context) {
         super(context, R.layout.row_item_comunidades, data);
         this.dataSet = data;
         this.mContext = context;
-        this.mTipoInforme = tipoInforme;
     }
 
     @Override
@@ -137,7 +135,7 @@ public class ListViewAdapterComunidadInforme extends ArrayAdapter<BoletinModelo>
         retenedorVista.tv_hora.setText(comunidadInformeModelo.getHora());
         retenedorVista.tv_descripcion.setText(comunidadInformeModelo.getDescripcion());
 
-        retenedorVista.tv_tipo_informe.setText(mTipoInforme);
+        retenedorVista.tv_tipo_informe.setText(comunidadInformeModelo.getTipoInforme());
 
         retenedorVista.btn_comentarios.setOnClickListener(this);
         retenedorVista.btn_comentarios.setTag(position);
