@@ -127,8 +127,6 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
             }
             else
             {
-                Log.d("PEPA", response);
-
                 if (!jsonObject.getString("status").equals("no hay comunidades"))
                 {
                     JSONArray jsonArray = new JSONObject(response).getJSONArray("value");
@@ -174,12 +172,16 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                         array_informes_comunidades.add(i,
                                 new BoletinModelo(autor.getNombre() + autor.getApellido(), titular, nombreComu, canton, fecha, hora, descripcion,
                                         sospechosos, armasSosp, vehiculosSosp, linkImagenGPS, autor, nombreComu, TipoInforme.BOLETIN.getNombreInforme()));
-
-                        executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
                     }
 
+                    executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+
                 }
-                else {
+                else
+                {
+                    adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
+                    listView.setAdapter(adapter); // en caso de que no haya nada, pongo la lista vacia
+
                     //Toast.makeText(this, "Sin comunidades asociadas", Toast.LENGTH_SHORT).show();
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
                             "Sin comunidades asociadas", Snackbar.LENGTH_SHORT).show();
@@ -204,7 +206,8 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
             // e.printStackTrace();
             swipeLayout.setRefreshing(false);
             progressDialog.dismiss();
-            executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
+            // intente con reuniones
+            // executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
         }
         swipeLayout.setRefreshing(false);
         progressDialog.dismiss();
@@ -236,6 +239,8 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
     }
 
     private void obtenerDatosReunionesResponse(String response){
+
+        Log.d("NEPE", "VECES EJECUTADO: " + "entré");
 
         try{
             JSONObject jsonObject = new JSONObject(response);
@@ -333,7 +338,7 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
             @Override
 
             public void onResponse(String response) {
-                obtenerDatosReunionesResponse(response);  /* Para inicio de sesión*/
+                obtenerDatosReunionesResponse(response);
 
             }
         }, new Response.ErrorListener() {
