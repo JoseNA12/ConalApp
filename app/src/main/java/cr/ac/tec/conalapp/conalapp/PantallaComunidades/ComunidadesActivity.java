@@ -175,40 +175,31 @@ public class ComunidadesActivity extends AppCompatActivity implements SwipeRefre
                     }
 
                     executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
-
                 }
                 else
                 {
-                    adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
-                    listView.setAdapter(adapter); // en caso de que no haya nada, pongo la lista vacia
-
                     //Toast.makeText(this, "Sin comunidades asociadas", Toast.LENGTH_SHORT).show();
                     Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
                             "Sin comunidades asociadas", Snackbar.LENGTH_SHORT).show();
                 }
 
-                /*adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
-
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        BoletinModelo dataModel = array_informes_comunidades.get(position);
-                    }
-                });*/
+                //adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
+                //listView.setAdapter(adapter); // en caso de que no haya nada, pongo la lista vacia
 
                 swipeLayout.setRefreshing(false);
                 progressDialog.dismiss();
             }
         } catch (JSONException e) {
+
             // e.printStackTrace();
             swipeLayout.setRefreshing(false);
             progressDialog.dismiss();
             // intente con reuniones
             // executeQuery_getReuniones(ClaseSingleton.SELECT_ALL_COUNT_REUNIONES_BY_ID + "?IdPersona=" + ClaseSingleton.USUARIO_ACTUAL.getId());
         }
+        adapter = new ListViewAdapterComunidadInforme(array_informes_comunidades, this);
+        listView.setAdapter(adapter); // en caso de que no haya nada, pongo la lista vacia
+
         swipeLayout.setRefreshing(false);
         progressDialog.dismiss();
     }
